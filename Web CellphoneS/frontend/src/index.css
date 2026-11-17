@@ -13,3 +13,12 @@ body {
 * {
   box-sizing: border-box;
 }
+
+:root {
+  --color-primary: #D70018;
+  --color-primary-hover: #B50014;
+  --color-black: #171717;
+  --color-white: #FFFFFF;
+  --color-background: #F5F5F5;
+  --color-border: #E5E7EB;
+}

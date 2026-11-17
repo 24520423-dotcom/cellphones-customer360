@@ -29,7 +29,7 @@ export default function LeadChart({ data }) {  return (
             <XAxis dataKey="status" />
             <YAxis allowDecimals={false} />
             <Tooltip />
-            <Bar dataKey="count" fill="#dc2626" radius={[6, 6, 0, 0]} />
+            <Bar dataKey="count" fill="#B91C1C" radius={[6, 6, 0, 0]} />
           </BarChart>
         </ResponsiveContainer>
       </div>
