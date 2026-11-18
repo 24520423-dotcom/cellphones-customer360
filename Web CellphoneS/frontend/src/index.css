@@ -1,24 +1,43 @@
+﻿@import "tailwindcss";
 
-@import "tailwindcss";
+@theme {
+  --color-primary: #d70018;
+  --color-primary-hover: #b50014;
+  --color-primary-soft: #fff1f2;
+  --color-brand-highlight: #ff6674;
+  --color-ink: #171717;
+  --color-muted: #525866;
+  --color-background: #f5f5f5;
+  --color-border: #e5e7eb;
+}
 
 :root {
   font-family: Arial, sans-serif;
+  --color-black: var(--color-ink);
 }
 
 body {
   margin: 0;
   min-width: 320px;
+  background: var(--color-background);
+  color: var(--color-ink);
 }
 
-* {
-  box-sizing: border-box;
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
 }
 
-:root {
-  --color-primary: #D70018;
-  --color-primary-hover: #B50014;
-  --color-black: #171717;
-  --color-white: #FFFFFF;
-  --color-background: #F5F5F5;
-  --color-border: #E5E7EB;
+@layer components {
+  .crm-card {
+    @apply rounded-xl border border-border bg-white p-6 shadow-sm;
+  }
+
+  .crm-action {
+    @apply inline-flex rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-white hover:bg-primary-hover;
+  }
+
+  .crm-input {
+    @apply w-full rounded-lg border border-border bg-white px-3 py-2.5 text-ink;
+  }
 }

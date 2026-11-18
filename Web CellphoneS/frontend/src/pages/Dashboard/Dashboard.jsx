@@ -1,4 +1,4 @@
-
+﻿
 import { useMemo, useState } from "react";
 import {
   Users,
@@ -101,7 +101,7 @@ export default function Dashboard() {
             Dashboard
           </h1>
           <p className="mt-2 text-slate-500">
-            Tổng quan hoạt động CRM của CellphoneS.
+            Tổng quan hoạt động CRM của CellphoneS · Dữ liệu minh họa
           </p>
         </div>
 

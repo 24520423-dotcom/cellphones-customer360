@@ -1,4 +1,4 @@
-
+﻿
 export default function Button({
   children,
   variant = "primary",
@@ -12,13 +12,13 @@ export default function Button({
 }) {
   const variants = {
     primary:
-      "bg-[#D70018] text-white hover:bg-[#B50014]",
+      "bg-primary text-white hover:bg-primary-hover",
     secondary:
-      "bg-white text-[#171717] border border-gray-300 hover:bg-gray-100",
+      "bg-white text-ink border border-gray-300 hover:bg-gray-100",
     outline:
-      "bg-white text-[#D70018] border border-[#D70018] hover:bg-red-50",
+      "bg-white text-primary border border-primary hover:bg-primary-soft",
     danger:
-      "bg-[#171717] text-white hover:bg-black",
+      "bg-ink text-white hover:bg-black",
   };
 
   const sizes = {
@@ -36,7 +36,7 @@ export default function Button({
         inline-flex items-center justify-center gap-2
         rounded-lg font-medium transition-colors
         focus-visible:outline-none focus-visible:ring-2
-        focus-visible:ring-[#D70018] focus-visible:ring-offset-2
+        focus-visible:ring-primary focus-visible:ring-offset-2
         disabled:cursor-not-allowed disabled:opacity-50
         ${variants[variant] || variants.primary}
         ${sizes[size] || sizes.md}

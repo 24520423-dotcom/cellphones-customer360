@@ -1,4 +1,4 @@
-
+﻿
 export default function Table({
   columns = [],
   data = [],
@@ -8,11 +8,11 @@ export default function Table({
   getRowKey,
 }) {
   return (
-    <div className="w-full min-w-0 overflow-hidden rounded-xl border border-gray-200 bg-white">
+    <div className="w-full min-w-0 overflow-hidden rounded-xl border border-border bg-white">
       <div className="w-full overflow-x-auto">
         <table className="w-full min-w-[650px] border-collapse text-left text-sm">
           {/* Tiêu đề bảng */}
-          <thead className="bg-[#171717] text-white">
+          <thead className="bg-ink text-white">
             <tr>
               {columns.map((column) => (
                 <th
@@ -55,14 +55,14 @@ export default function Table({
                       : undefined
                   }
                   className={`
-                    transition-colors hover:bg-red-50
+                    transition-colors hover:bg-primary-soft
                     ${onRowClick ? "cursor-pointer" : ""}
                   `}
                 >
                   {columns.map((column) => (
                     <td
                       key={column.key}
-                      className="px-5 py-4 text-[#171717]"
+                      className="px-5 py-4 text-ink"
                     >
                       {column.render
                         ? column.render(row[column.key], row)
