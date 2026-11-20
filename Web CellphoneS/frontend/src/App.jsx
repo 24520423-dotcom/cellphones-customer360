@@ -9,6 +9,7 @@ import ProtectedRoute from "./routes/ProtectedRoute";
 import Register from "./pages/Auth/Register";
 import PendingApproval from "./pages/Auth/PendingApproval";
 import LeadList from "./pages/Leads/LeadList";
+import DealList from "./pages/Deals/DealList";
 function Placeholder({ title }) {
   return (
     <section className="crm-card">
@@ -35,6 +36,8 @@ export default function App({ authAdapter }) {
                     <Dashboard />
                   ) : path === "/leads" ? (
                     <LeadList />
+                  ) : path === "/deals" ? (
+                    <DealList />
                   ) : (
                     <Placeholder title={label} />
                   );
@@ -50,7 +53,10 @@ export default function App({ authAdapter }) {
           {import.meta.env.DEV && (
             <Route path="/preview/leads" element={<LeadList />} />
           )}
-          // Chỉ dùng để xem thử giao diện H03 khi chưa có Backend
+          {/* Xem trước giao diện Deal khi chưa đăng nhập, chỉ trong DEV */}
+          {import.meta.env.DEV && (
+            <Route path="/preview/deals" element={<DealList />} />
+          )}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </AuthProvider>
