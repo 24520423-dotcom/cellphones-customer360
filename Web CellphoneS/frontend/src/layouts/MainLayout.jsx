@@ -11,7 +11,8 @@ export default function MainLayout() {
   const { pathname } = useLocation();
   const { session, hasPermission, logout } = useAuth();
   const drawer = useRef(null);
-  const title = crmRoutes.find(({ path }) => matchPath(path, pathname))?.label;
+  const title = crmRoutes.find(({ path }) => matchPath(path, pathname))?.label
+    || (pathname.startsWith("/customers/") ? "Customer 360" : undefined);
 
   useEffect(() => {
     if (!sidebarOpen) return;

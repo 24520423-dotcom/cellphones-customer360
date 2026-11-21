@@ -1,7 +1,7 @@
 ﻿import { LogOut, Menu, UserCircle } from "lucide-react";
 import { useState } from "react";
 
-export default function Header({ onMenuClick, sidebarOpen, title, user, logout }) {
+export default function Header({ onMenuClick, sidebarOpen, title, user, logout, previewMode = false }) {
   const [logoutPending, setLogoutPending] = useState(false);
   const [logoutError, setLogoutError] = useState(false);
 
@@ -43,6 +43,12 @@ export default function Header({ onMenuClick, sidebarOpen, title, user, logout }
             <span className="break-all">{user.displayName || user.id}</span>
           </div>
         )}
+        {previewMode ? (
+          <span className="inline-flex items-center gap-2 rounded-md border border-gray-200 bg-gray-50 px-3 py-1.5 text-xs font-medium text-gray-600">
+            <span className="h-1.5 w-1.5 rounded-full bg-primary" aria-hidden="true" />
+            Bản xem thử · Chưa kết nối Backend
+          </span>
+        ) : (
         <button
           type="button"
           disabled={!logout || logoutPending}
@@ -53,6 +59,7 @@ export default function Header({ onMenuClick, sidebarOpen, title, user, logout }
           <LogOut size={16} aria-hidden="true" />
           Đăng xuất
         </button>
+        )}
         {logoutError && <p role="alert" className="text-sm text-primary">Không thể đăng xuất. Vui lòng thử lại.</p>}
       </div>
     </header>
