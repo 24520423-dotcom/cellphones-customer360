@@ -10,6 +10,12 @@ import Register from "./pages/Auth/Register";
 import PendingApproval from "./pages/Auth/PendingApproval";
 import LeadList from "./pages/Leads/LeadList";
 import DealList from "./pages/Deals/DealList";
+import CustomerList from "./pages/Customers/CustomerList";
+import CustomerProfile from "./pages/Customers/CustomerProfile";
+import CustomerPreviewFrame from "./pages/Customers/CustomerPreviewFrame";
+
+// Trang hồ sơ dùng cùng quyền với trang danh sách /customers.
+const customersPermission = crmRoutes.find(({ path }) => path === "/customers")?.permission;
 function Placeholder({ title }) {
   return (
     <section className="crm-card">
@@ -38,6 +44,8 @@ export default function App({ authAdapter }) {
                     <LeadList />
                   ) : path === "/deals" ? (
                     <DealList />
+                  ) : path === "/customers" ? (
+                    <CustomerList />
                   ) : (
                     <Placeholder title={label} />
                   );
@@ -47,6 +55,9 @@ export default function App({ authAdapter }) {
                   </Route>
                 ) : <Route key={path} path={path} element={page} />;
               })}
+              <Route element={<ProtectedRoute permission={customersPermission} />}>
+                <Route path="/customers/:customerId" element={<CustomerProfile />} />
+              </Route>
             </Route>
           </Route>
           {/* Chỉ dùng để xem thử giao diện H03 khi chưa có Backend */}
@@ -56,6 +67,13 @@ export default function App({ authAdapter }) {
           {/* Xem trước giao diện Deal khi chưa đăng nhập, chỉ trong DEV */}
           {import.meta.env.DEV && (
             <Route path="/preview/deals" element={<DealList />} />
+          )}
+          {/* Xem thử L01/L02 không cần Frappe, chỉ khi chạy dev. */}
+          {import.meta.env.DEV && (
+            <Route path="/preview/customers" element={<CustomerPreviewFrame />}>
+              <Route index element={<CustomerList />} />
+              <Route path=":customerId" element={<CustomerProfile />} />
+            </Route>
           )}
           <Route path="*" element={<NotFound />} />
         </Routes>

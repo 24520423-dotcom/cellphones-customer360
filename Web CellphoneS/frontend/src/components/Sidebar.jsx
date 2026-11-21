@@ -29,9 +29,10 @@ export default function Sidebar({
   onToggle,
   onClose,
   hasPermission = () => false,
+  previewMode = false,
 }) {
   const ToggleIcon = collapsed ? PanelLeftOpen : PanelLeftClose;
-  const menuItems = crmRoutes.filter(({ permission }) => !permission || hasPermission(permission));
+  const menuItems = previewMode ? crmRoutes.filter(({ path }) => path !== "/admin") : crmRoutes.filter(({ permission }) => !permission || hasPermission(permission));
 
   return (
     <aside className="flex h-full w-full flex-col bg-ink text-white">
@@ -53,10 +54,17 @@ export default function Sidebar({
       <nav aria-label="Module CRM" className="flex-1 space-y-2 overflow-y-auto p-3">
         {menuItems.map(({ label, path }) => {
           const Icon = icons[path];
+          if (previewMode && path !== "/customers") return (
+            <div key={path} title="Module cần đăng nhập Frappe CRM"
+              className={`flex cursor-not-allowed items-center gap-3 rounded-lg py-3 text-sm text-gray-500 ${collapsed ? "justify-center" : "px-3"}`}>
+              <Icon size={19} className="shrink-0" aria-hidden="true" />
+              {!collapsed && <span>{label}</span>}
+            </div>
+          );
           return (
             <NavLink
               key={path}
-              to={path}
+              to={previewMode ? "/preview/customers" : path}
               onClick={onNavigate}
               aria-label={label}
               title={collapsed ? label : undefined}
