@@ -1,0 +1,23 @@
+﻿# Frappe Bench archive
+frappe-bench-backup.tar.gz
+
+# Database and site backups
+backup/
+*.sql
+*.sql.gz
+
+# Sensitive configuration
+.env
+.env.*
+!.env.example
+site_config.json
+site_config_backup.json
+*_site_config_backup.json
+
+# Python generated files
+__pycache__/
+*.pyc
+
+# Local files
+.DS_Store
+Thumbs.db

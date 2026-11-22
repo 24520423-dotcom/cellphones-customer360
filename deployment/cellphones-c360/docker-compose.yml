@@ -1,0 +1,46 @@
+﻿name: cellphones-c360-snapshot
+
+services:
+  mariadb:
+    image: mariadb:10.8
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+      - --skip-character-set-client-handshake
+      - --skip-innodb-read-only-compressed
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:?Set MYSQL_ROOT_PASSWORD in .env}
+    volumes:
+      - snapshot-mariadb-data:/var/lib/mysql
+
+  redis:
+    image: redis:alpine
+
+  frappe:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: cellphones-c360-snapshot:local
+    command:
+      - bash
+      - -lc
+      - |
+        cd /home/frappe/frappe-bench
+        exec bench start
+    working_dir: /home/frappe
+    environment:
+      PYENV_VERSION: "3.12.15"
+      SHELL: /bin/bash
+    volumes:
+      - snapshot-bench-data:/home/frappe/frappe-bench
+      - ./backend/cellphones_c360:/home/frappe/frappe-bench/apps/cellphones_c360
+    ports:
+      - "8001:8000"
+      - "9001:9000"
+    depends_on:
+      - mariadb
+      - redis
+
+volumes:
+  snapshot-mariadb-data:
+  snapshot-bench-data:
