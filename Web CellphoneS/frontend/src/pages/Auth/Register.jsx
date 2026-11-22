@@ -1,130 +1,62 @@
-
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useRef, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
 import StatusPage from "../StatusPage";
+import { submitRegistration } from "../../services/registrationService";
+
+const departments = [
+  ["Sales", "Kinh doanh"],
+  ["Customer Service", "Chăm sóc khách hàng"],
+  ["Operations", "Vận hành"],
+  ["Other", "Khác"],
+];
 
 export default function Register() {
-  const [form, setForm] = useState({
-    fullName: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-  });
-
+  const navigate = useNavigate();
+  const lock = useRef(false);
+  const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-
-    setForm((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-
+  async function handleSubmit(event) {
+    event.preventDefault();
+    if (lock.current) return;
+    const payload = Object.fromEntries(new FormData(event.currentTarget));
+    lock.current = true;
+    setSubmitting(true);
     setError("");
-    setSuccess("");
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    if (!form.fullName.trim() || !form.email.trim() ||
-        !form.password || !form.confirmPassword) {
-      setError("Vui lòng nhập đầy đủ thông tin.");
-      return;
+    try {
+      await submitRegistration(payload);
+      navigate("/pending-approval", { replace: true });
+    } catch (error) {
+      setError(error.status === 429
+        ? "Bạn đã gửi quá nhiều yêu cầu. Vui lòng thử lại sau 10 phút."
+        : "Không gửi được yêu cầu. Vui lòng kiểm tra thông tin và thử lại.");
+    } finally {
+      lock.current = false;
+      setSubmitting(false);
     }
-
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
-      setError("Email không đúng định dạng.");
-      return;
-    }
-
-    if (form.password.length < 8) {
-      setError("Mật khẩu phải có ít nhất 8 ký tự.");
-      return;
-    }
-
-    if (form.password !== form.confirmPassword) {
-      setError("Mật khẩu xác nhận không khớp.");
-      return;
-    }
-
-    setError("");
-    setSuccess(
-      "Thông tin hợp lệ! Chức năng đăng ký sẽ được kết nối sau."
-    );
-  };
+  }
 
   return (
     <StatusPage title="Đăng ký tài khoản nhân viên">
-      <p className="mb-5 text-sm text-muted">
-        CellphoneS Customer 360 · Cổng quản trị nhân viên
-      </p>
-
       <form onSubmit={handleSubmit} className="grid gap-4 text-left">
-        <Input
-          label="Họ và tên"
-          name="fullName"
-          value={form.fullName}
-          onChange={handleChange}
-          placeholder="Nhập họ và tên"
-        />
-
-        <Input
-          label="Email"
-          name="email"
-          type="email"
-          value={form.email}
-          onChange={handleChange}
-          placeholder="Nhập email nhân viên"
-        />
-
-        <Input
-          label="Mật khẩu"
-          name="password"
-          type="password"
-          value={form.password}
-          onChange={handleChange}
-          placeholder="Nhập mật khẩu"
-        />
-
-        <Input
-          label="Xác nhận mật khẩu"
-          name="confirmPassword"
-          type="password"
-          value={form.confirmPassword}
-          onChange={handleChange}
-          placeholder="Nhập lại mật khẩu"
-        />
-
-        {error && (
-          <p role="alert" className="text-sm font-medium text-red-600">
-            {error}
-          </p>
-        )}
-
-        {success && (
-          <p role="status" className="text-sm font-medium text-green-600">
-            {success}
-          </p>
-        )}
-
-        <Button type="submit">
-          Đăng ký
-        </Button>
-
-        <p className="text-center text-sm">
-          Đã có tài khoản?{" "}
-          <Link
-            to="/login"
-            className="font-semibold text-primary"
-          >
-            Đăng nhập
-          </Link>
-        </p>
+        <Input label="Họ và tên" name="full_name" autoComplete="name" required minLength={2} maxLength={140} />
+        <Input label="Email" name="email" type="email" autoComplete="email" required maxLength={140} />
+        <Input label="Số điện thoại" name="phone" type="tel" autoComplete="tel" required maxLength={40} />
+        <label className="grid gap-1 text-sm font-medium">
+          Bộ phận mong muốn
+          <select name="department" className="crm-input" defaultValue="" required>
+            <option value="" disabled>Chọn bộ phận</option>
+            {departments.map(([value, label]) => <option key={value} value={value}>{label}</option>)}
+          </select>
+        </label>
+        <div className="absolute h-px w-px overflow-hidden opacity-0" aria-hidden="true">
+          <label>Website <input name="website" tabIndex={-1} autoComplete="off" /></label>
+        </div>
+        {error && <p role="alert" className="text-sm text-primary">{error}</p>}
+        <Button type="submit" loading={submitting}>Gửi yêu cầu đăng ký</Button>
+        <Link className="text-center text-sm font-semibold text-primary hover:underline" to="/login">Quay lại đăng nhập</Link>
       </form>
     </StatusPage>
   );

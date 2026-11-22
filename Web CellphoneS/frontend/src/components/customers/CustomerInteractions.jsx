@@ -3,11 +3,9 @@ import Button from "../Button";
 import { EmptyState, ErrorState, Panel, SkeletonLines } from "./CustomerStates";
 import { displayDateTime, displayOrDash, INTERACTION_TYPE_LABELS, relativeDays } from "../../utils/customer360";
 
-// L02 – Lịch sử tương tác và tư vấn. Nguồn chính: get_customer_timeline (PROPOSED),
-// dự kiến tổng hợp từ CRM Call Log / CRM Task – mapping chờ L03.
 // timeline = { status: "loading" | "ready" | "error", items, total, error, loadingMore }
 
-const RELATED_LABELS = { "CRM Lead": "Lead", "CRM Deal": "Deal", "C360 After Sales Request": "Yêu cầu" };
+const RELATED_LABELS = { "CRM Lead": "Lead", "CRM Deal": "Deal", "C360 After Sales Request": "Yêu cầu", "Customer Support Ticket": "Yêu cầu", "Customer Order": "Đơn hàng" };
 
 export default function CustomerInteractions({ timeline, onLoadMore, onRetry, compact = false, onShowAll }) {
   const [type, setType] = useState("all");
@@ -36,7 +34,7 @@ export default function CustomerInteractions({ timeline, onLoadMore, onRetry, co
       {timeline.status === "loading" ? <SkeletonLines lines={compact ? 3 : 5} label="Đang tải lịch sử tương tác…" />
         : timeline.status === "error" ? (
           <ErrorState compact error={timeline.error} onRetry={onRetry}
-            notFoundMessage="API get_customer_timeline chưa được triển khai trên máy chủ." />
+            notFoundMessage="Không tìm thấy lịch sử của hồ sơ này." />
         ) : !items.length ? (
           <EmptyState compact title="Chưa có tương tác nào được ghi nhận" />
         ) : (

@@ -25,13 +25,13 @@ export function statusClass(status) {
   return "bg-primary-soft text-primary";
 }
 
-export function formatVnd(value) {
+export function formatVnd(value, currency = "VND") {
   if (value === null || value === undefined || value === "") return "—";
   const number = Number(value);
   if (!Number.isFinite(number)) return "—";
   return new Intl.NumberFormat("vi-VN", {
     style: "currency",
-    currency: "VND",
+    currency: /^[A-Z]{3}$/.test(currency) ? currency : "VND",
     maximumFractionDigits: 0,
   }).format(number);
 }

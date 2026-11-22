@@ -5,7 +5,7 @@ import Button from "../../components/Button";
 import CustomerDataTable from "../../components/customers/CustomerDataTable";
 import { DemoBadge, EmptyState, ErrorState } from "../../components/customers/CustomerStates";
 import {
-  customerDataMode, listCapabilities, listCustomers, SORT_OPTIONS,
+  customerDataMode, getCustomerAccess, listCapabilities as apiCapabilities, listCustomers, SORT_OPTIONS,
 } from "../../services/customerService";
 import {
   customerBasePath, daysSince, displayDate, INSIGHT_RULES, relativeDays,
@@ -13,7 +13,6 @@ import {
 
 // L01 – Danh sách khách hàng Customer 360.
 const PAGE_SIZE = 10;
-const isDemo = customerDataMode === "demo";
 const FILTER_DISABLED_HINT = "Chờ L03 bổ sung tham số lọc/sắp xếp vào API Contract";
 
 function setParam(next, key, value) {
@@ -24,6 +23,19 @@ function setParam(next, key, value) {
 export default function CustomerList() {
   const { pathname, search } = useLocation();
   const base = customerBasePath(pathname);
+  const isDemo = base.startsWith("/preview/") || customerDataMode === "demo";
+  const listCapabilities = isDemo ? { filters: true, sort: true } : apiCapabilities;
+  const [canCreate, setCanCreate] = useState(false);
+
+  useEffect(() => {
+    if (isDemo) return;
+    const controller = new AbortController();
+    getCustomerAccess(null, { signal: controller.signal }).then(
+      ({ canCreate }) => { if (!controller.signal.aborted) setCanCreate(Boolean(canCreate)); },
+      () => { if (!controller.signal.aborted) setCanCreate(false); },
+    );
+    return () => controller.abort();
+  }, [isDemo]);
   const [params, setParams] = useSearchParams();
 
   // Trạng thái tìm kiếm/lọc/trang nằm trên URL để giữ nguyên khi mở hồ sơ rồi quay lại.
@@ -77,7 +89,7 @@ export default function CustomerList() {
     listCustomers({
       search: q, page, page_size: PAGE_SIZE,
       has_open_deal: openDeal, has_open_request: openRequest, order_by: sort,
-      signal: controller.signal,
+      signal: controller.signal, demo: isDemo,
     })
       .then((data) => {
         if (!controller.signal.aborted) setState({ key: requestKey, data, error: null });
@@ -88,7 +100,7 @@ export default function CustomerList() {
         }
       });
     return () => controller.abort();
-  }, [q, page, openDeal, openRequest, sort, requestKey]);
+  }, [q, page, openDeal, openRequest, sort, requestKey, isDemo]);
 
   const data = state.data;
   const items = loading ? [] : data?.items ?? [];
@@ -205,6 +217,7 @@ export default function CustomerList() {
           <div className="flex flex-wrap items-center gap-3">
             <h1 className="text-[25px] font-bold tracking-tight text-ink">Khách hàng</h1>
             {isDemo && <DemoBadge />}
+            {!isDemo && canCreate && <Link className="crm-action" to="/customers/new">Thêm khách hàng</Link>}
           </div>
           <p className="text-[13px] text-muted">Tra cứu và xem toàn bộ hành trình khách hàng trên một hồ sơ.</p>
         </div>

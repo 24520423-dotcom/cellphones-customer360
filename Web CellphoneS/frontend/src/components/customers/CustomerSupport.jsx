@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { DataTable, EmptyState, Panel } from "./CustomerStates";
 import {
   daysSince, displayDate, INSIGHT_RULES, isOpenRequest, REQUEST_CATEGORY_LABELS, REQUEST_STATUS_LABELS,
@@ -32,13 +33,17 @@ const columns = [
   { key: "created_at", label: "Ngày tạo", render: (value) => displayDate(value) },
 ];
 
-export default function CustomerSupport({ requests = [] }) {
+export default function CustomerSupport({ requests = [], linkTickets = false }) {
+  const ticketColumns = linkTickets ? columns.map((column) => column.key === "request_id" ? {
+    ...column,
+    render: (id) => id && <Link to={`/after-sales/${encodeURIComponent(id)}`} className="font-mono text-xs text-primary hover:underline">{id}</Link>,
+  } : column) : columns;
   const sorted = [...requests].sort((a, b) => Number(isOpenRequest(b)) - Number(isOpenRequest(a))
     || String(b.created_at || "").localeCompare(String(a.created_at || "")));
   return (
     <Panel id="support-title" title="Yêu cầu sau bán" count={requests.length}>
       {requests.length ? (
-        <DataTable caption="Yêu cầu chăm sóc sau bán của khách hàng" columns={columns} rows={sorted} getKey={(r) => r.request_id} />
+        <DataTable caption="Yêu cầu chăm sóc sau bán của khách hàng" columns={ticketColumns} rows={sorted} getKey={(r) => r.request_id} />
       ) : <EmptyState compact title="Chưa có yêu cầu chăm sóc sau bán" />}
     </Panel>
   );

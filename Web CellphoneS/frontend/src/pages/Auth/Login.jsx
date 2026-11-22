@@ -1,5 +1,5 @@
-﻿import { useState } from "react";
-import { Navigate, useLocation } from "react-router-dom";
+import { useState } from "react";
+import { Link, Navigate, useLocation } from "react-router-dom";
 import Button from "../../components/Button";
 import Loading from "../../components/Loading";
 import { useAuth } from "../../hooks/useAuth";
@@ -50,6 +50,7 @@ export default function Login() {
         </label>
         {message && <p role="alert" className="text-sm text-primary">{message}</p>}
         <Button type="submit" loading={submitting}>Đăng nhập</Button>
+        <Link to="/register" className="text-center text-sm font-semibold text-primary hover:underline">Đăng ký tài khoản</Link>
       </form>
     </StatusPage>
   );

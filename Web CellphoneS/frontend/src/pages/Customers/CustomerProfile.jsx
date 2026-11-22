@@ -8,7 +8,7 @@ import CustomerInteractions from "../../components/customers/CustomerInteraction
 import CustomerDeals, { OpenDealsSummary } from "../../components/customers/CustomerDeals";
 import CustomerSupport, { OpenRequestsSummary } from "../../components/customers/CustomerSupport";
 import { ErrorState, SkeletonLines } from "../../components/customers/CustomerStates";
-import { customerDataMode, getCustomerProfile, getCustomerTimeline } from "../../services/customerService";
+import { customerDataMode, getCustomerAccess, getCustomerProfile, getCustomerTimeline } from "../../services/customerService";
 import { computeAlerts, customerBasePath } from "../../utils/customer360";
 
 // L02 – Hồ sơ Customer 360.
@@ -21,12 +21,23 @@ const TABS = [
   { id: "support", label: "Sau bán" },
 ];
 const TIMELINE_PAGE_SIZE = 20;
-const isDemo = customerDataMode === "demo";
 
 export default function CustomerProfile() {
   const { customerId } = useParams();
   const location = useLocation();
   const base = customerBasePath(location.pathname);
+  const isDemo = base.startsWith("/preview/") || customerDataMode === "demo";
+  const [editableId, setEditableId] = useState(null);
+
+  useEffect(() => {
+    if (isDemo) return;
+    const controller = new AbortController();
+    getCustomerAccess(customerId, { signal: controller.signal }).then(
+      ({ canEdit }) => { if (!controller.signal.aborted) setEditableId(canEdit ? customerId : null); },
+      () => { if (!controller.signal.aborted) setEditableId(null); },
+    );
+    return () => controller.abort();
+  }, [customerId, isDemo]);
   const backTo = typeof location.state?.from === "string" && location.state.from.startsWith(base) ? location.state.from : base;
 
   const [params, setParams] = useSearchParams();
@@ -46,17 +57,17 @@ export default function CustomerProfile() {
   // Hồ sơ và timeline tải song song; lỗi timeline không làm mất hồ sơ.
   useEffect(() => {
     const controller = new AbortController();
-    getCustomerProfile(customerId, { signal: controller.signal })
+    getCustomerProfile(customerId, { signal: controller.signal, demo: isDemo })
       .then((data) => { if (!controller.signal.aborted) setProfileState({ key: profileKey, data, error: null }); })
       .catch((error) => {
         if (!controller.signal.aborted && error.name !== "AbortError") setProfileState({ key: profileKey, data: null, error });
       });
     return () => controller.abort();
-  }, [customerId, profileKey]);
+  }, [customerId, isDemo, profileKey]);
 
   useEffect(() => {
     const controller = new AbortController();
-    getCustomerTimeline(customerId, { page: 1, page_size: TIMELINE_PAGE_SIZE, signal: controller.signal })
+    getCustomerTimeline(customerId, { page: 1, page_size: TIMELINE_PAGE_SIZE, signal: controller.signal, demo: isDemo })
       .then((result) => {
         if (!controller.signal.aborted) {
           setTimelineState({ key: timelineKey, items: result.items, total: result.total, page: 1, error: null });
@@ -68,14 +79,14 @@ export default function CustomerProfile() {
         }
       });
     return () => controller.abort();
-  }, [customerId, timelineKey]);
+  }, [customerId, isDemo, timelineKey]);
 
   async function loadMoreTimeline() {
     const key = timelineState.key;
     setLoadingMore(true);
     setLoadMoreError(false);
     try {
-      const result = await getCustomerTimeline(customerId, { page: timelineState.page + 1, page_size: TIMELINE_PAGE_SIZE });
+      const result = await getCustomerTimeline(customerId, { page: timelineState.page + 1, page_size: TIMELINE_PAGE_SIZE, demo: isDemo });
       setTimelineState((prev) => (prev.key !== key ? prev : {
         ...prev,
         items: [...prev.items, ...result.items.filter((item) => !prev.items.some((old) => old.id === item.id))],
@@ -152,7 +163,6 @@ export default function CustomerProfile() {
     );
   }
 
-  const showTab = (id) => () => selectTab(id);
 
   return (
     <div className="space-y-4">
@@ -160,6 +170,10 @@ export default function CustomerProfile() {
         {backLink}
         <span className="text-xs text-gray-500">Hồ sơ / {profile.customer_id}</span>
       </div>
+      {location.state?.notice && <p role="status" className="text-sm text-green-800">{location.state.notice}</p>}
+      {!isDemo && editableId === customerId && (
+        <Link className="crm-action" to={`/customers/${encodeURIComponent(customerId)}/edit`}>Chỉnh sửa hồ sơ</Link>
+      )}
       <CustomerInfo customer={profile} isDemo={isDemo} />
       <div className="grid items-start gap-4 xl:grid-cols-[minmax(0,1fr)_310px]">
         <div className="min-w-0 space-y-3">
@@ -194,7 +208,7 @@ export default function CustomerProfile() {
               <CustomerInteractions timeline={timeline} onLoadMore={loadMoreTimeline}
                 onRetry={() => setTimelineReload((v) => v + 1)} />
             )}
-            {activeTab === "support" && <CustomerSupport requests={profile.after_sales_requests} />}
+            {activeTab === "support" && <CustomerSupport requests={profile.after_sales_requests} linkTickets={!isDemo} />}
           </div>
         </div>
         <aside className="order-first min-w-0 space-y-3 xl:order-last" aria-label="Tình trạng và việc cần xử lý">

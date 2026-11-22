@@ -1,19 +1,19 @@
 import { BriefcaseBusiness, ChevronRight } from "lucide-react";
-import { DEAL_STATUSES, STATUS_LABELS, formatVnd } from "./dealUtils";
+import { STATUS_LABELS, formatVnd } from "./dealUtils";
 
-export default function DealBoard({ deals = [], onOpenDetail, onChangeStatus }) {
+export default function DealBoard({ deals = [], statuses, disabled, onOpenDetail, onChangeStatus }) {
   return (
     <div className="deals-board-scroll" role="region" aria-label="Bảng tiến trình Deal" tabIndex={0}>
       <div className="deals-board">
-        {DEAL_STATUSES.map((status) => {
+        {statuses.map((status) => {
           const items = deals.filter((deal) => deal.status === status);
-          const expectedTotal = items.reduce((sum, deal) => sum + (Number(deal.expected_deal_value) || 0), 0);
+          const expectedTotal = items.every((deal) => deal.expected_deal_value != null && (!deal.currency || deal.currency === "VND")) ? items.reduce((sum, deal) => sum + Number(deal.expected_deal_value), 0) : null;
           return (
             <section key={status} className="deals-board-column" data-status={status}>
               <div className="deals-board-column-top" />
               <header className="deals-board-column-heading">
                 <div className="deals-board-heading-line">
-                  <h3>{STATUS_LABELS[status]}</h3>
+                  <h3>{STATUS_LABELS[status] || status}</h3>
                   <span className="deals-board-number">{items.length}</span>
                 </div>
                 <span className="deals-board-total">{formatVnd(expectedTotal)} dự kiến</span>
@@ -35,15 +35,16 @@ export default function DealBoard({ deals = [], onOpenDetail, onChangeStatus }) 
                       <span>Lead</span>
                       <strong>{deal.lead || "Chưa liên kết"}</strong>
                     </div>
-                    <div className="deals-board-card-amount">{formatVnd(deal.expected_deal_value)}</div>
+                    <div className="deals-board-card-amount">{formatVnd(deal.expected_deal_value, deal.currency)}</div>
                     <label className="deals-board-card-change">
                       <span>Chuyển giai đoạn</span>
                       <select
                         aria-label={`Chuyển giai đoạn Deal ${deal.name}`}
                         value={deal.status}
+                        disabled={disabled}
                         onChange={(event) => onChangeStatus?.(deal.name, event.target.value)}
                       >
-                        {DEAL_STATUSES.map((target) => <option key={target} value={target}>{STATUS_LABELS[target]}</option>)}
+                        {statuses.map((target) => <option key={target} value={target}>{STATUS_LABELS[target] || target}</option>)}
                       </select>
                     </label>
                   </article>

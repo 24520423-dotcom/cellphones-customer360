@@ -47,6 +47,8 @@ export const INTERACTION_TYPE_LABELS = {
   chat: "Tin nhắn",
   meeting: "Gặp trực tiếp",
   task: "Công việc",
+  order: "Đơn hàng",
+  support: "Hậu mãi",
 };
 
 const DAY_MS = 24 * 60 * 60 * 1000;

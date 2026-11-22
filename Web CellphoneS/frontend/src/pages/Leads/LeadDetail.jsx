@@ -1,68 +1,79 @@
+import { useEffect, useState } from "react";
 
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { ArrowLeft, Pencil, History } from "lucide-react";
+import { History, Pencil } from "lucide-react";
 import Button from "../../components/Button";
-import Modal from "../../components/Modal";
-import LeadForm from "./LeadForm";
+import Table from "../../components/Table";
+import { getLeadOptions } from "../../services/leadService";
+import { displayDateTime } from "../../utils/customer360";
 
-const fields = [
-  "Mã Lead",
-  "Họ và tên",
-  "Số điện thoại",
-  "Email",
-  "Nguồn Lead",
-  "Trạng thái",
-  "Nhân viên phụ trách",
-  "Ghi chú",
+const columns = [
+  { key: "type", label: "Loại" },
+  { key: "title", label: "Nội dung" },
+  { key: "status", label: "Trạng thái" },
+  { key: "date", label: "Thời gian", render: displayDateTime },
 ];
 
-export default function LeadDetail() {
-  const navigate = useNavigate();
-  const [showEdit, setShowEdit] = useState(false);
+export default function LeadDetail({ lead, onEdit }) {
+  const leadId = lead?.id;
+  const [result, setResult] = useState(null);
+  useEffect(() => {
+    if (!leadId) return;
+    const controller = new AbortController();
+    getLeadOptions(leadId, { signal: controller.signal }).then(
+      (data) => { if (!controller.signal.aborted) setResult({ leadId, data }); },
+      (error) => { if (!controller.signal.aborted) setResult({ leadId, error: error.message }); },
+    );
+    return () => controller.abort();
+  }, [leadId]);
+  const current = result?.leadId === leadId ? result : null;
+
+  if (!lead) {
+    return (
+      <p className="text-sm text-muted">
+        Không tìm thấy thông tin Lead.
+      </p>
+    );
+  }
+
+  const fields = [
+    { label: "Mã Lead", value: lead.id },
+    { label: "Họ và tên", value: lead.name },
+    { label: "Số điện thoại", value: lead.phone },
+    { label: "Email", value: lead.email },
+    { label: "Nguồn Lead", value: lead.source },
+    { label: "Trạng thái", value: lead.status },
+    { label: "Nhân viên phụ trách", value: lead.owner },
+    { label: "Ghi chú", value: lead.notes },
+  ];
 
   return (
     <div className="space-y-5">
-      {/* Tiêu đề */}
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <div>
-          <h1 className="text-2xl font-bold text-ink">
-            Chi tiết Lead
-          </h1>
-          <p className="mt-1 text-sm text-muted">
-            Thông tin khách hàng tiềm năng
-          </p>
-        </div>
-
-        <button
-          type="button"
-          onClick={() => navigate("/leads")}
-          className="flex items-center gap-2 rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm hover:bg-gray-50"
-        >
-          <ArrowLeft size={16} />
-          Quay lại danh sách
-        </button>
+      <div>
+        <h1 className="text-2xl font-bold text-ink">
+          Chi tiết Lead
+        </h1>
+        <p className="mt-1 text-sm text-muted">
+          Thông tin khách hàng tiềm năng
+        </p>
       </div>
 
       {/* Thông tin Lead */}
       <section className="crm-card">
-        <div className="mb-4 flex items-center justify-between">
-          <h2 className="font-semibold text-ink">
-            Thông tin Lead
-          </h2>
-        </div>
+        <h2 className="mb-4 font-semibold text-ink">
+          Thông tin Lead
+        </h2>
 
         <dl className="grid gap-3 sm:grid-cols-2">
-          {fields.map((label) => (
+          {fields.map((field) => (
             <div
-              key={label}
+              key={field.label}
               className="rounded-lg bg-gray-50 p-3"
             >
               <dt className="text-xs text-muted">
-                {label}
+                {field.label}
               </dt>
-              <dd className="mt-1 text-sm text-ink">
-                —
+              <dd className="mt-1 break-words text-sm text-ink">
+                {field.value || "—"}
               </dd>
             </div>
           ))}
@@ -78,36 +89,21 @@ export default function LeadDetail() {
           </h2>
         </div>
 
-        <div className="mt-4 rounded-lg border border-dashed border-gray-200 p-6 text-center">
-          <p className="text-sm text-muted">
-            Chưa có lịch sử tư vấn.
-          </p>
+        <div className="mt-4">
+          {current?.error ? <p role="alert" className="text-primary">{current.error}</p> : (
+            <Table data={current?.data?.history} columns={columns} loading={!current} emptyMessage="Chưa có cuộc gọi hoặc công việc liên kết." />
+          )}
         </div>
       </section>
 
-      {/* Nút chỉnh sửa */}
+      {current?.data?.canEdit && (
       <div className="flex justify-end">
-        <Button
-          type="button"
-          onClick={() => setShowEdit(true)}
-        >
-          <span className="flex items-center gap-2">
-            <Pencil size={16} />
-            Chỉnh sửa Lead
-          </span>
+        <Button type="button" onClick={onEdit}>
+        <Pencil size={16} />
+        Chỉnh sửa Lead
         </Button>
       </div>
-
-      {/* Modal chỉnh sửa */}
-      <Modal
-        open={showEdit}
-        onClose={() => setShowEdit(false)}
-        title="Chỉnh sửa thông tin Lead"
-      >
-        <LeadForm
-          onCancel={() => setShowEdit(false)}
-        />
-      </Modal>
+      )}
     </div>
   );
 }

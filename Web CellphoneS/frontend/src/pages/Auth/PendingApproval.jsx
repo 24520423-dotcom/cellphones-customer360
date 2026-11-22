@@ -15,8 +15,8 @@ export default function PendingApproval() {
 
         {/* Thông báo trạng thái */}
         <p className="mb-4 text-sm leading-6 text-muted">
-          Yêu cầu đăng ký tài khoản nhân viên CellphoneS
-          của bạn đang chờ quản trị viên xét duyệt.
+          Hệ thống đã tiếp nhận thông tin đăng ký nhân viên CellphoneS.
+          Quản trị viên sẽ kiểm tra các yêu cầu mới.
         </p>
 
         {/* Thông tin hướng dẫn */}
@@ -27,7 +27,7 @@ export default function PendingApproval() {
           </div>
 
           <p className="text-sm leading-6 text-gray-600">
-            Sau khi tài khoản được quản trị viên phê duyệt,
+            Khi yêu cầu được phê duyệt, hãy dùng liên kết gửi đến email đăng ký để thiết lập mật khẩu. Sau đó,
             bạn có thể đăng nhập để sử dụng hệ thống
             Customer 360.
           </p>

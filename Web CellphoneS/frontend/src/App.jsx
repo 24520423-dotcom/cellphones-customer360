@@ -11,20 +11,16 @@ import PendingApproval from "./pages/Auth/PendingApproval";
 import LeadList from "./pages/Leads/LeadList";
 import DealList from "./pages/Deals/DealList";
 import CustomerList from "./pages/Customers/CustomerList";
+import CustomerEditor from "./pages/Customers/CustomerEditor";
 import CustomerProfile from "./pages/Customers/CustomerProfile";
+import AfterSales from "./pages/AfterSales/AfterSales";
+import AfterSalesTicketPage from "./pages/AfterSales/AfterSalesTicketPage";
+import Analytics from "./pages/Analytics/Analytics";
+import Administration from "./pages/Administration/Administration";
 import CustomerPreviewFrame from "./pages/Customers/CustomerPreviewFrame";
 
 // Trang hồ sơ dùng cùng quyền với trang danh sách /customers.
 const customersPermission = crmRoutes.find(({ path }) => path === "/customers")?.permission;
-function Placeholder({ title }) {
-  return (
-    <section className="crm-card">
-      <h1 className="text-2xl font-bold text-ink">{title}</h1>
-      <p className="mt-2 text-muted">Chức năng đang được phát triển.</p>
-    </section>
-  );
-}
-
 export default function App({ authAdapter }) {
   return (
     <BrowserRouter>
@@ -36,7 +32,7 @@ export default function App({ authAdapter }) {
           <Route path="/pending-approval" element={<PendingApproval />} />
           <Route element={<ProtectedRoute />}>
             <Route element={<MainLayout />}>
-              {crmRoutes.map(({ path, label, permission }) => {
+              {crmRoutes.map(({ path, permission }) => {
                 const page =
                   path === "/dashboard" ? (
                     <Dashboard />
@@ -44,10 +40,14 @@ export default function App({ authAdapter }) {
                     <LeadList />
                   ) : path === "/deals" ? (
                     <DealList />
+                  ) : path === "/after-sales" ? (
+                    <AfterSales />
+                  ) : path === "/analytics" ? (
+                    <Analytics />
                   ) : path === "/customers" ? (
                     <CustomerList />
                   ) : (
-                    <Placeholder title={label} />
+                    <Administration />
                   );
                 return permission ? (
                   <Route key={path} element={<ProtectedRoute permission={permission} />}>
@@ -55,7 +55,10 @@ export default function App({ authAdapter }) {
                   </Route>
                 ) : <Route key={path} path={path} element={page} />;
               })}
+              <Route path="/after-sales/:ticketId" element={<AfterSalesTicketPage />} />
               <Route element={<ProtectedRoute permission={customersPermission} />}>
+                <Route path="/customers/new" element={<CustomerEditor />} />
+                <Route path="/customers/:customerId/edit" element={<CustomerEditor />} />
                 <Route path="/customers/:customerId" element={<CustomerProfile />} />
               </Route>
             </Route>
@@ -66,7 +69,7 @@ export default function App({ authAdapter }) {
           )}
           {/* Xem trước giao diện Deal khi chưa đăng nhập, chỉ trong DEV */}
           {import.meta.env.DEV && (
-            <Route path="/preview/deals" element={<DealList />} />
+            <Route path="/preview/deals" element={<DealList preview />} />
           )}
           {/* Xem thử L01/L02 không cần Frappe, chỉ khi chạy dev. */}
           {import.meta.env.DEV && (

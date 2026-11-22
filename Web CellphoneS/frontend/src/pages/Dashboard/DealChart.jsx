@@ -9,14 +9,6 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-const dealData = [
-  { stage: "New", count: 18 },
-  { stage: "Qualified", count: 14 },
-  { stage: "Proposal", count: 10 },
-  { stage: "Won", count: 8 },
-  { stage: "Lost", count: 4 },
-];
-
 export default function DealChart({ data }) {
   return (
     <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
@@ -24,17 +16,17 @@ export default function DealChart({ data }) {
         Deal Pipeline
       </h3>
 
-      <div className="h-72">
+      {data?.length ? <div className="h-72 min-w-0">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={ data }>
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="stage" />
+            <XAxis dataKey="label" />
             <YAxis allowDecimals={false} />
             <Tooltip />
             <Bar dataKey="count" fill="#D70018" radius={[6, 6, 0, 0]} />
           </BarChart>
         </ResponsiveContainer>
-      </div>
+      </div> : <p className="text-sm text-muted">Chưa có dữ liệu</p>}
     </div>
   );
 }

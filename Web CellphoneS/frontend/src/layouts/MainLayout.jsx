@@ -1,4 +1,4 @@
-﻿import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { matchPath, Outlet, useLocation } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
@@ -12,7 +12,8 @@ export default function MainLayout() {
   const { session, hasPermission, logout } = useAuth();
   const drawer = useRef(null);
   const title = crmRoutes.find(({ path }) => matchPath(path, pathname))?.label
-    || (pathname.startsWith("/customers/") ? "Customer 360" : undefined);
+    || (pathname.startsWith("/customers/") ? "Customer 360" : undefined)
+    || (pathname.startsWith("/after-sales/") ? "After-sales" : undefined);
 
   useEffect(() => {
     if (!sidebarOpen) return;

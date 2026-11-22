@@ -1,4 +1,4 @@
-﻿import { frappeRequest } from "./api";
+import { clearCsrfToken, frappeRequest } from "./api";
 
 // Adapter contract: getSession returns null for guests or { user, permissions }.
 // Auth can add a server-verified permission mapping and a logout operation.
@@ -21,10 +21,24 @@ export const frappeAuth = {
       throw new Error("Phản hồi kiểm tra phiên không hợp lệ.");
     }
 
-    return { user: { id: userId }, permissions: [] };
+    const access = await frappeRequest("/api/method/cellphones_c360.api.administration.get_access", {
+      signal,
+      cache: "no-store",
+    }).catch(() => null);
+
+    return {
+      user: { id: userId },
+      permissions: access?.message?.administration ? ["administration"] : [],
+    };
+  },
+
+  async logout() {
+    await frappeRequest("/api/method/logout", { method: "POST" });
+    clearCsrfToken();
   },
 
   async login(username, password) {
+    clearCsrfToken();
     await frappeRequest("/api/method/login", {
       method: "POST",
       body: new URLSearchParams({ usr: username, pwd: password }),

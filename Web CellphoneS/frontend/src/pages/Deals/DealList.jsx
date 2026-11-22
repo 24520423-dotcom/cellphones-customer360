@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   ArrowUpRight,
   BriefcaseBusiness,
@@ -25,10 +25,11 @@ import {
   STATUS_LABELS,
   formatVnd,
 } from "./dealUtils";
+import { getDeal, getDealCapabilities, listDeals, saveDeal as persistDeal, updateDealStage } from "../../services/dealService";
 import "./Deals.css";
 
 const TEMP_ID_PREFIX = "TEMP-DEAL-";
-const isActive = (deal) => !["Won", "Lost"].includes(deal.status);
+const previewStatuses = DEAL_STATUSES.map((name) => ({ name, type: ["Won", "Lost"].includes(name) ? name : "Open" }));
 
 function StatusBadge({ status }) {
   return (
@@ -52,15 +53,41 @@ function SummaryCard({ icon: Icon, label, value, helper, variant = "neutral" }) 
   );
 }
 
-export default function DealList() {
-  // K02: chỉ sử dụng dữ liệu demo trong React state, KHÔNG lấy/lưu vào Frappe.
-  const [deals, setDeals] = useState(() => INITIAL_MOCK_DEALS.map((deal) => ({ ...deal })));
+export default function DealList({ preview = false }) {
+  const [deals, setDeals] = useState(() => preview ? INITIAL_MOCK_DEALS.map((deal) => ({ ...deal })) : []);
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
   const [view, setView] = useState("list");
   const [selectedId, setSelectedId] = useState(null);
   const [mode, setMode] = useState(null); // null | "detail" | "form"
   const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(!preview);
+  const [options, setOptions] = useState(() => preview ? { statuses: previewStatuses, canCreate: true, canMove: true } : { statuses: [] });
+  const [detail, setDetail] = useState(null);
+  const [saving, setSaving] = useState(false);
+  const busy = useRef(false);
+  const { statuses, canCreate, canMove } = options;
+  const stageNames = statuses.map(({ name }) => name);
+
+  useEffect(() => {
+    if (preview) return;
+    const controller = new AbortController();
+    listDeals({ signal: controller.signal }).then(
+      ({ deals, ...options }) => {
+        if (controller.signal.aborted) return;
+        setDeals(deals);
+        setOptions(options);
+        setLoading(false);
+      },
+      (error) => {
+        if (controller.signal.aborted) return;
+        setError(error.message);
+        setLoading(false);
+      },
+    );
+    return () => controller.abort();
+  }, [preview]);
 
   const selected = useMemo(
     () => deals.find((deal) => deal.name === selectedId) || null,
@@ -77,48 +104,82 @@ export default function DealList() {
     });
   }, [deals, search, statusFilter]);
 
-  const summary = useMemo(() => ({
+  const stageTypes = new Map(statuses.map(({ name, type }) => [name, type]));
+  const active = deals.filter(({ status }) => ["Open", "Ongoing", "On Hold"].includes(stageTypes.get(status)));
+  const summary = {
     total: deals.length,
-    active: deals.filter(isActive).length,
-    won: deals.filter((deal) => deal.status === "Won").length,
-    expectedOpen: deals.filter(isActive).reduce((sum, deal) => {
-      const amount = Number(deal.expected_deal_value);
-      return sum + (Number.isFinite(amount) ? amount : 0);
-    }, 0),
-  }), [deals]);
+    active: active.length,
+    won: deals.filter(({ status }) => stageTypes.get(status) === "Won").length,
+    expectedOpen: active.every((deal) => deal.expected_deal_value != null && (preview || deal.currency === "VND"))
+      ? active.reduce((sum, deal) => sum + Number(deal.expected_deal_value), 0)
+      : null,
+  };
 
   function openNew() {
     setSelectedId(null);
     setMode("form");
   }
 
-  function openDetail(deal) {
+  async function openDetail(deal) {
+    if (busy.current) return;
     setSelectedId(deal.name);
+    setDetail(preview ? { deal, canEdit: true } : null);
     setMode("detail");
-  }
+    if (preview) return;
 
-  function saveDeal(value) {
-    if (selectedId) {
-      setDeals((previous) => previous.map((deal) => deal.name === selectedId
-        ? { ...deal, ...value, name: deal.name }
-        : deal));
-      setMessage("Đã cập nhật Deal trên bản xem trước. Dữ liệu chưa lưu vào Frappe.");
-    } else {
-      // ID demo chỉ sử dụng ở K02; K03 phải lấy name do Frappe tạo.
-      const name = `${TEMP_ID_PREFIX}${Date.now()}`;
-      setDeals((previous) => [{ ...value, name }, ...previous]);
-      setMessage("Đã thêm Deal vào bản xem trước. Dữ liệu chưa lưu vào Frappe.");
+    try {
+      const [record, { canEdit }] = await Promise.all([
+        getDeal(deal.name),
+        getDealCapabilities(deal.name).catch(() => ({ canEdit: false })),
+      ]);
+      setDetail({ id: deal.name, deal: record, canEdit });
+    } catch (error) {
+      setDetail({ id: deal.name, error: error.message });
     }
-    setSelectedId(null);
-    setMode(null);
   }
 
-  function changeStatus(name, status) {
-    if (!DEAL_STATUSES.includes(status)) return;
-    setDeals((previous) => previous.map((deal) => deal.name === name ? { ...deal, status } : deal));
-    setMessage("Đã chuyển giai đoạn trong bản xem trước. Dữ liệu chưa lưu vào Frappe.");
+  function close() {
+    if (!busy.current) setMode(null);
   }
 
+  async function saveDeal(value) {
+    if (busy.current) return;
+    busy.current = true;
+    setSaving(true);
+    try {
+      const record = preview
+        ? { ...value, name: selectedId || `${TEMP_ID_PREFIX}${Date.now()}` }
+        : await persistDeal(selectedId, value);
+      setDeals((previous) => selectedId
+        ? previous.map((deal) => deal.name === record.name ? record : deal)
+        : [record, ...previous]);
+      setMessage(preview ? "Đã lưu trong bản xem trước." : "Đã lưu Deal vào Frappe.");
+      setSelectedId(null);
+      setMode(null);
+    } finally {
+      busy.current = false;
+      setSaving(false);
+    }
+  }
+
+  async function changeStatus(name, status) {
+    if (busy.current || !canMove || !stageNames.includes(status)) return;
+    busy.current = true;
+    setSaving(true);
+    setError("");
+    try {
+      const record = preview ? { ...deals.find((deal) => deal.name === name), status } : await updateDealStage(name, status);
+      setDeals((previous) => previous.map((deal) => deal.name === name ? record : deal));
+      setMessage("Đã chuyển giai đoạn.");
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      busy.current = false;
+      setSaving(false);
+    }
+  }
+
+  const currentDetail = preview || detail?.id === selectedId ? detail : null;
   const columns = [
     {
       key: "name",
@@ -143,8 +204,8 @@ export default function DealList() {
         </div>
       ),
     },
-    { key: "expected_deal_value", label: "Giá trị dự kiến", render: (value) => <strong className="deal-table-amount">{formatVnd(value)}</strong> },
-    { key: "deal_value", label: "Giá trị Deal", render: (value) => <span className="deal-table-actual">{formatVnd(value)}</span> },
+    { key: "expected_deal_value", label: "Giá trị dự kiến", render: (value, deal) => <strong className="deal-table-amount">{formatVnd(value, deal.currency)}</strong> },
+    { key: "deal_value", label: "Giá trị Deal", render: (value, deal) => <span className="deal-table-actual">{formatVnd(value, deal.currency)}</span> },
     { key: "status", label: "Giai đoạn", render: (status) => <StatusBadge status={status} /> },
   ];
 
@@ -158,22 +219,25 @@ export default function DealList() {
           <h1>Quản lý <span>Deal</span></h1>
           <p>Theo dõi cơ hội bán hàng, quản lý pipeline và tiến độ chốt giao dịch.</p>
         </div>
-        <Button className="deals-add-button" onClick={openNew}>
+        <Button className="deals-add-button" disabled={!canCreate || saving} onClick={openNew}>
           <Plus size={18} strokeWidth={2.3} /> Thêm Deal mới
         </Button>
       </header>
 
       <section className="deals-overview" aria-label="Tổng quan cơ hội bán hàng">
-        <SummaryCard icon={BriefcaseBusiness} label="Tổng số Deal" value={summary.total} helper="Toàn bộ cơ hội" />
-        <SummaryCard icon={Clock3} label="Đang theo dõi" value={summary.active} helper="Chưa Won / Lost" variant="blue" />
-        <SummaryCard icon={CheckCircle2} label="Đã chốt thành công" value={summary.won} helper="Trạng thái Won" variant="green" />
-        <SummaryCard icon={CircleDollarSign} label="Giá trị pipeline" value={formatVnd(summary.expectedOpen)} helper="Giá trị dự kiến của Deal đang mở" variant="red" />
+        <SummaryCard icon={BriefcaseBusiness} label="Tổng số Deal" value={loading || (error && !options.statuses.length) ? "—" : summary.total} helper="Toàn bộ cơ hội" />
+        <SummaryCard icon={Clock3} label="Đang theo dõi" value={loading || !statuses.length ? "—" : summary.active} helper="Chưa Won / Lost" variant="blue" />
+        <SummaryCard icon={CheckCircle2} label="Đã chốt thành công" value={loading || !statuses.length ? "—" : summary.won} helper="Trạng thái Won" variant="green" />
+        <SummaryCard icon={CircleDollarSign} label="Giá trị pipeline" value={formatVnd(loading || !statuses.length ? null : summary.expectedOpen)} helper="Giá trị dự kiến của Deal đang mở" variant="red" />
       </section>
 
-      <div className="deals-demo-notice" role="note">
-        <span className="deals-demo-icon"><Info size={16} /></span>
-        <p><strong>Chế độ xem trước K02</strong> · Dữ liệu mẫu được lưu tạm trong phiên trang; tải lại sẽ trở về ban đầu. Chưa kết nối Frappe CRM.</p>
-      </div>
+      {preview && (
+        <div className="deals-demo-notice" role="note">
+          <span className="deals-demo-icon"><Info size={16} /></span>
+          <p>Bản xem trước với dữ liệu mẫu trong phiên trang.</p>
+        </div>
+      )}
+      {error && <p role="alert" className="text-primary">{error}</p>}
 
       <section className="deals-workspace" aria-label="Danh sách và pipeline Deal">
         <div className="deals-workspace-header">
@@ -201,7 +265,7 @@ export default function DealList() {
             <SlidersHorizontal size={18} aria-hidden="true" />
             <select aria-label="Lọc Deal theo giai đoạn" value={statusFilter} onChange={(event) => setStatusFilter(event.target.value)}>
               <option value="all">Tất cả giai đoạn</option>
-              {DEAL_STATUSES.map((status) => <option key={status} value={status}>{STATUS_LABELS[status]}</option>)}
+              {stageNames.map((status) => <option key={status} value={status}>{STATUS_LABELS[status] || status}</option>)}
             </select>
           </div>
           <div className="deals-view-switch" role="group" aria-label="Chọn chế độ xem Deal">
@@ -226,13 +290,14 @@ export default function DealList() {
             <Table
               columns={columns}
               data={filtered}
+              loading={loading}
               getRowKey={(deal) => deal.name}
               onRowClick={openDetail}
               emptyMessage="Không tìm thấy Deal phù hợp. Hãy thử bộ lọc khác hoặc thêm Deal mới."
             />
           </div>
         ) : (
-          <DealBoard deals={filtered} onOpenDetail={openDetail} onChangeStatus={changeStatus} />
+          <DealBoard deals={filtered} statuses={stageNames} disabled={!canMove || saving} onOpenDetail={openDetail} onChangeStatus={changeStatus} />
         )}
 
         <div className="deals-workspace-footer">
@@ -241,11 +306,11 @@ export default function DealList() {
         </div>
       </section>
 
-      <Modal isOpen={mode !== null} onClose={() => setMode(null)} size="lg" title={mode === "detail" ? "Chi tiết Deal" : selected ? "Chỉnh sửa Deal" : "Tạo Deal mới"}>
+      <Modal isOpen={mode !== null} onClose={close} size="lg" title={mode === "detail" ? "Chi tiết Deal" : selected ? "Chỉnh sửa Deal" : "Tạo Deal mới"}>
         {mode === "detail" ? (
-          <DealDetail deal={selected} onEdit={() => setMode("form")} />
+          (currentDetail?.error ? <p role="alert">{currentDetail.error}</p> : currentDetail?.deal ? <DealDetail deal={currentDetail.deal} onEdit={currentDetail.canEdit ? () => setMode("form") : undefined} /> : <p role="status">Đang tải Deal…</p>)
         ) : mode === "form" ? (
-          <DealForm key={selectedId || "new"} initialValue={selected} onSave={saveDeal} onCancel={() => setMode(null)} />
+          <DealForm key={selectedId || "new"} initialValue={selectedId ? currentDetail?.deal ?? selected : null} statuses={stageNames} preview={preview} onSave={saveDeal} onCancel={close} />
         ) : null}
       </Modal>
     </div>

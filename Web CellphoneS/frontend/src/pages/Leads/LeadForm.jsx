@@ -1,45 +1,32 @@
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
-
-const leadStatuses = [
-  "Mới",
-  "Đang tư vấn",
-  "Đã liên hệ",
-  "Đã chuyển đổi",
-  "Không tiềm năng",
-];
 
 const empty = {
   name: "",
   phone: "",
   email: "",
-  source: "Website",
-  status: "Mới",
+  source: "",
+  status: "New",
   owner: "",
   notes: "",
 };
 
 export default function LeadForm({
   initialValue,
+  statuses,
   onSave,
   onCancel,
 }) {
   const [form, setForm] = useState({
     ...empty,
+    status: statuses.includes("New") ? "New" : (statuses[0] ?? ""),
     ...initialValue,
   });
 
   const [error, setError] = useState("");
-
-  useEffect(() => {
-    setForm({
-      ...empty,
-      ...initialValue,
-    });
-    setError("");
-  }, [initialValue]);
+  const [saving, setSaving] = useState(false);
 
   const update = (e) => {
     const { name, value } = e.target;
@@ -52,36 +39,45 @@ export default function LeadForm({
     setError("");
   };
 
-  const submit = (e) => {
-    e.preventDefault();
 
-    if (!form.name.trim()) {
-      setError("Vui lòng nhập họ tên khách hàng.");
-      return;
-    }
+const submit = async (e) => {
+  e.preventDefault();
 
-    if (!/^[0-9+().\s-]{9,16}$/.test(form.phone)) {
-      setError("Số điện thoại chưa hợp lệ.");
-      return;
-    }
+  if (saving) return;
 
-    if (
-      form.email &&
-      !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)
-    ) {
-      setError("Email không đúng định dạng.");
-      return;
-    }
+  if (!form.name.trim()) {
+    setError("Vui lòng nhập họ tên khách hàng.");
+    return;
+  }
 
-    setError("");
+  if (!/^[0-9+().\s-]{9,16}$/.test(form.phone)) {
+    setError("Số điện thoại chưa hợp lệ.");
+    return;
+  }
 
-    // Gửi dữ liệu cho component cha (Frontend).
-    // Chưa gọi API hay lưu vào Backend.
-    onSave?.({
+  if (
+    form.email &&
+    !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)
+  ) {
+    setError("Email không đúng định dạng.");
+    return;
+  }
+
+  setError("");
+  setSaving(true);
+
+  try {
+    await onSave({
       ...form,
       name: form.name.trim(),
     });
-  };
+  } catch (err) {
+    setError(err.message || "Không thể lưu Lead.");
+  } finally {
+    setSaving(false);
+  }
+};
+
 
   return (
     <form onSubmit={submit} className="grid gap-4">
@@ -114,13 +110,26 @@ export default function LeadForm({
           placeholder="Nhập email"
         />
 
-        <Input
-          label="Nhân viên phụ trách"
+        <label className="grid gap-2 text-sm font-medium">
+          Nhân viên phụ trách
+          <select
           name="owner"
           value={form.owner}
           onChange={update}
-          placeholder="Nhập tên nhân viên"
-        />
+          className="crm-input"
+          >
+    <option value="">Chưa phân công</option>
+    <option value="Administrator">
+      Administrator
+    </option>
+    <option value="sales.user@cellphones.example">
+      Nhân viên bán hàng
+    </option>
+    <option value="sales.manager@cellphones.example">
+      Quản lý kinh doanh
+    </option>
+  </select>
+</label>
 
         <label className="grid gap-2 text-sm font-medium">
           Nguồn Lead
@@ -130,11 +139,15 @@ export default function LeadForm({
             onChange={update}
             className="crm-input"
           >
+            <option value="">Chưa xác định</option>
             <option value="Website">Website</option>
+            <option value="Web Form">Biểu mẫu website</option>
             <option value="Facebook">Facebook</option>
-            <option value="Hotline">Hotline</option>
-            <option value="Cửa hàng">Cửa hàng</option>
-            <option value="Khác">Khác</option>
+            <option value="Walk In">Khách tại cửa hàng</option>
+            <option value="Cold Calling">Tiếp cận qua điện thoại</option>
+            <option value="Email">Email</option>
+            <option value="Campaign">Chiến dịch Marketing</option>
+            <option value="Advertisement">Quảng cáo</option>
           </select>
         </label>
 
@@ -146,7 +159,7 @@ export default function LeadForm({
             onChange={update}
             className="crm-input"
           >
-            {leadStatuses.map((status) => (
+            {statuses.map((status) => (
               <option key={status} value={status}>
                 {status}
               </option>
@@ -181,12 +194,17 @@ export default function LeadForm({
           type="button"
           variant="secondary"
           onClick={onCancel}
+          disabled={saving}
         >
           Hủy
         </Button>
 
-        <Button type="submit">
-          {initialValue ? "Lưu thay đổi" : "Thêm Lead"}
+        <Button type="submit" disabled={saving}>
+          {saving
+          ? "Đang lưu..."
+          : initialValue
+          ? "Lưu thay đổi"
+          : "Thêm Lead"}
         </Button>
       </div>
     </form>

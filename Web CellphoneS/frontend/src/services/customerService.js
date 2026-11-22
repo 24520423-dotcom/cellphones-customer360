@@ -2,12 +2,9 @@ import { frappeRequest } from "./api";
 import { DEMO_CUSTOMERS } from "../mocks/customers";
 import { isOpenDeal, isOpenRequest, maskEmail, maskPhone } from "../utils/customer360";
 
-// API Contract v1.0 – 17/11/2026, mục 7: Customer 360 = PROPOSED / BLOCKED (chưa có backend).
-// DEV: mặc định dùng adapter demo mô phỏng đúng response của contract.
-// Kiểm thử Backend thật trên máy DEV: tạo .env.local với VITE_CUSTOMER360_MODE=api
-// Production luôn gọi API, không bao giờ hiển thị dữ liệu demo.
+// Các trang xem trước truyền adapter demo. Tuyến nghiệp vụ mặc định gọi Frappe.
 export const customerDataMode =
-  import.meta.env.DEV && import.meta.env.VITE_CUSTOMER360_MODE !== "api" ? "demo" : "api";
+  import.meta.env.DEV && import.meta.env.VITE_CUSTOMER360_MODE === "demo" ? "demo" : "api";
 
 // Contract v1.0 list_customers chỉ có search/page/page_size.
 // Lọc và sắp xếp là ĐỀ XUẤT bổ sung: chỉ bật ở demo; ở API mode bị khóa cho tới khi L03 hỗ trợ,
@@ -23,7 +20,7 @@ export const SORT_OPTIONS = [
   { value: "interaction_asc", label: "Lâu chưa tương tác nhất" },
 ];
 
-const METHOD = "/api/method/cellphones_c360.api.customers."; // tên app chờ chốt D01
+const METHOD = "/api/method/cellphones_c360.api.customer360.";
 const MAX_PAGE_SIZE = 100;
 
 export class CustomerApiError extends Error {
@@ -150,12 +147,12 @@ const sorters = {
 
 // ------------------------------ API công khai ------------------------------
 export async function listCustomers(
-  { search = "", page = 1, page_size = 20, has_open_deal = false, has_open_request = false, order_by = "updated_desc", signal } = {},
+  { search = "", page = 1, page_size = 20, has_open_deal = false, has_open_request = false, order_by = "updated_desc", signal, demo = customerDataMode === "demo" } = {},
 ) {
   const size = clampPageSize(page_size);
   const query = search.trim();
 
-  if (customerDataMode === "demo") {
+  if (demo) {
     await demoDelay(signal);
     const rows = DEMO_CUSTOMERS.filter((c) => demoSearch(c, query))
       .map(demoListItem)
@@ -181,10 +178,10 @@ export async function listCustomers(
   };
 }
 
-export async function getCustomerProfile(customerId, { signal } = {}) {
+export async function getCustomerProfile(customerId, { signal, demo = customerDataMode === "demo" } = {}) {
   if (!customerId) throw new CustomerApiError("not_found", "Thiếu mã khách hàng.");
 
-  if (customerDataMode === "demo") {
+  if (demo) {
     await demoDelay(signal);
     const found = DEMO_CUSTOMERS.find((c) => c.customer_id === customerId);
     if (!found) throw new CustomerApiError("not_found", "Không tìm thấy hồ sơ demo.", 404);
@@ -199,11 +196,11 @@ export async function getCustomerProfile(customerId, { signal } = {}) {
   return normalizeProfile(result);
 }
 
-export async function getCustomerTimeline(customerId, { page = 1, page_size = 20, signal } = {}) {
+export async function getCustomerTimeline(customerId, { page = 1, page_size = 20, signal, demo = customerDataMode === "demo" } = {}) {
   if (!customerId) throw new CustomerApiError("not_found", "Thiếu mã khách hàng.");
   const size = clampPageSize(page_size);
 
-  if (customerDataMode === "demo") {
+  if (demo) {
     await demoDelay(signal, 150);
     const items = DEMO_CUSTOMERS.find((c) => c.customer_id === customerId)?.timeline || [];
     return { items: items.slice((page - 1) * size, page * size), page, page_size: size, total: items.length };
@@ -216,4 +213,28 @@ export async function getCustomerTimeline(customerId, { page = 1, page_size = 20
   // Contract chưa quy định thứ tự; sắp xếp mới nhất trước ở phía client cho trang đã nhận.
   const items = [...result.items].sort((a, b) => String(b.occurred_at || "").localeCompare(String(a.occurred_at || "")));
   return { items, page: Number(result.page ?? page), page_size: Number(result.page_size ?? size), total: Number(result.total ?? items.length) };
+}
+
+
+const customerEndpoint = "/api/resource/C360%20Customer";
+
+export async function getCustomerAccess(id, { signal } = {}) {
+  const query = id ? `?${new URLSearchParams({ customer: id })}` : "";
+  const { message } = await frappeRequest(`/api/method/cellphones_c360.api.customers.get_access${query}`, { signal });
+  return message;
+}
+
+export async function getCustomerRecord(id, { signal } = {}) {
+  const { data } = await frappeRequest(`${customerEndpoint}/${encodeURIComponent(id)}`, { signal });
+  return data;
+}
+
+export async function saveCustomerRecord(id, payload) {
+  const endpoint = id ? `${customerEndpoint}/${encodeURIComponent(id)}` : customerEndpoint;
+  const { data } = await frappeRequest(endpoint, {
+    method: id ? "PUT" : "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  });
+  return data;
 }

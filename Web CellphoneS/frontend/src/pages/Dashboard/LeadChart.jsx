@@ -9,30 +9,24 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-const leadData = [
-  { status: "New", count: 45 },
-  { status: "Contacted", count: 35 },
-  { status: "Qualified", count: 28 },
-  { status: "Unqualified", count: 20 },
-];
-
-export default function LeadChart({ data }) {  return (
+export default function LeadChart({ data }) {
+  return (
     <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
       <h3 className="mb-5 text-lg font-semibold text-slate-800">
         Lead by Status
       </h3>
 
-      <div className="h-72">
+      {data?.length ? <div className="h-72 min-w-0">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={data}>
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="status" />
+            <XAxis dataKey="label" />
             <YAxis allowDecimals={false} />
             <Tooltip />
             <Bar dataKey="count" fill="#B91C1C" radius={[6, 6, 0, 0]} />
           </BarChart>
         </ResponsiveContainer>
-      </div>
+      </div> : <p className="text-sm text-muted">Chưa có dữ liệu</p>}
     </div>
   );
 }
