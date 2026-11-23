@@ -1,0 +1,53 @@
+{
+  "snapshot_id": "cellphones-c360-demo-v1",
+  "snapshot_version": "1.0.0",
+  "data_type": "synthetic_demo",
+  "status": "example_not_imported_or_tested_on_frappe",
+  "description": "Dữ liệu logic demo cho kiểm thử CV2, không phải bản dump và chưa tương thích trực tiếp Frappe Data Import.",
+  "created_on": "2026-11-23",
+  "app_versions_test_target": {
+    "frappe": "15.127.1",
+    "crm": "1.92.0",
+    "cellphones_c360": "0.0.1"
+  },
+  "import_order": [
+    "customers.csv",
+    "leads.csv",
+    "deals.csv",
+    "orders.csv",
+    "order_items.csv",
+    "tickets.csv",
+    "intakes.csv"
+  ],
+  "files": {
+    "customers.csv": {
+      "record_count": 3,
+      "sha256": "678a47a4a05c57117015f4d3e0692ef9b70f1c55d4efbb02f03c7dcc2e28381b"
+    },
+    "leads.csv": {
+      "record_count": 3,
+      "sha256": "27500fcad9216cd0dddfdae098c2c3bdad84aab4e17bc70a4d9be386e5174c94"
+    },
+    "deals.csv": {
+      "record_count": 3,
+      "sha256": "5b5dd48f2bb78b4a34529178ad5691fa991934d04ab50a57c57781a29d6b9b1b"
+    },
+    "orders.csv": {
+      "record_count": 2,
+      "sha256": "d6f3fc48e31576b61a0fe949d98c6b190864ec138167c3f2114bb8ab03980e81"
+    },
+    "order_items.csv": {
+      "record_count": 2,
+      "sha256": "808b618412df0177a0ee552f79dae54154b57f4dfaee112f39d85edddc8e6323"
+    },
+    "tickets.csv": {
+      "record_count": 2,
+      "sha256": "5123024ee073dc838f1a1c0f6f79d975c9ba220fc466c8fb7923ccad406605b4"
+    },
+    "intakes.csv": {
+      "record_count": 4,
+      "sha256": "615490532ce3c151192029250472016acb4a59147af5e6b8de2ff8ecb239e6cd"
+    }
+  },
+  "privacy": "All records fictional. Do not commit real customers, credentials, or full DB backup."
+}

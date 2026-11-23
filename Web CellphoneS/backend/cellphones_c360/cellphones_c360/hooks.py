@@ -266,3 +266,13 @@ app_license = "mit"
 
 
 auth_hooks = ["cellphones_c360.api.access.require_enabled_api_account"]
+
+
+# Phase 2: idempotent schema sync after installing / migrating the custom app.
+after_install = "cellphones_c360.setup_cv2.ensure_custom_fields"
+after_migrate = "cellphones_c360.setup_cv2.ensure_custom_fields"
+
+# Prevent linking a CRM Deal to a different customer from its linked Lead.
+doc_events = {
+    "CRM Deal": {"validate": "cellphones_c360.link_validation.validate_deal_customer"},
+}

@@ -1,0 +1,70 @@
+{
+  "note": "KPI tính từ CSV snapshot V2. Sau khi import lên site đã có dữ liệu, Dashboard có thể cho tổng số khác. Time filters của Lead/Deal dùng thời điểm import.",
+  "counts": {
+    "intakes": 144,
+    "customers": 54,
+    "order_items": 100,
+    "tickets": 45,
+    "orders": 62,
+    "registration_requests": 12,
+    "deals": 76,
+    "leads": 94
+  },
+  "customers_by_source": {
+    "App": 9,
+    "Facebook": 9,
+    "Hotline": 9,
+    "Store": 9,
+    "Website": 9,
+    "Zalo": 9
+  },
+  "customers_by_type": {
+    "Individual": 51,
+    "Business": 3
+  },
+  "lead_by_status": {
+    "Contacted": 17,
+    "Converted": 18,
+    "Junk": 2,
+    "New": 6,
+    "Nurture": 11,
+    "Qualified": 27,
+    "Unqualified": 13
+  },
+  "deals_by_status": {
+    "Demo/Making": 8,
+    "Lost": 16,
+    "Negotiation": 8,
+    "Proposal/Quotation": 11,
+    "Qualification": 7,
+    "Ready to Close": 8,
+    "Won": 18
+  },
+  "orders_by_status": {
+    "Cancelled": 9,
+    "Completed": 26,
+    "Confirmed": 9,
+    "Draft": 9,
+    "Processing": 9
+  },
+  "tickets_by_status": {
+    "Closed": 8,
+    "In Progress": 8,
+    "Open": 9,
+    "Pending": 8,
+    "Resolved": 12
+  },
+  "intakes_expected_actions": {
+    "linked": 64,
+    "new": 54,
+    "rejected": 8,
+    "review": 18
+  },
+  "orders_valid_for_analytics": 44,
+  "valid_order_value_vnd": "678850000",
+  "repeat_customers_valid_orders": 7,
+  "registration_requests_by_status": {
+    "Pending": 8,
+    "Rejected": 4
+  }
+}

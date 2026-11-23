@@ -1,0 +1,135 @@
+{
+  "doctype": "DocType",
+  "name": "C360 Customer Intake",
+  "module": "CellphoneS Customer 360",
+  "custom": 0,
+  "is_submittable": 0,
+  "track_changes": 1,
+  "allow_rename": 0,
+  "engine": "InnoDB",
+  "autoname": "INTAKE-.#####",
+  "title_field": "source_reference",
+  "field_order": [
+    "source_key",
+    "source_channel",
+    "source_reference",
+    "received_at",
+    "customer_name",
+    "phone_number",
+    "email",
+    "status",
+    "customer",
+    "candidate_customer",
+    "review_reason",
+    "reviewed_by",
+    "reviewed_at"
+  ],
+  "fields": [
+    {
+      "fieldname": "source_key",
+      "label": "Source Key",
+      "fieldtype": "Data",
+      "reqd": 1,
+      "unique": 1,
+      "read_only": 1,
+      "in_list_view": 0
+    },
+    {
+      "fieldname": "source_channel",
+      "label": "Source Channel",
+      "fieldtype": "Select",
+      "reqd": 1,
+      "options": "Website\nApp\nFacebook\nZalo\nHotline\nStore\nOther",
+      "in_list_view": 1
+    },
+    {
+      "fieldname": "source_reference",
+      "label": "Source Reference",
+      "fieldtype": "Data",
+      "reqd": 1,
+      "in_list_view": 1
+    },
+    {
+      "fieldname": "received_at",
+      "label": "Received At",
+      "fieldtype": "Datetime",
+      "reqd": 1
+    },
+    {
+      "fieldname": "customer_name",
+      "label": "Customer Name",
+      "fieldtype": "Data",
+      "reqd": 1
+    },
+    {
+      "fieldname": "phone_number",
+      "label": "Phone Number",
+      "fieldtype": "Data",
+      "reqd": 0
+    },
+    {
+      "fieldname": "email",
+      "label": "Email",
+      "fieldtype": "Data",
+      "reqd": 0
+    },
+    {
+      "fieldname": "status",
+      "label": "Status",
+      "fieldtype": "Select",
+      "reqd": 1,
+      "options": "Created\nLinked\nNeeds Review\nRejected",
+      "in_list_view": 1
+    },
+    {
+      "fieldname": "customer",
+      "label": "Customer",
+      "fieldtype": "Link",
+      "reqd": 0,
+      "options": "C360 Customer",
+      "in_list_view": 1
+    },
+    {
+      "fieldname": "candidate_customer",
+      "label": "Candidate Customer",
+      "fieldtype": "Link",
+      "reqd": 0,
+      "options": "C360 Customer"
+    },
+    {
+      "fieldname": "review_reason",
+      "label": "Review Reason",
+      "fieldtype": "Small Text",
+      "reqd": 0
+    },
+    {
+      "fieldname": "reviewed_by",
+      "label": "Reviewed By",
+      "fieldtype": "Link",
+      "options": "User",
+      "reqd": 0
+    },
+    {
+      "fieldname": "reviewed_at",
+      "label": "Reviewed At",
+      "fieldtype": "Datetime",
+      "reqd": 0
+    }
+  ],
+  "permissions": [
+    {
+      "role": "System Manager",
+      "read": 1,
+      "write": 1,
+      "create": 1,
+      "delete": 0,
+      "export": 1,
+      "report": 1,
+      "share": 0,
+      "print": 1,
+      "email": 0
+    }
+  ],
+  "sort_field": "modified",
+  "sort_order": "DESC"
+}

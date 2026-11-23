@@ -1,0 +1,3 @@
+﻿snapshot_id,customer_snapshot_id,order_date,sales_channel,order_status,total_amount
+ORDER-001,CUS-001,2026-11-20,Store,Completed,15990000
+ORDER-002,CUS-002,2026-11-21,Website,Confirmed,5900000

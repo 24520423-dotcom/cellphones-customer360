@@ -1,0 +1,3 @@
+﻿snapshot_id,order_snapshot_id,product_code,product_name,quantity,unit_price,amount
+ITEM-001,ORDER-001,DEMO-PHONE-A,Điện thoại mẫu A,1,15990000,15990000
+ITEM-002,ORDER-002,DEMO-PHONE-B,Điện thoại mẫu B,1,5900000,5900000

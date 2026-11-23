@@ -1,0 +1,13 @@
+﻿source_channel,source_reference,customer_name,phone_number,email,received_at
+Website,WEB-001,Nguyễn Văn An,0901234567,an@example.test,2026-11-19 08:30:00
+Store,STORE-001,Nguyễn Văn An,+84901234567,AN@example.test,2026-11-19 11:15:00
+Facebook,FB-001,Trần Thị Bình,0912345678,binh@example.test,2026-11-19 14:40:00
+Hotline,HOT-001,Nguyễn Văn An,0901234567,an@example.test,2026-11-19 18:05:00
+Zalo,ZALO-001,Lê Thanh Mai,0933333333,mai@example.test,2026-11-20 08:50:00
+Website,WEB-002,Phạm Minh Khoa,0988888888,khoa@example.test,2026-11-20 09:20:00
+Store,STORE-002,Trần Thị Bình,0912345678,binh@example.test,2026-11-20 13:40:00
+Facebook,FB-002,Nguyễn Văn Anh,0901234567,,2026-11-20 14:35:00
+Hotline,HOT-002,Nguyễn Văn An,0901234567,an-new@example.test,2026-11-20 16:00:00
+Website,WEB-003,Lê Văn Đức,0121234567,duc@example.test,2026-11-21 09:00:00
+Zalo,ZALO-002,Nguyễn Thị Thảo,,thao@example.test,2026-11-21 10:30:00
+Store,STORE-003,Nguyễn Thị Thảo,0977777777,thao@example.test,2026-11-21 15:10:00

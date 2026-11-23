@@ -1,6 +1,7 @@
-from datetime import datetime, time
+from datetime import date, datetime, time
 
 import frappe
+from frappe.utils import get_datetime
 
 from cellphones_c360.api.leads import get_linked_history
 
@@ -20,9 +21,48 @@ def _visible_doc(doctype, name):
     return doc
 
 
-@frappe.whitelist()
+def _customer_links(customer):
+    """Resolve all accessible Leads/Deals for the same C360 Customer.
+
+    ``crm_lead`` is retained for backward compatibility with old records;
+    ``custom_c360_customer`` supports the new 1:N relationship.
+    """
+    customer_id = customer.name
+    lead_ids = set()
+    if frappe.has_permission("CRM Lead", "read"):
+        meta = frappe.get_meta("CRM Lead")
+        if meta.has_field("custom_c360_customer"):
+            lead_ids.update(frappe.get_list(
+                "CRM Lead", filters={"custom_c360_customer": customer_id},
+                pluck="name", page_length=0,
+            ))
+        if customer.crm_lead:
+            legacy = _visible_doc("CRM Lead", customer.crm_lead)
+            if legacy:
+                # Don't leak a Lead that has been explicitly assigned elsewhere.
+                assigned = legacy.get("custom_c360_customer") if meta.has_field("custom_c360_customer") else None
+                if not assigned or assigned == customer_id:
+                    lead_ids.add(legacy.name)
+
+    deal_ids = set()
+    if frappe.has_permission("CRM Deal", "read"):
+        deal_meta = frappe.get_meta("CRM Deal")
+        if deal_meta.has_field("custom_c360_customer"):
+            deal_ids.update(frappe.get_list(
+                "CRM Deal", filters={"custom_c360_customer": customer_id},
+                pluck="name", page_length=0,
+            ))
+        if lead_ids:
+            deal_ids.update(frappe.get_list(
+                "CRM Deal", filters={"lead": ["in", sorted(lead_ids)]},
+                pluck="name", page_length=0,
+            ))
+    return sorted(lead_ids), sorted(deal_ids)
+
+
+@frappe.whitelist(methods=["GET"])
 def get_customer_360(customer_id):
-    # 1. Lấy hồ sơ khách hàng
+    """Permission-aware, aggregated customer profile for the existing React UI."""
     customer = frappe.get_doc("C360 Customer", customer_id)
     customer.check_permission("read")
     customer.apply_fieldlevel_read_permissions()
@@ -37,123 +77,92 @@ def get_customer_360(customer_id):
         "source_channel": customer.source_channel,
         "crm_contact": customer.crm_contact,
         "crm_lead": customer.crm_lead,
+        "modified": customer.modified,
     }
 
-    # 2. Lấy CRM Lead được liên kết
-    lead_data = None
+    lead_ids, deal_ids = _customer_links(customer)
+    leads = []
+    for name in lead_ids:
+        lead = _visible_doc("CRM Lead", name)
+        if lead:
+            leads.append({
+                "name": lead.name,
+                "lead_name": lead.get("lead_name"),
+                "email": lead.get("email"),
+                "mobile_no": lead.get("mobile_no"),
+                "status": lead.get("status"),
+                "source": lead.get("source"),
+                "creation": lead.get("creation"),
+                "lead_owner": lead.get("lead_owner"),
+                "converted": lead.get("converted"),
+            })
+    leads.sort(key=lambda item: item["name"])
+
     deals = []
-
-    lead = _visible_doc("CRM Lead", customer.crm_lead)
-    if lead:
-
-        lead_data = {
-            "name": lead.name,
-            "lead_name": lead.lead_name,
-            "email": lead.email,
-            "mobile_no": lead.mobile_no,
-            "status": lead.status,
-            "lead_owner": lead.lead_owner,
-            "converted": lead.converted,
-        }
-
-        # 3. Lấy các Deal thuộc Lead này
-        if frappe.has_permission("CRM Deal", "read"):
+    if frappe.has_permission("CRM Deal", "read"):
+        fields = ["name", "lead", "status", "deal_owner", "probability", "expected_deal_value",
+                  "total", "net_total", "creation", "closed_date"]
+        meta = frappe.get_meta("CRM Deal")
+        fields = [f for f in fields if f in ("name", "creation") or meta.has_field(f)]
+        if deal_ids:
             deals = frappe.get_list(
-                "CRM Deal",
-                filters={"lead": customer.crm_lead},
-                fields=["name", "lead", "status", "deal_owner", "probability",
-                        "expected_deal_value", "total", "net_total", "creation"],
-                order_by="creation desc",
-                page_length=0,
+                "CRM Deal", filters={"name": ["in", deal_ids]},
+                fields=fields, order_by="creation desc", page_length=0,
             )
 
-    # 4. Lấy lịch sử đơn hàng của khách hàng
     orders = []
-
-    order_names = (
-        frappe.get_list(
-            "Customer Order",
-            filters={"customer": customer.name},
-            pluck="name",
-            order_by="creation desc",
-            page_length=0,
+    if frappe.has_permission("Customer Order", "read"):
+        order_ids = frappe.get_list(
+            "Customer Order", filters={"customer": customer.name},
+            pluck="name", order_by="creation desc", page_length=0,
         )
-        if frappe.has_permission("Customer Order", "read") else []
-    )
-
-    for order_name in order_names:
-        order = _visible_doc("Customer Order", order_name)
-        if not order:
-            continue
-
-        order_items = []
-
-        for item in order.items or []:
-            order_items.append({
-                "product_code": item.product_code,
-                "product_name": item.product_name,
-                "quantity": item.quantity,
-                "unit_price": item.unit_price,
-                "amount": item.amount,
+        for name in order_ids:
+            order = _visible_doc("Customer Order", name)
+            if not order:
+                continue
+            orders.append({
+                "name": order.name,
+                "order_date": order.order_date,
+                "sales_channel": order.sales_channel,
+                "order_status": order.order_status,
+                "total_amount": order.total_amount,
+                "items": [{
+                    "product_code": item.product_code,
+                    "product_name": item.product_name,
+                    "quantity": item.quantity,
+                    "unit_price": item.unit_price,
+                    "amount": item.amount,
+                } for item in (order.items or [])],
             })
 
-        orders.append({
-            "name": order.name,
-            "order_date": order.order_date,
-            "sales_channel": order.sales_channel,
-            "order_status": order.order_status,
-            "total_amount": order.total_amount,
-            "items": order_items,
-        })
-
-    # 5. Lấy lịch sử hỗ trợ khách hàng
-    tickets = (
-        frappe.get_list(
-            "Customer Support Ticket",
-            filters={"customer": customer.name},
+    tickets = []
+    if frappe.has_permission("Customer Support Ticket", "read"):
+        tickets = frappe.get_list(
+            "Customer Support Ticket", filters={"customer": customer.name},
             fields=["name", "subject", "ticket_type", "priority", "ticket_status",
                     "created_date", "related_order", "description", "assigned_to",
                     "resolution", "resolved_date"],
-            order_by="created_date desc, name desc",
-            page_length=0,
+            order_by="created_date desc, name desc", page_length=0,
         )
-        if frappe.has_permission("Customer Support Ticket", "read") else []
-    )
 
-    # 6. Lấy thông tin liên hệ CRM Contact
     contact_data = None
-
-    if customer.crm_contact:
-        contact = frappe.get_doc(
-            "Contact",
-            customer.crm_contact
-        )
-        contact.check_permission("read")
-
+    contact = _visible_doc("Contact", customer.crm_contact) if customer.crm_contact else None
+    if contact:
         contact_data = {
             "name": contact.name,
-            "first_name": contact.first_name,
-            "last_name": contact.last_name,
-            "email_ids": [
-                {
-                    "email_id": row.email_id,
-                    "is_primary": row.is_primary
-                }
-                for row in (contact.email_ids or [])
-            ],
-            "phone_nos": [
-                {
-                    "phone": row.phone,
-                    "is_primary_phone": row.is_primary_phone
-                }
-                for row in (contact.phone_nos or [])
-            ],
+            "first_name": contact.get("first_name"),
+            "last_name": contact.get("last_name"),
+            "email_ids": [{"email_id": row.email_id, "is_primary": row.is_primary}
+                          for row in (contact.email_ids or [])],
+            "phone_nos": [{"phone": row.phone, "is_primary_phone": row.is_primary_phone}
+                          for row in (contact.phone_nos or [])],
         }
 
     return {
         "customer": customer_data,
         "contact": contact_data,
-        "lead": lead_data,
+        "lead": leads[0] if leads else None,  # legacy callers
+        "leads": leads,
         "deals": deals,
         "orders": orders,
         "tickets": tickets,
@@ -246,8 +255,6 @@ def get_customer_profile(customer_id):
     data = get_customer_360(customer_id)
 
     customer = data["customer"]
-    lead = data["lead"]
-
     return {
         "customer_id": customer["name"],
         "display_name": customer["customer_name"],
@@ -255,10 +262,22 @@ def get_customer_profile(customer_id):
         "email": customer["email"],
         "segments": [],
         "owner": None,
-        "updated_at": None,
-        "leads": [lead] if lead else [],
+        "updated_at": str(customer.get("modified")) if customer.get("modified") else None,
+        "leads": data["leads"],
         "deals": data["deals"],
-        "orders": data["orders"],
+        "orders": [
+            {
+                **order,
+                "order_id": order["name"],
+                "product": ", ".join(item.get("product_name") or "" for item in order.get("items", [])
+                                     if item.get("product_name")),
+                "purchased_at": order["order_date"],
+                "channel": order["sales_channel"],
+                "total": order["total_amount"],
+                "status": order["order_status"],
+            }
+            for order in data["orders"]
+        ],
         "after_sales_requests": [
             {
                 "request_id": ticket["name"],
@@ -302,7 +321,9 @@ def get_customer_timeline(customer_id, page=1, page_size=20):
             return None
         if isinstance(value, datetime):
             return value.isoformat()
-        return datetime.combine(value, time.min).isoformat()
+        if isinstance(value, date):
+            return datetime.combine(value, time.min).isoformat()
+        return get_datetime(value).isoformat()
 
     # 1. Lịch sử đơn hàng
     if frappe.has_permission("Customer Order", "read"):
@@ -358,21 +379,33 @@ def get_customer_timeline(customer_id, page=1, page_size=20):
                 "related_name": ticket.name
             })
 
-    lead = _visible_doc("CRM Lead", customer.crm_lead)
-    if lead:
-        deals = (
-            frappe.get_list("CRM Deal", filters={"lead": lead.name}, pluck="name", page_length=0)
-            if frappe.has_permission("CRM Deal", "read") else []
+    lead_ids, deal_ids = _customer_links(customer)
+    references = {"CRM Lead": lead_ids, "CRM Deal": deal_ids}
+    for item in get_linked_history(references):
+        events.append({
+            "id": item["id"],
+            "type": item["kind"],
+            "summary": " · ".join(value for value in (item["type"], item["title"], item["status"]) if value),
+            "occurred_at": item["date"],
+            "related_doctype": item["reference_type"],
+            "related_name": item["reference_name"],
+        })
+
+    # Retain every confirmed source touchpoint, not only the first channel.
+    if frappe.has_permission("C360 Customer Intake", "read"):
+        intake_rows = frappe.get_list(
+            "C360 Customer Intake", filters={"customer": customer_id, "status": ["in", ["Created", "Linked"]]},
+            fields=["name", "source_channel", "source_reference", "received_at"],
+            page_length=0,
         )
-        references = {"CRM Lead": [lead.name], "CRM Deal": deals}
-        for item in get_linked_history(references):
+        for record in intake_rows:
             events.append({
-                "id": item["id"],
-                "type": item["kind"],
-                "summary": " · ".join(value for value in (item["type"], item["title"], item["status"]) if value),
-                "occurred_at": item["date"],
-                "related_doctype": item["reference_type"],
-                "related_name": item["reference_name"],
+                "id": f"intake-{record.name}",
+                "type": "intake",
+                "summary": f"Tiếp nhận từ {record.source_channel}: {record.source_reference}",
+                "occurred_at": format_datetime(record.received_at),
+                "related_doctype": "C360 Customer Intake",
+                "related_name": record.name,
             })
 
     # 3. Sắp xếp mới nhất trước

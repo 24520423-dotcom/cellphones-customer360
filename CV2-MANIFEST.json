@@ -1,0 +1,12 @@
+{
+  "version": "snapshot-revision-2026-11-23",
+  "basis": "CV2-01-05-CellphoneS-patch.zip",
+  "changes": [
+    "CV2-00-KE-HOACH-SNAPSHOT.md",
+    "CV2-02-SNAPSHOT-GUIDE.md",
+    "snapshots/demo-v1/*",
+    "validate_snapshot.py",
+    "README-CV2-01-05.md"
+  ],
+  "note": "No Frappe deployment performed; these are documentation/sample data/read-only validation additions."
+}

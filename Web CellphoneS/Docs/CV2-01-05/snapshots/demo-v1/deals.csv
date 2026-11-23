@@ -1,0 +1,4 @@
+﻿snapshot_id,customer_snapshot_id,lead_snapshot_id,status,expected_deal_value
+DEAL-001,CUS-001,LEAD-001,Qualification,15990000
+DEAL-002,CUS-001,LEAD-002,Proposal/Quotation,8900000
+DEAL-003,CUS-002,LEAD-003,Qualification,5900000

@@ -1,0 +1,3 @@
+﻿snapshot_id,customer_snapshot_id,order_snapshot_id,subject,ticket_type,priority,ticket_status,created_date,description
+TICKET-001,CUS-001,ORDER-001,Hỗ trợ kiểm tra thiết bị mẫu,Technical Support,Medium,Open,2026-11-22 10:00:00,Khách hàng hỏi cách kiểm tra tình trạng bảo hành của đơn hàng mẫu.
+TICKET-002,CUS-002,ORDER-002,Yêu cầu đổi lịch nhận hàng mẫu,Other,Low,Pending,2026-11-22 11:00:00,Điều chỉnh lịch giao của đơn hàng mẫu.

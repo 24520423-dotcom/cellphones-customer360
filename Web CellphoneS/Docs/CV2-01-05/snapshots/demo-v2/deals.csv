@@ -1,0 +1,77 @@
+﻿snapshot_id,customer_snapshot_id,lead_snapshot_id,status,expected_deal_value,currency,deal_name,scenario,lost_reason,lost_notes,expected_closure_date
+V2-DEAL-001,V2-CUS-001,V2-LEAD-001,Demo/Making,14690000,VND,Đề xuất iPhone 15 128GB,Pipeline còn mở,,,2026-11-25
+V2-DEAL-002,V2-CUS-001,V2-LEAD-002,Proposal/Quotation,10490000,VND,Đề xuất OPPO Reno 256GB (mô phỏng),Pipeline còn mở,,,2026-11-30
+V2-DEAL-003,V2-CUS-001,V2-LEAD-003,Ready to Close,2490000,VND,Đề xuất Tai nghe Galaxy Buds,Pipeline còn mở,,,2026-12-05
+V2-DEAL-004,V2-CUS-002,V2-LEAD-004,Won,250000,VND,Đề xuất Kính cường lực,Won: đã chốt,,,2026-10-25
+V2-DEAL-005,V2-CUS-002,V2-LEAD-006,Qualification,5590000,VND,Đề xuất Xiaomi Redmi Note 14 256GB,Pipeline còn mở,,,2026-12-15
+V2-DEAL-006,V2-CUS-003,V2-LEAD-007,Proposal/Quotation,3490000,VND,Đề xuất Tai nghe AirPods mẫu 2,Pipeline còn mở,,,2026-12-20
+V2-DEAL-007,V2-CUS-003,V2-LEAD-008,Negotiation,350000,VND,Đề xuất Ốp lưng bảo vệ,Pipeline còn mở,,,2026-12-25
+V2-DEAL-008,V2-CUS-003,V2-LEAD-009,Won,17990000,VND,Đề xuất iPhone 16 128GB,Won: đã chốt,,,2026-11-14
+V2-DEAL-009,V2-CUS-004,V2-LEAD-011,Won,26990000,VND,Đề xuất MacBook Air 13 inch 256GB,Won: đã chốt,,,2026-10-10
+V2-DEAL-010,V2-CUS-004,V2-LEAD-012,Demo/Making,190000,VND,Đề xuất Cáp USB-C 1m,Pipeline còn mở,,,2027-01-09
+V2-DEAL-011,V2-CUS-005,V2-LEAD-013,Lost,790000,VND,Đề xuất Pin sạc dự phòng 10000mAh,Lost: không chuyển đổi,Pricing,,2026-10-20
+V2-DEAL-012,V2-CUS-005,V2-LEAD-014,Ready to Close,19990000,VND,Đề xuất Samsung Galaxy S25 256GB,Pipeline còn mở,,,2026-11-30
+V2-DEAL-013,V2-CUS-006,V2-LEAD-016,Lost,390000,VND,Đề xuất Củ sạc USB-C 25W,Lost: không chuyển đổi,Competition,,2026-10-30
+V2-DEAL-014,V2-CUS-006,V2-LEAD-017,Demo/Making,4890000,VND,Đề xuất Đồng hồ thông minh mẫu,Pipeline còn mở,,,2026-12-10
+V2-DEAL-015,V2-CUS-006,V2-LEAD-018,Proposal/Quotation,9990000,VND,Đề xuất Samsung Galaxy A56 5G 256GB,Pipeline còn mở,,,2026-12-15
+V2-DEAL-016,V2-CUS-007,V2-LEAD-019,Ready to Close,16990000,VND,Đề xuất iPad Air 11 inch 128GB,Pipeline còn mở,,,2026-12-20
+V2-DEAL-017,V2-CUS-007,V2-LEAD-021,Lost,250000,VND,Đề xuất Kính cường lực,Lost: không chuyển đổi,Pricing,,2026-10-10
+V2-DEAL-018,V2-CUS-008,V2-LEAD-022,Won,14690000,VND,Đề xuất iPhone 15 128GB,Won: đã chốt,,,2026-10-15
+V2-DEAL-019,V2-CUS-008,V2-LEAD-023,Proposal/Quotation,10490000,VND,Đề xuất OPPO Reno 256GB (mô phỏng),Pipeline còn mở,,,2027-01-04
+V2-DEAL-020,V2-CUS-008,V2-LEAD-024,Negotiation,2490000,VND,Đề xuất Tai nghe Galaxy Buds,Pipeline còn mở,,,2027-01-09
+V2-DEAL-021,V2-CUS-009,V2-LEAD-026,Won,17990000,VND,Đề xuất iPhone 16 128GB,Won: đã chốt,,,2026-10-30
+V2-DEAL-022,V2-CUS-009,V2-LEAD-027,Lost,5590000,VND,Đề xuất Xiaomi Redmi Note 14 256GB,Lost: không chuyển đổi,Competition,,2026-11-04
+V2-DEAL-023,V2-CUS-010,V2-LEAD-028,Demo/Making,3490000,VND,Đề xuất Tai nghe AirPods mẫu 2,Pipeline còn mở,,,2026-12-05
+V2-DEAL-024,V2-CUS-010,V2-LEAD-029,Negotiation,350000,VND,Đề xuất Ốp lưng bảo vệ,Pipeline còn mở,,,2026-12-10
+V2-DEAL-025,V2-CUS-011,V2-LEAD-031,Won,19990000,VND,Đề xuất Samsung Galaxy S25 256GB,Won: đã chốt,,,2026-10-10
+V2-DEAL-026,V2-CUS-011,V2-LEAD-032,Lost,26990000,VND,Đề xuất MacBook Air 13 inch 256GB,Lost: không chuyển đổi,Pricing,,2026-10-15
+V2-DEAL-027,V2-CUS-011,V2-LEAD-033,Won,190000,VND,Đề xuất Cáp USB-C 1m,Won: đã chốt,,,2026-10-20
+V2-DEAL-028,V2-CUS-012,V2-LEAD-034,Proposal/Quotation,790000,VND,Đề xuất Pin sạc dự phòng 10000mAh,Pipeline còn mở,,,2026-12-30
+V2-DEAL-029,V2-CUS-012,V2-LEAD-036,Ready to Close,16990000,VND,Đề xuất iPad Air 11 inch 128GB,Pipeline còn mở,,,2027-01-04
+V2-DEAL-030,V2-CUS-013,V2-LEAD-037,Lost,390000,VND,Đề xuất Củ sạc USB-C 25W,Lost: không chuyển đổi,Budget Constraints,,2026-11-04
+V2-DEAL-031,V2-CUS-013,V2-LEAD-038,Qualification,4890000,VND,Đề xuất Đồng hồ thông minh mẫu,Pipeline còn mở,,,2026-11-25
+V2-DEAL-032,V2-CUS-014,V2-LEAD-039,Proposal/Quotation,9990000,VND,Đề xuất Samsung Galaxy A56 5G 256GB,Pipeline còn mở,,,2026-11-30
+V2-DEAL-033,V2-CUS-015,V2-LEAD-041,Lost,2490000,VND,Đề xuất Tai nghe Galaxy Buds,Lost: không chuyển đổi,Budget Constraints,,2026-10-10
+V2-DEAL-034,V2-CUS-015,V2-LEAD-042,Won,250000,VND,Đề xuất Kính cường lực,Won: đã chốt,,,2026-10-15
+V2-DEAL-035,V2-CUS-016,V2-LEAD-043,Qualification,14690000,VND,Đề xuất iPhone 15 128GB,Pipeline còn mở,,,2026-12-15
+V2-DEAL-036,V2-CUS-016,V2-LEAD-044,Won,10490000,VND,Đề xuất OPPO Reno 256GB (mô phỏng),Won: đã chốt,,,2026-10-25
+V2-DEAL-037,V2-CUS-017,V2-LEAD-046,Negotiation,350000,VND,Đề xuất Ốp lưng bảo vệ,Pipeline còn mở,,,2026-12-25
+V2-DEAL-038,V2-CUS-018,V2-LEAD-047,Won,17990000,VND,Đề xuất iPhone 16 128GB,Won: đã chốt,,,2026-11-04
+V2-DEAL-039,V2-CUS-018,V2-LEAD-048,Lost,5590000,VND,Đề xuất Xiaomi Redmi Note 14 256GB,Lost: không chuyển đổi,Budget Constraints,,2026-11-09
+V2-DEAL-040,V2-CUS-019,V2-LEAD-049,Demo/Making,3490000,VND,Đề xuất Tai nghe AirPods mẫu 2,Pipeline còn mở,,,2027-01-09
+V2-DEAL-041,V2-CUS-020,V2-LEAD-051,Negotiation,790000,VND,Đề xuất Pin sạc dự phòng 10000mAh,Pipeline còn mở,,,2026-11-25
+V2-DEAL-042,V2-CUS-020,V2-LEAD-052,Ready to Close,19990000,VND,Đề xuất Samsung Galaxy S25 256GB,Pipeline còn mở,,,2026-11-30
+V2-DEAL-043,V2-CUS-021,V2-LEAD-053,Lost,26990000,VND,Đề xuất MacBook Air 13 inch 256GB,Lost: không chuyển đổi,Competition,,2026-10-20
+V2-DEAL-044,V2-CUS-021,V2-LEAD-054,Lost,190000,VND,Đề xuất Cáp USB-C 1m,Lost: không chuyển đổi,Pricing,,2026-10-25
+V2-DEAL-045,V2-CUS-022,V2-LEAD-056,Won,9990000,VND,Đề xuất Samsung Galaxy A56 5G 256GB,Won: đã chốt,,,2026-10-30
+V2-DEAL-046,V2-CUS-023,V2-LEAD-057,Ready to Close,16990000,VND,Đề xuất iPad Air 11 inch 128GB,Pipeline còn mở,,,2026-12-20
+V2-DEAL-047,V2-CUS-023,V2-LEAD-058,Won,390000,VND,Đề xuất Củ sạc USB-C 25W,Won: đã chốt,,,2026-11-09
+V2-DEAL-048,V2-CUS-024,V2-LEAD-059,Qualification,4890000,VND,Đề xuất Đồng hồ thông minh mẫu,Pipeline còn mở,,,2026-12-30
+V2-DEAL-049,V2-CUS-025,V2-LEAD-061,Proposal/Quotation,10490000,VND,Đề xuất OPPO Reno 256GB (mô phỏng),Pipeline còn mở,,,2027-01-04
+V2-DEAL-050,V2-CUS-025,V2-LEAD-062,Negotiation,2490000,VND,Đề xuất Tai nghe Galaxy Buds,Pipeline còn mở,,,2027-01-09
+V2-DEAL-051,V2-CUS-026,V2-LEAD-063,Won,250000,VND,Đề xuất Kính cường lực,Won: đã chốt,,,2026-10-20
+V2-DEAL-052,V2-CUS-026,V2-LEAD-064,Lost,14690000,VND,Đề xuất iPhone 15 128GB,Lost: không chuyển đổi,Competition,,2026-10-25
+V2-DEAL-053,V2-CUS-027,V2-LEAD-066,Demo/Making,3490000,VND,Đề xuất Tai nghe AirPods mẫu 2,Pipeline còn mở,,,2026-12-05
+V2-DEAL-054,V2-CUS-028,V2-LEAD-067,Won,350000,VND,Đề xuất Ốp lưng bảo vệ,Won: đã chốt,,,2026-11-04
+V2-DEAL-055,V2-CUS-028,V2-LEAD-068,Lost,17990000,VND,Đề xuất iPhone 16 128GB,Lost: không chuyển đổi,Competition,,2026-11-09
+V2-DEAL-056,V2-CUS-029,V2-LEAD-069,Lost,5590000,VND,Đề xuất Xiaomi Redmi Note 14 256GB,Lost: không chuyển đổi,Pricing,,2026-11-14
+V2-DEAL-057,V2-CUS-030,V2-LEAD-071,Demo/Making,190000,VND,Đề xuất Cáp USB-C 1m,Pipeline còn mở,,,2026-12-25
+V2-DEAL-058,V2-CUS-030,V2-LEAD-072,Proposal/Quotation,790000,VND,Đề xuất Pin sạc dự phòng 10000mAh,Pipeline còn mở,,,2026-12-30
+V2-DEAL-059,V2-CUS-031,V2-LEAD-073,Ready to Close,19990000,VND,Đề xuất Samsung Galaxy S25 256GB,Pipeline còn mở,,,2027-01-04
+V2-DEAL-060,V2-CUS-031,V2-LEAD-074,Won,26990000,VND,Đề xuất MacBook Air 13 inch 256GB,Won: đã chốt,,,2026-10-25
+V2-DEAL-061,V2-CUS-032,V2-LEAD-076,Qualification,4890000,VND,Đề xuất Đồng hồ thông minh mẫu,Pipeline còn mở,,,2026-11-25
+V2-DEAL-062,V2-CUS-033,V2-LEAD-077,Proposal/Quotation,9990000,VND,Đề xuất Samsung Galaxy A56 5G 256GB,Pipeline còn mở,,,2026-11-30
+V2-DEAL-063,V2-CUS-034,V2-LEAD-078,Won,16990000,VND,Đề xuất iPad Air 11 inch 128GB,Won: đã chốt,,,2026-11-09
+V2-DEAL-064,V2-CUS-035,V2-LEAD-079,Won,390000,VND,Đề xuất Củ sạc USB-C 25W,Won: đã chốt,,,2026-11-14
+V2-DEAL-065,V2-CUS-037,V2-LEAD-081,Qualification,14690000,VND,Đề xuất iPhone 15 128GB,Pipeline còn mở,,,2026-12-15
+V2-DEAL-066,V2-CUS-038,V2-LEAD-082,Lost,10490000,VND,Đề xuất OPPO Reno 256GB (mô phỏng),Lost: không chuyển đổi,Budget Constraints,,2026-10-15
+V2-DEAL-067,V2-CUS-039,V2-LEAD-083,Negotiation,2490000,VND,Đề xuất Tai nghe Galaxy Buds,Pipeline còn mở,,,2026-12-25
+V2-DEAL-068,V2-CUS-040,V2-LEAD-084,Ready to Close,250000,VND,Đề xuất Kính cường lực,Pipeline còn mở,,,2026-12-30
+V2-DEAL-069,V2-CUS-042,V2-LEAD-086,Lost,5590000,VND,Đề xuất Xiaomi Redmi Note 14 256GB,Lost: không chuyển đổi,Budget Constraints,,2026-10-30
+V2-DEAL-070,V2-CUS-043,V2-LEAD-087,Demo/Making,3490000,VND,Đề xuất Tai nghe AirPods mẫu 2,Pipeline còn mở,,,2027-01-09
+V2-DEAL-071,V2-CUS-044,V2-LEAD-088,Proposal/Quotation,350000,VND,Đề xuất Ốp lưng bảo vệ,Pipeline còn mở,,,2026-11-25
+V2-DEAL-072,V2-CUS-045,V2-LEAD-089,Won,17990000,VND,Đề xuất iPhone 16 128GB,Won: đã chốt,,,2026-11-14
+V2-DEAL-073,V2-CUS-047,V2-LEAD-091,Lost,26990000,VND,Đề xuất MacBook Air 13 inch 256GB,Lost: không chuyển đổi,Competition,,2026-10-10
+V2-DEAL-074,V2-CUS-048,V2-LEAD-092,Qualification,190000,VND,Đề xuất Cáp USB-C 1m,Pipeline còn mở,,,2026-12-10
+V2-DEAL-075,V2-CUS-049,V2-LEAD-093,Proposal/Quotation,790000,VND,Đề xuất Pin sạc dự phòng 10000mAh,Pipeline còn mở,,,2026-12-15
+V2-DEAL-076,V2-CUS-050,V2-LEAD-094,Negotiation,19990000,VND,Đề xuất Samsung Galaxy S25 256GB,Pipeline còn mở,,,2026-12-20
