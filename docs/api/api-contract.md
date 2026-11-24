@@ -196,9 +196,12 @@ Ví dụ minh họa:
 
 Nguồn dữ liệu hiện gồm đơn hàng, yêu cầu hỗ trợ và lịch sử liên kết được backend hỗ trợ. Kiểm thử thực tế hiện đã thấy sự kiện đơn hàng và ticket; cần kiểm thử cuộc gọi, email, công việc và lịch sử Lead/Deal. Không tự tạo sự kiện giả khi thiếu dữ liệu.
 
-### 6.4. Quản lý hồ sơ khách hàng – PLANNED / REVIEW
+### 6.4. Tạo hồ sơ khách hàng
 
-Cần đối chiếu `customers.py` và controller `c360_customer.py` trước khi tích hợp Create/Edit trong Vue. REST `C360 Customer` là một khả năng của nền tảng; chưa xác nhận thao tác ghi và role trong giao diện mới. Kiểm tra trường bắt buộc, chuẩn hóa điện thoại/email, trùng lặp, liên kết Contact/Lead, quyền tạo/sửa, lỗi validation và bảo toàn liên kết khi hợp nhất.
+- `GET /api/method/cellphones_c360.api.customers.get_access` trả `canCreate` và `fields`. Mỗi trường có `fieldname`, `label`, `fieldtype`, `options`, `required` và `default` từ metadata theo quyền.
+- `POST /api/method/frappe.client.insert` nhận `doc` với `doctype: "C360 Customer"` và các trường được phép ghi. Response `message.name` là mã hồ sơ do Frappe sinh.
+- Giao diện dùng session và CSRF của Frappe UI. ORM kiểm tra quyền tạo, trường bắt buộc và Link. Controller chuẩn hóa các trường nhận diện và trả ValidationError khi có xung đột.
+- `crm_contact` liên kết trực tiếp `Contact`, còn `crm_lead` liên kết `CRM Lead`. Khi tài khoản không đọc được Contact, hồ sơ Customer 360 vẫn tải được và không gửi phần chi tiết của Contact đó.
 
 ## 7. Orders và After-sales
 

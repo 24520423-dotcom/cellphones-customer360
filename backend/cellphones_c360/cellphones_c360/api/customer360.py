@@ -37,6 +37,7 @@ def get_customer_360(customer_id):
         "source_channel": customer.source_channel,
         "crm_contact": customer.crm_contact,
         "crm_lead": customer.crm_lead,
+        "modified": str(customer.modified),
     }
 
     # 2. Lấy CRM Lead được liên kết
@@ -123,13 +124,8 @@ def get_customer_360(customer_id):
     # 6. Lấy thông tin liên hệ CRM Contact
     contact_data = None
 
-    if customer.crm_contact:
-        contact = frappe.get_doc(
-            "Contact",
-            customer.crm_contact
-        )
-        contact.check_permission("read")
-
+    contact = _visible_doc("Contact", customer.crm_contact)
+    if contact:
         contact_data = {
             "name": contact.name,
             "first_name": contact.first_name,
