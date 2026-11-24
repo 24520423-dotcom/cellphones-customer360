@@ -1,7 +1,7 @@
 From 820f0af20e6040721470f04c535a6d84458f83d7 Mon Sep 17 00:00:00 2001
 From: 24520423-dotcom <24520423@gm.uit.edu.vn>
 Date: Tue, 24 Nov 2026 03:52:19 +0000
-Subject: [PATCH 01/14] feat: customize CellphoneS CRM theme
+Subject: [PATCH 01/17] feat: customize CellphoneS CRM theme
 
 ---
  frontend/src/cellphones-theme.css | 25 +++++++++++++++++++++++++
@@ -57,7 +57,7 @@ index 7a91fc9..9391f8d 100644
 From 5d45d3789ad7ff407fe5945dba6886f1a6553f85 Mon Sep 17 00:00:00 2001
 From: 24520423-dotcom <24520423@gm.uit.edu.vn>
 Date: Tue, 24 Nov 2026 04:06:09 +0000
-Subject: [PATCH 02/14] feat: integrate Customer 360 customer list into Frappe
+Subject: [PATCH 02/17] feat: integrate Customer 360 customer list into Frappe
  CRM
 
 ---
@@ -302,7 +302,7 @@ index fad8708..b209857 100644
 From 261dc539d1fccef78c22888464ffe7bd75df0688 Mon Sep 17 00:00:00 2001
 From: 24520423-dotcom <24520423@gm.uit.edu.vn>
 Date: Tue, 24 Nov 2026 04:15:17 +0000
-Subject: [PATCH 03/14] feat: integrate Customer 360 detailed profile into
+Subject: [PATCH 03/17] feat: integrate Customer 360 detailed profile into
  Frappe CRM
 
 ---
@@ -770,7 +770,7 @@ index b209857..073ca6e 100644
 From 8bbfc82323a3ec6a91d8695a611ccaa5b76a8f8d Mon Sep 17 00:00:00 2001
 From: 24520423-dotcom <24520423@gm.uit.edu.vn>
 Date: Tue, 24 Nov 2026 05:33:36 +0000
-Subject: [PATCH 04/14] feat: add native Customer 360 creation form
+Subject: [PATCH 04/17] feat: add native Customer 360 creation form
 
 ---
  .../components/Customer360/CustomerForm.vue   | 91 +++++++++++++++++++
@@ -957,7 +957,7 @@ index c96d028..e076461 100644
 From 1d90c4db31efc81d9f0a6408090fc415b3e12b36 Mon Sep 17 00:00:00 2001
 From: 24520423-dotcom <24520423@gm.uit.edu.vn>
 Date: Tue, 24 Nov 2026 05:37:41 +0000
-Subject: [PATCH 05/14] feat: edit Customer 360 profiles in native CRM
+Subject: [PATCH 05/17] feat: edit Customer 360 profiles in native CRM
 
 ---
  .../components/Customer360/CustomerForm.vue   | 25 ++++++----
@@ -1125,7 +1125,7 @@ index bbf875e..28da65a 100644
 From 138e5a70d71a505b3df83d51ec14a1b62118cee5 Mon Sep 17 00:00:00 2001
 From: 24520423-dotcom <24520423@gm.uit.edu.vn>
 Date: Tue, 24 Nov 2026 05:52:52 +0000
-Subject: [PATCH 06/14] feat: review and merge verified profiles in CRM
+Subject: [PATCH 06/17] feat: review and merge verified profiles in CRM
 
 ---
  .../Customer360/DuplicateReview.vue           | 170 ++++++++++++++++++
@@ -1392,7 +1392,7 @@ index 28da65a..8a112d7 100644
 From a19381dc20309d8b71af4e18782e9ab588385dce Mon Sep 17 00:00:00 2001
 From: 24520423-dotcom <24520423@gm.uit.edu.vn>
 Date: Tue, 24 Nov 2026 06:02:25 +0000
-Subject: [PATCH 07/14] feat: connect Customer 360 to native CRM sales
+Subject: [PATCH 07/17] feat: connect Customer 360 to native CRM sales
  workflows
 
 ---
@@ -1720,7 +1720,7 @@ index 8a112d7..80852a5 100644
 From 9755203942b9f9b65c34b4a35803ce9073794cdc Mon Sep 17 00:00:00 2001
 From: 24520423-dotcom <24520423@gm.uit.edu.vn>
 Date: Tue, 24 Nov 2026 06:06:35 +0000
-Subject: [PATCH 08/14] feat: add order worklist and native form navigation
+Subject: [PATCH 08/17] feat: add order worklist and native form navigation
 
 ---
  frontend/src/components/Customer360/format.js |  12 ++
@@ -1999,7 +1999,7 @@ index 073ca6e..1e7d339 100644
 From e81fb609909d9aab5f87f817a36616666626c2c3 Mon Sep 17 00:00:00 2001
 From: 24520423-dotcom <24520423@gm.uit.edu.vn>
 Date: Tue, 24 Nov 2026 06:13:50 +0000
-Subject: [PATCH 09/14] feat: add after-sales worklist and native ticket forms
+Subject: [PATCH 09/17] feat: add after-sales worklist and native ticket forms
 
 ---
  .../Customer360/CustomerWorklist.vue          | 164 ++++++++++++++++++
@@ -2418,7 +2418,7 @@ index 1e7d339..fbe2383 100644
 From dc56080cc5a579e46f6492d6b44355e43f89718f Mon Sep 17 00:00:00 2001
 From: 24520423-dotcom <24520423@gm.uit.edu.vn>
 Date: Tue, 24 Nov 2026 06:18:25 +0000
-Subject: [PATCH 10/14] feat: show complete Customer 360 history and confirmed
+Subject: [PATCH 10/17] feat: show complete Customer 360 history and confirmed
  spend
 
 ---
@@ -2597,7 +2597,7 @@ index 3aa26e7..7521639 100644
 From ebba2f51419036f162fade5ff56e8e23d4baeacb Mon Sep 17 00:00:00 2001
 From: 24520423-dotcom <24520423@gm.uit.edu.vn>
 Date: Tue, 24 Nov 2026 06:28:33 +0000
-Subject: [PATCH 11/14] feat: display and filter calculated customer segments
+Subject: [PATCH 11/17] feat: display and filter calculated customer segments
 
 ---
  frontend/src/pages/Customer360.vue       | 22 ++++++++++++++++++++--
@@ -2726,7 +2726,7 @@ index 7521639..39a6167 100644
 From 78ae5eb7226b3470f92a01a0a3f22baf630aa36a Mon Sep 17 00:00:00 2001
 From: 24520423-dotcom <24520423@gm.uit.edu.vn>
 Date: Tue, 24 Nov 2026 06:31:43 +0000
-Subject: [PATCH 12/14] feat: add Customer Analytics using native CRM charts
+Subject: [PATCH 12/17] feat: add Customer Analytics using native CRM charts
 
 ---
  .../src/components/Layouts/AppSidebar.vue     |  12 ++
@@ -2920,7 +2920,7 @@ index fbe2383..32d4fc0 100644
 From ed135bbfa73fe18c62e77ed375f34917aea66f01 Mon Sep 17 00:00:00 2001
 From: 24520423-dotcom <24520423@gm.uit.edu.vn>
 Date: Tue, 24 Nov 2026 06:43:32 +0000
-Subject: [PATCH 13/14] style: refine CellphoneS CRM layouts and keyboard
+Subject: [PATCH 13/17] style: refine CellphoneS CRM layouts and keyboard
  navigation
 
 ---
@@ -3300,7 +3300,7 @@ index 230dcf1..e59f690 100644
 From e4eee986aefa9bc86b86fd96a0e5f3bbd5184adc Mon Sep 17 00:00:00 2001
 From: 24520423-dotcom <24520423@gm.uit.edu.vn>
 Date: Tue, 24 Nov 2026 07:11:24 +0000
-Subject: [PATCH 14/14] feat: enable scoped Customer 360 department access
+Subject: [PATCH 14/17] feat: enable scoped Customer 360 department access
 
 ---
  crm/api/__init__.py                            | 4 +++-
@@ -3348,6 +3348,1098 @@ index e49ed5b..5ed2ce0 100644
          label: link.label,
          icon: link.icon,
          key: link.route,
+-- 
+2.47.3
+
+
+From a22ea4a37cc2b943cfa1bcec2419ea36c60c3098 Mon Sep 17 00:00:00 2001
+From: 24520423-dotcom <24520423@gm.uit.edu.vn>
+Date: Tue, 24 Nov 2026 15:42:27 +0000
+Subject: [PATCH 15/17] fix: normalize duplicate salutations on native leads
+
+---
+ crm/fcrm/doctype/crm_lead/crm_lead.py | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/crm/fcrm/doctype/crm_lead/crm_lead.py b/crm/fcrm/doctype/crm_lead/crm_lead.py
+index a5ea8fd..247a68d 100644
+--- a/crm/fcrm/doctype/crm_lead/crm_lead.py
++++ b/crm/fcrm/doctype/crm_lead/crm_lead.py
+@@ -124,6 +124,13 @@ class CRMLead(Document):
+ 
+ 	def set_full_name(self):
+ 		if self.first_name:
++			title = (self.salutation or "").split()
++			first_name = self.first_name.split()
++			title_tokens = [word.casefold() for word in title]
++			while title_tokens and [word.casefold() for word in first_name[:len(title)]] == title_tokens:
++				first_name = first_name[len(title):]
++			if first_name and len(first_name) != len(self.first_name.split()):
++				self.first_name = " ".join(first_name)
+ 			self.lead_name = " ".join(
+ 				name
+ 				for name in [
+-- 
+2.47.3
+
+
+From 7f09c20ca54fbda84d5e004697deee217ed30c52 Mon Sep 17 00:00:00 2001
+From: 24520423-dotcom <24520423@gm.uit.edu.vn>
+Date: Tue, 24 Nov 2026 15:42:28 +0000
+Subject: [PATCH 16/17] fix: scope native CRM navigation and settings by role
+
+---
+ crm/api/session.py                            | 19 ++++++++
+ crm/api/settings.py                           | 18 ++++++++
+ .../src/components/Layouts/AppSidebar.vue     | 19 +++++---
+ frontend/src/components/Settings/Settings.vue |  8 +++-
+ frontend/src/components/Settings/Users.vue    | 46 ++++++++++++++++---
+ frontend/src/components/UserDropdown.vue      | 46 ++++++++++++++++++-
+ frontend/src/router.js                        | 16 ++++++-
+ 7 files changed, 155 insertions(+), 17 deletions(-)
+
+diff --git a/crm/api/session.py b/crm/api/session.py
+index e6336e3..7db8cf7 100644
+--- a/crm/api/session.py
++++ b/crm/api/session.py
+@@ -2,6 +2,7 @@ import frappe
+ from frappe import _
+ 
+ CRM_ALLOWED_ROLES = ["System Manager", "Sales Manager", "Sales User"]
++C360_DEPARTMENT_ROLES = ("C360 Customer Service", "C360 Operations", "C360 Marketing")
+ 
+ 
+ def get_session_role_flags():
+@@ -48,6 +49,24 @@ def get_users(include_all: bool = False):
+ 	non-CRM users referenced in CRM activity. Non-System-Manager sessions
+ 	cannot escalate by passing this param.
+ 	"""
++	# Department-only users may bootstrap their own CRM shell, not native sales APIs.
++	# Keep get_session_role_flags and CRM_ALLOWED_ROLES unchanged for other callers.
++	actor = frappe.session.user
++	roles = set(frappe.get_roles())
++	if not roles.intersection(CRM_ALLOWED_ROLES) and roles.intersection(C360_DEPARTMENT_ROLES):
++		if actor == "Guest" or not frappe.db.exists("User", {"name": actor, "enabled": 1, "user_type": "System User"}):
++			frappe.throw(_("You are not permitted to access CRM resources."), frappe.PermissionError)
++		rows = frappe.qb.get_query("User", fields=USER_FIELDS, filters={"name": actor, "enabled": 1}).run(as_dict=1)
++		if not rows:
++			return [], []
++		profile = rows[0]
++		profile.roles = sorted(roles)
++		profile.role = next(role for role in C360_DEPARTMENT_ROLES if role in roles)
++		profile.session_user = True
++		profile.is_telephony_agent = False
++		profile.language = profile.language or frappe.db.get_single_value("System Settings", "language")
++		return rows, rows
++
+ 	session_roles = get_session_role_flags()
+ 
+ 	# Param arrives as a string from the HTTP layer; coerce.
+diff --git a/crm/api/settings.py b/crm/api/settings.py
+index f7e165b..1128998 100644
+--- a/crm/api/settings.py
++++ b/crm/api/settings.py
+@@ -1,6 +1,24 @@
+ import frappe
+ 
+ 
++@frappe.whitelist(methods=["GET"])
++def get_c360_department_brand():
++    """Read only the branding used in the department CRM shell."""
++    from crm.api.session import C360_DEPARTMENT_ROLES
++
++    user = frappe.session.user
++    if (user == "Guest"
++        or not set(frappe.get_roles()).intersection(C360_DEPARTMENT_ROLES)
++        or not frappe.db.exists("User", {"name": user, "enabled": 1, "user_type": "System User"})):
++        frappe.throw(frappe._("Not permitted"), frappe.PermissionError)
++
++    return {
++        "name": frappe.db.get_single_value("FCRM Settings", "brand_name"),
++        "logo": frappe.db.get_single_value("FCRM Settings", "brand_logo"),
++        "favicon": frappe.db.get_single_value("FCRM Settings", "favicon"),
++    }
++
++
+ @frappe.whitelist()
+ def create_email_account(data: dict):
+ 	service = data.get("service")
+diff --git a/frontend/src/components/Layouts/AppSidebar.vue b/frontend/src/components/Layouts/AppSidebar.vue
+index 5ed2ce0..73116be 100644
+--- a/frontend/src/components/Layouts/AppSidebar.vue
++++ b/frontend/src/components/Layouts/AppSidebar.vue
+@@ -22,7 +22,7 @@
+              active row's shadow. Widen the scroll box to the sidebar edges and
+              pad the content back in so the shadow has room. -->
+         <div class="-mx-2 mt-2 flex flex-1 flex-col gap-1 overflow-y-auto px-2">
+-          <SidebarItem :label="__('Search')" @click="onSearchClick">
++          <SidebarItem v-if="!isDepartmentUser" :label="__('Search')" @click="onSearchClick">
+             <template #prefix>
+               <LucideSearch class="size-4 text-ink-gray-7" />
+             </template>
+@@ -35,6 +35,7 @@
+           </SidebarItem>
+ 
+           <SidebarItem
++            v-if="!isDepartmentUser"
+             id="notifications-btn"
+             :label="__('Notifications')"
+             :route="mobile ? { name: 'Notifications' } : undefined"
+@@ -114,7 +115,7 @@
+         </div>
+ 
+         <div v-if="!mobile" class="mt-auto flex flex-col gap-1 pt-2">
+-          <div class="mb-1 flex flex-col gap-2">
++          <div v-if="!isDepartmentUser" class="mb-1 flex flex-col gap-2">
+             <SignupBanner
+               v-if="isDemoSite"
+               :isSidebarCollapsed="isCollapsed"
+@@ -164,7 +165,7 @@
+         </div>
+       </div>
+     </Sidebar>
+-    <Notifications v-if="!mobile" />
++    <Notifications v-if="!mobile && !isDepartmentUser" />
+   </div>
+ 
+   <template v-if="!mobile">
+@@ -302,7 +303,7 @@ const allViews = computed(() => {
+       name: 'All Views',
+       hideLabel: true,
+       opened: true,
+-      views: (staffAccess.data?.nativeSales === false ? [] : links).map((link) => ({
++      views: (isDepartmentUser.value || staffAccess.data?.nativeSales === false ? [] : links).map((link) => ({
+         label: link.label,
+         icon: link.icon,
+         key: link.route,
+@@ -341,7 +342,7 @@ const allViews = computed(() => {
+     ],
+   })
+ 
+-  if (getPublicViews().length) {
++  if (!isDepartmentUser.value && getPublicViews().length) {
+     _views.push({
+       name: 'Public Views',
+       opened: true,
+@@ -349,7 +350,7 @@ const allViews = computed(() => {
+     })
+   }
+ 
+-  if (getPinnedViews().length) {
++  if (!isDepartmentUser.value && getPinnedViews().length) {
+     _views.push({
+       name: 'Pinned Views',
+       opened: true,
+@@ -452,7 +453,10 @@ function toggleHelpModal() {
+ 
+ // onboarding
+ const { user } = sessionStore()
+-const { users, isManager } = usersStore()
++const { users, isManager, getUserRole } = usersStore()
++const isDepartmentUser = computed(() => [
++  'C360 Customer Service', 'C360 Operations', 'C360 Marketing',
++].includes(getUserRole()))
+ const { isOnboardingStepsCompleted, setUp } = useOnboarding('frappecrm')
+ const { flushPendingSteps } = useCrmOnboarding()
+ 
+@@ -647,6 +651,7 @@ onMounted(async () => {
+   if (props.mobile) return
+ 
+   await users.promise
++  if (isDepartmentUser.value) return
+ 
+   const filteredSteps = steps.filter((step) => {
+     if (step.condition) {
+diff --git a/frontend/src/components/Settings/Settings.vue b/frontend/src/components/Settings/Settings.vue
+index 659a469..e15ba6b 100644
+--- a/frontend/src/components/Settings/Settings.vue
++++ b/frontend/src/components/Settings/Settings.vue
+@@ -99,7 +99,10 @@ import ShieldCheck from '~icons/lucide/shield-check'
+ import LucideZap from '~icons/lucide/zap'
+ import SlaConfig from './Sla/SlaConfig.vue'
+ 
+-const { isManager, getUser } = usersStore()
++const { isManager, getUser, getUserRole } = usersStore()
++const isDepartmentUser = computed(() => [
++  'C360 Customer Service', 'C360 Operations', 'C360 Marketing',
++].includes(getUserRole()))
+ 
+ const user = computed(() => getUser() || {})
+ 
+@@ -264,6 +267,9 @@ const tabs = computed(() => {
+     },
+   ]
+ 
++  // Department users get personal settings only.
++  if (isDepartmentUser.value) return [_tabs[0]]
++
+   return _tabs.filter((tab) => {
+     if (tab.condition && !tab.condition()) return false
+     if (tab.items) {
+diff --git a/frontend/src/components/Settings/Users.vue b/frontend/src/components/Settings/Users.vue
+index 68053a2..b0dbdd3 100644
+--- a/frontend/src/components/Settings/Users.vue
++++ b/frontend/src/components/Settings/Users.vue
+@@ -48,7 +48,7 @@
+ 
+     <!-- Empty State -->
+     <EmptyState
+-      v-if="!users.loading && users.data?.crmUsers?.length == 1"
++      v-if="!users.loading && !usersList.length && !search && currentRole === 'All'"
+       name="Users"
+       :description="__('Add one to get started.')"
+       icon="user"
+@@ -56,11 +56,11 @@
+ 
+     <!-- Users List -->
+     <div
+-      v-if="!users.loading && users.data?.crmUsers?.length > 1"
++      v-if="!users.loading && (usersList.length || search || currentRole !== 'All')"
+       class="flex flex-col overflow-hidden"
+     >
+       <div
+-        v-if="users.data?.crmUsers?.length > 10"
++        v-if="isAdmin() || users.data?.crmUsers?.length > 10"
+         class="flex items-center gap-2 mb-4 px-2 pt-0.5"
+       >
+         <TextInput
+@@ -85,6 +85,7 @@
+             { label: __('Admin'), value: 'System Manager' },
+             { label: __('Manager'), value: 'Sales Manager' },
+             { label: __('Sales User'), value: 'Sales User' },
++            ...(isAdmin() ? departmentRoles.map((role) => ({ label: roleMap[role], value: role })) : []),
+           ]"
+         />
+       </div>
+@@ -114,7 +115,13 @@
+               </div>
+             </div>
+             <div class="flex gap-2 items-center flex-row-reverse">
++              <Button
++                v-if="isC360Managed(user) && isAdmin()"
++                :label="__('Manage in Desk')"
++                @click="openDeskUser(user)"
++              />
+               <Dropdown
++                v-if="!isC360Managed(user)"
+                 :options="getMoreOptions(user)"
+                 :button="{
+                   icon: 'lucide-more-horizontal',
+@@ -125,8 +132,12 @@
+                 }"
+                 align="end"
+               />
++              <div v-if="isC360Managed(user)" class="flex flex-col items-end gap-1">
++                <span class="text-p-sm">{{ roleMap[user.role] || user.role }}</span>
++                <span v-if="user.roles?.includes('C360 Merge Approver')" class="text-xs text-ink-gray-5">Merge Approver</span>
++              </div>
+               <Tooltip
+-                v-if="isManager() && user.role == 'System Manager'"
++                v-else-if="isManager() && user.role == 'System Manager'"
+                 :text="__('Cannot change role of user with Admin access')"
+               >
+                 <Button :label="__('Admin')" icon-left="lucide-shield" />
+@@ -189,7 +200,7 @@ import {
+ import { ref, computed, onMounted } from 'vue'
+ import { ConfirmDelete } from '../../utils'
+ 
+-const { users, isAdmin, isManager } = usersStore()
++const { users, usersFull, isAdmin, isManager } = usersStore()
+ 
+ const showAddExistingModal = ref(false)
+ const searchRef = ref(null)
+@@ -200,12 +211,34 @@ const roleMap = {
+   'System Manager': __('Admin'),
+   'Sales Manager': __('Manager'),
+   'Sales User': __('Sales User'),
++  'C360 Customer Service': __('Customer Service'),
++  'C360 Operations': __('Operations'),
++  'C360 Marketing': __('Marketing'),
++}
++
++const departmentRoles = ['C360 Customer Service', 'C360 Operations', 'C360 Marketing']
++function isC360Managed(user) {
++  return (user.roles || []).some((role) => departmentRoles.includes(role) || role === 'C360 Merge Approver')
++}
++function openDeskUser(user) {
++  window.open('/app/user/' + encodeURIComponent(user.name), '_blank', 'noopener,noreferrer')
+ }
+ 
+ const usersList = computed(() => {
+   let filteredUsers =
+     users.data?.crmUsers?.filter((user) => user.name !== 'Administrator') || []
+ 
++  // Use the admin-only full user list; do not add departments to sales assignment lists.
++  if (isAdmin()) {
++    const byName = new Map(filteredUsers.map((user) => [user.name, user]))
++    for (const user of usersFull.data?.allUsers || []) {
++      if (user.name === 'Administrator' || !isC360Managed(user)) continue
++      const roles = user.roles || []
++      const role = ['System Manager', 'Sales Manager', 'Sales User', ...departmentRoles].find((r) => roles.includes(r))
++      if (role) byName.set(user.name, { ...user, role })
++    }
++    filteredUsers = [...byName.values()].sort((a, b) => a.full_name.localeCompare(b.full_name))
++  }
+   return filteredUsers
+     .filter(
+       (user) =>
+@@ -254,7 +287,7 @@ function getDropdownOptions(user) {
+     },
+   ]
+ 
+-  return options.filter((option) => option.condition?.() || true)
++  return options.filter((option) => !option.condition || option.condition())
+ }
+ 
+ function updateRole(user, newRole) {
+@@ -292,6 +325,7 @@ function removeUser(user) {
+ }
+ 
+ onMounted(() => {
++  if (isAdmin()) usersFull.fetch().catch(() => {})
+   if (searchRef.value) {
+     searchRef.value.focus()
+   }
+diff --git a/frontend/src/components/UserDropdown.vue b/frontend/src/components/UserDropdown.vue
+index e160a04..032911e 100644
+--- a/frontend/src/components/UserDropdown.vue
++++ b/frontend/src/components/UserDropdown.vue
+@@ -59,7 +59,7 @@ import { useCloudSettings } from '@/composables/cloudSettings'
+ import CreditCardIcon from '~icons/lucide/credit-card'
+ import { spriteIcon } from '@/utils/spriteIcon'
+ import { createResource, Dropdown } from 'frappe-ui'
+-import { computed, h, markRaw } from 'vue'
++import { computed, h, markRaw, watch } from 'vue'
+ 
+ defineProps({
+   isCollapsed: { type: Boolean, default: false },
+@@ -68,9 +68,27 @@ defineProps({
+ const { settings, brand } = getSettings()
+ const { logout } = sessionStore()
+ const { available: canManageBilling, open: openBilling } = useCloudSettings()
+-const { getUser } = usersStore()
++const { getUser, getUserRole } = usersStore()
+ 
+ const user = computed(() => getUser() || {})
++const isDepartmentUser = computed(() => [
++  'C360 Customer Service', 'C360 Operations', 'C360 Marketing',
++].includes(getUserRole()))
++
++const departmentBrand = createResource({
++  url: 'crm.api.settings.get_c360_department_brand',
++  method: 'GET',
++  auto: false,
++  onSuccess(data) {
++    if (!data) return
++    brand.name = data.name
++    brand.logo = data.logo
++    brand.favicon = data.favicon
++  },
++})
++watch(isDepartmentUser, (allowed) => {
++  if (allowed) departmentBrand.fetch().catch(() => {})
++}, { immediate: true })
+ 
+ const apps = createResource({
+   url: 'frappe.apps.get_apps',
+@@ -80,6 +98,30 @@ const apps = createResource({
+ })
+ 
+ const dropdownItems = computed(() => {
++  // Department users do not need access to the full FCRM Settings document.
++  if (isDepartmentUser.value) {
++    return [{
++      group: 'Account',
++      hideLabel: true,
++      options: [
++        ...(!isMobileView.value ? [{
++          icon: 'lucide-settings',
++          label: __('Settings'),
++          onClick: () => (showSettings.value = true),
++        }] : []),
++        {
++          icon: 'lucide-info',
++          label: __('About'),
++          onClick: () => (showAboutModal.value = true),
++        },
++        {
++          icon: 'lucide-log-out',
++          label: __('Log out'),
++          onClick: () => logout.submit(),
++        },
++      ],
++    }]
++  }
+   if (!settings.value?.dropdown_items) return []
+ 
+   let items = settings.value.dropdown_items
+diff --git a/frontend/src/router.js b/frontend/src/router.js
+index 32d4fc0..e111063 100644
+--- a/frontend/src/router.js
++++ b/frontend/src/router.js
+@@ -190,7 +190,7 @@ router.beforeEach(async (to, from, next) => {
+   router.previousRoute = from
+ 
+   const { isLoggedIn, user } = sessionStore()
+-  const { users, isCrmUser, isAdmin } = usersStore()
++  const { users, isCrmUser, isAdmin, getUserRole } = usersStore()
+ 
+   if (isLoggedIn && !users.fetched) {
+     try {
+@@ -203,6 +203,20 @@ router.beforeEach(async (to, from, next) => {
+     }
+   }
+ 
++  // Department users do not load the native sales views or default Leads route.
++  const departmentPages = {
++    'C360 Customer Service': ['CustomerAfterSales', 'Customer360', 'Customer360Detail', 'CustomerOrders', 'CustomerAnalytics'],
++    'C360 Operations': ['CustomerOrders', 'Customer360', 'Customer360Detail', 'CustomerAfterSales', 'CustomerAnalytics'],
++    'C360 Marketing': ['CustomerAnalytics', 'Customer360', 'Customer360Detail'],
++  }
++  const departmentRoutes = isLoggedIn && isCrmUser() && departmentPages[getUserRole()]
++  if (departmentRoutes) {
++    if (!departmentRoutes.includes(to.name)) {
++      return next({ name: departmentRoutes[0], replace: true })
++    }
++    return next()
++  }
++
+   if (isLoggedIn && isCrmUser()) {
+     const isAdminUser = isAdmin() || user === 'Administrator'
+     const redirect = await getSetupRedirect(to, isAdminUser)
+-- 
+2.47.3
+
+
+From 310c1635222d05ef6646a1a4ed51cfce12c6400a Mon Sep 17 00:00:00 2001
+From: 24520423-dotcom <24520423@gm.uit.edu.vn>
+Date: Tue, 24 Nov 2026 15:42:28 +0000
+Subject: [PATCH 17/17] feat: complete customer intake and scoped profile views
+
+---
+ .../components/Customer360/CustomerForm.vue   |  27 ++++-
+ .../components/Customer360/CustomerIntake.vue | 100 ++++++++++++++++++
+ .../Customer360/CustomerWorklist.vue          |   3 +-
+ .../Customer360/DuplicateReview.vue           |   9 +-
+ .../components/Customer360/LinkCRMRecord.vue  |   3 +-
+ frontend/src/components/Customer360/errors.js |  27 +++++
+ frontend/src/pages/Customer360.vue            |  27 +++--
+ frontend/src/pages/Customer360Detail.vue      |  47 ++++----
+ frontend/src/pages/CustomerAnalytics.vue      |  46 +++++---
+ 9 files changed, 238 insertions(+), 51 deletions(-)
+ create mode 100644 frontend/src/components/Customer360/CustomerIntake.vue
+ create mode 100644 frontend/src/components/Customer360/errors.js
+
+diff --git a/frontend/src/components/Customer360/CustomerForm.vue b/frontend/src/components/Customer360/CustomerForm.vue
+index 1b91dd0..ab1c5b8 100644
+--- a/frontend/src/components/Customer360/CustomerForm.vue
++++ b/frontend/src/components/Customer360/CustomerForm.vue
+@@ -10,6 +10,21 @@
+           :required="field.required"
+           :disabled="saving"
+         />
++        <div v-else-if="field.fieldtype === 'Check'" class="space-y-1">
++          <label class="flex items-center gap-2 text-sm">
++            <input
++              type="checkbox"
++              class="rounded border-outline-gray-3 accent-[#D70018]"
++              :checked="Number(values[field.fieldname]) === 1"
++              :disabled="saving"
++              @change="values[field.fieldname] = $event.target.checked ? 1 : 0"
++            />
++            {{ __(field.label) }}
++          </label>
++          <p v-if="field.fieldname === 'marketing_consent'" class="text-xs text-ink-gray-6">
++            {{ __('Select only when the customer has explicitly agreed to receive marketing communications.') }}
++          </p>
++        </div>
+         <FormControl
+           v-else
+           v-model="values[field.fieldname]"
+@@ -35,6 +50,7 @@
+ </template>
+ 
+ <script setup>
++import { customerError } from '@/components/Customer360/errors'
+ import Link from '@/components/Controls/Link.vue'
+ import { Button, Dialog, FormControl, call, toast } from 'frappe-ui'
+ import { ref, watch } from 'vue'
+@@ -54,7 +70,10 @@ watch(open, (shown) => {
+   if (!shown) return
+   revision = props.profile ? { customer: props.profile.name, modified: props.profile.modified } : null
+   values.value = Object.fromEntries(
+-    props.fields.map((field) => [field.fieldname, (props.profile ? props.profile[field.fieldname] : field.default) ?? '']),
++    props.fields.map((field) => {
++      const value = props.profile ? props.profile[field.fieldname] : field.default
++      return [field.fieldname, field.fieldtype === 'Check' ? (Number(value) === 1 ? 1 : 0) : (value ?? '')]
++    }),
+   )
+   error.value = ''
+ })
+@@ -75,7 +94,7 @@ function selectOptions(field) {
+ async function save() {
+   if (saving.value) return
+   error.value = ''
+-  if (props.fields.some((field) => field.required && !values.value[field.fieldname]?.trim())) {
++  if (props.fields.some((field) => field.required && (field.fieldtype === 'Check' ? Number(values.value[field.fieldname]) !== 1 : !String(values.value[field.fieldname] ?? '').trim()))) {
+     error.value = __('Fill in all required fields.')
+     return
+   }
+@@ -90,9 +109,7 @@ async function save() {
+     toast.success(revision ? __('Customer updated') : __('Customer created'))
+     emit('saved', result.name)
+   } catch (err) {
+-    error.value = err.exc_type === 'TimestampMismatchError'
+-      ? __('The customer changed after you opened the form. Close it and reload the profile.')
+-      : err.messages?.[0] || __('Unable to save the customer.')
++    error.value = customerError(err, 'Unable to save the customer.', __)
+   } finally {
+     saving.value = false
+   }
+diff --git a/frontend/src/components/Customer360/CustomerIntake.vue b/frontend/src/components/Customer360/CustomerIntake.vue
+new file mode 100644
+index 0000000..cb0b5da
+--- /dev/null
++++ b/frontend/src/components/Customer360/CustomerIntake.vue
+@@ -0,0 +1,100 @@
++<template>
++  <Dialog v-model:open="open" :title="__('Import Customers')" :size="'2xl'">
++    <form class="space-y-4" @submit.prevent="submit">
++      <div class="flex flex-wrap items-center justify-between gap-3">
++        <label for="c360-intake-file" class="text-sm font-medium">{{ __('Customer CSV file') }}</label>
++        <a :href="templateUrl" download="customer-intake.csv" class="text-sm text-ink-gray-8 underline">
++          {{ __('Download CSV template') }}
++        </a>
++      </div>
++      <input
++        id="c360-intake-file"
++        type="file"
++        accept=".csv,text/csv"
++        :disabled="submitting"
++        class="block max-w-full text-sm"
++        @change="selectFile"
++      />
++      <p v-if="error" role="alert" class="text-sm text-ink-red-5">{{ error }}</p>
++      <div class="flex justify-end">
++        <Button type="submit" variant="solid" :disabled="!file" :loading="submitting">
++          {{ __('Import CSV') }}
++        </Button>
++      </div>
++    </form>
++    <div v-if="rows.length" class="mt-4 max-h-80 overflow-auto">
++      <table class="w-full text-left text-sm">
++        <thead class="bg-surface-gray-2">
++          <tr>
++            <th class="p-2" scope="col">{{ __('Row') }}</th>
++            <th class="p-2" scope="col">{{ __('Status') }}</th>
++            <th class="p-2" scope="col">{{ __('Details') }}</th>
++          </tr>
++        </thead>
++        <tbody>
++          <tr v-for="row in rows" :key="row.row" class="border-t border-outline-gray-2">
++            <th class="p-2 align-top" scope="row">{{ row.row }}</th>
++            <td class="p-2 align-top">
++              <Badge :label="__(row.status)" :theme="row.status === 'Invalid' ? 'red' : 'gray'" />
++              <p v-if="row.replay" class="mt-1 text-xs text-ink-gray-6">{{ __('Already processed') }}</p>
++            </td>
++            <td class="space-y-1 p-2">
++              <p v-if="row.reason">{{ row.reason }}</p>
++              <RouterLink
++                v-if="row.customer"
++                class="underline"
++                :to="{ name: 'Customer360Detail', params: { customerId: row.customer } }"
++              >{{ row.customer }}</RouterLink>
++              <a
++                v-if="row.source_document"
++                :href="sourceUrl(row.source_document)"
++                class="block underline"
++              >{{ row.status === 'Needs Review' ? __('Review Source Record') : row.source_record_id }}</a>
++            </td>
++          </tr>
++        </tbody>
++      </table>
++    </div>
++  </Dialog>
++</template>
++
++<script setup>
++import { customerError } from '@/components/Customer360/errors'
++import { Badge, Button, Dialog, call } from 'frappe-ui'
++import { computed, ref } from 'vue'
++import { RouterLink } from 'vue-router'
++
++const props = defineProps({ csvHeader: { type: String, required: true } })
++const emit = defineEmits(['imported'])
++const open = defineModel({ type: Boolean })
++const templateUrl = computed(() => 'data:text/csv;charset=utf-8,' + encodeURIComponent(props.csvHeader + '\r\n'))
++const file = ref(null)
++const submitting = ref(false)
++const rows = ref([])
++const error = ref('')
++
++function selectFile(event) {
++  file.value = event.target.files[0] || null
++  rows.value = []
++  error.value = ''
++}
++
++function sourceUrl(name) {
++  return '/app/c360-source-record/' + encodeURIComponent(name)
++}
++
++async function submit() {
++  if (!file.value || submitting.value) return
++  submitting.value = true
++  error.value = ''
++  try {
++    const result = await call('cellphones_c360.api.intake.process_csv', { csv_text: await file.value.text() })
++    rows.value = result.items
++    emit('imported')
++  } catch (err) {
++    error.value = customerError(err, 'Unable to import customers.', __)
++  } finally {
++    submitting.value = false
++  }
++}
++</script>
+diff --git a/frontend/src/components/Customer360/CustomerWorklist.vue b/frontend/src/components/Customer360/CustomerWorklist.vue
+index f401fdb..bff1b23 100644
+--- a/frontend/src/components/Customer360/CustomerWorklist.vue
++++ b/frontend/src/components/Customer360/CustomerWorklist.vue
+@@ -31,7 +31,7 @@
+ 
+         <p v-if="items.loading" role="status">{{ __('Loading records') }}</p>
+         <div v-else-if="items.error" role="alert" class="flex flex-wrap items-center gap-2 text-sm text-ink-red-5">
+-          {{ items.error.messages?.[0] || __('Unable to load items.') }}
++          {{ customerError(items.error, 'Unable to load items.', __) }}
+           <Button @click="items.reload()">{{ __('Retry') }}</Button>
+         </div>
+         <p v-else-if="!items.data?.items?.length" class="text-sm text-ink-gray-6">{{ __(config.empty) }}</p>
+@@ -76,6 +76,7 @@
+ </template>
+ 
+ <script setup>
++import { customerError } from '@/components/Customer360/errors'
+ import { Badge, Button, FormControl, createResource } from 'frappe-ui'
+ import { reactive, ref } from 'vue'
+ import { RouterLink, useRoute } from 'vue-router'
+diff --git a/frontend/src/components/Customer360/DuplicateReview.vue b/frontend/src/components/Customer360/DuplicateReview.vue
+index 853065b..826704b 100644
+--- a/frontend/src/components/Customer360/DuplicateReview.vue
++++ b/frontend/src/components/Customer360/DuplicateReview.vue
+@@ -85,6 +85,7 @@
+ </template>
+ 
+ <script setup>
++import { customerError } from '@/components/Customer360/errors'
+ import Link from '@/components/Controls/Link.vue'
+ import { Button, Dialog, FormControl, call, frappeRequest, toast } from 'frappe-ui'
+ import { ref, watch } from 'vue'
+@@ -116,8 +117,8 @@ watch(open, async (shown) => {
+       method: 'GET',
+       params: { customer: props.customer.name },
+     })
+-  } catch {
+-    error.value = __('Unable to look for similar profiles.')
++  } catch (err) {
++    error.value = customerError(err, 'Unable to look for similar profiles.', __)
+   } finally {
+     loadingCandidates.value = false
+   }
+@@ -142,7 +143,7 @@ watch(source, async (name, _, onCleanup) => {
+     comparison.value = result
+     selected.value = Object.fromEntries(result.fields.map((field) => [field.fieldname, field.suggested]))
+   } catch (err) {
+-    if (current) error.value = err.messages?.[0] || __('Unable to compare these profiles.')
++    if (current) error.value = customerError(err, 'Unable to compare these profiles.', __)
+   } finally {
+     if (current) loadingPreview.value = false
+   }
+@@ -162,7 +163,7 @@ async function confirmMerge() {
+     toast.success(__('Profiles merged'))
+     emit('saved')
+   } catch (err) {
+-    error.value = err.messages?.[0] || __('Unable to merge these profiles.')
++    error.value = customerError(err, 'Unable to merge these profiles.', __)
+   } finally {
+     saving.value = false
+   }
+diff --git a/frontend/src/components/Customer360/LinkCRMRecord.vue b/frontend/src/components/Customer360/LinkCRMRecord.vue
+index acb385e..ca611c8 100644
+--- a/frontend/src/components/Customer360/LinkCRMRecord.vue
++++ b/frontend/src/components/Customer360/LinkCRMRecord.vue
+@@ -20,6 +20,7 @@
+ </template>
+ 
+ <script setup>
++import { customerError } from '@/components/Customer360/errors'
+ import Link from '@/components/Controls/Link.vue'
+ import { Button, Dialog, FormControl, call, toast } from 'frappe-ui'
+ import { computed, ref, watch } from 'vue'
+@@ -57,7 +58,7 @@ async function save() {
+     toast.success(__('CRM record linked'))
+     emit('saved')
+   } catch (err) {
+-    error.value = err.messages?.[0] || __('Unable to link the CRM record.')
++    error.value = customerError(err, 'Unable to link the CRM record.', __)
+   } finally {
+     saving.value = false
+   }
+diff --git a/frontend/src/components/Customer360/errors.js b/frontend/src/components/Customer360/errors.js
+new file mode 100644
+index 0000000..d4d07ab
+--- /dev/null
++++ b/frontend/src/components/Customer360/errors.js
+@@ -0,0 +1,27 @@
++export function customerError(error, fallback, translate = (message) => message) {
++  const type = error?.exc_type
++  const status = error?.response?.status ?? error?.status
++
++  if (type === 'CSRFTokenError' || type === 'AuthenticationError' || status === 401) {
++    return translate('Your session has expired. Sign in and try again.')
++  }
++  if (type === 'PermissionError' || status === 403) {
++    return translate('You do not have permission for this action.')
++  }
++  if (type === 'DoesNotExistError' || status === 404) {
++    return translate('The requested record is unavailable.')
++  }
++  if (type === 'InvalidTransition') {
++    return translate('The requested status transition is not allowed.')
++  }
++  if (type === 'TimestampMismatchError' || status === 409) {
++    return translate('The record has changed. Reload and try again.')
++  }
++  if ([
++    'ValidationError', 'MandatoryError', 'LinkValidationError', 'DataError',
++    'DuplicateEntryError', 'InvalidEmailAddressError',
++  ].includes(type) || [400, 417, 422].includes(status)) {
++    return translate('Check the entered values and try again.')
++  }
++  return translate(fallback)
++}
+diff --git a/frontend/src/pages/Customer360.vue b/frontend/src/pages/Customer360.vue
+index 3237666..eb9dc48 100644
+--- a/frontend/src/pages/Customer360.vue
++++ b/frontend/src/pages/Customer360.vue
+@@ -4,11 +4,23 @@
+       <h1 class="text-xl font-semibold text-ink-gray-9">
+         Customer 360
+       </h1>
+-      <Button v-if="access?.canCreate" variant="solid" @click="showCreate = true">
+-        {{ __('Create Customer') }}
+-      </Button>
++      <div class="flex flex-wrap items-center justify-end gap-2">
++        <a v-if="access?.canReadSources" href="/app/c360-source-record" class="text-sm underline">
++          {{ __('Source Records') }}
++        </a>
++        <Button v-if="access?.canImport" @click="showIntake = true">{{ __('Import Customers') }}</Button>
++        <Button v-if="access?.canCreate" variant="solid" @click="showCreate = true">
++          {{ __('Create Customer') }}
++        </Button>
++      </div>
+     </div>
+ 
++    <CustomerIntake
++      v-if="access?.canImport"
++      v-model="showIntake"
++      :csv-header="access.csvHeader"
++      @imported="loadCustomers"
++    />
+     <CustomerForm
+       v-if="access?.canCreate"
+       v-model="showCreate"
+@@ -144,8 +156,10 @@
+ </template>
+ 
+ <script setup>
++import { customerError } from '@/components/Customer360/errors'
+ import { ref, computed, onMounted } from 'vue'
+ import { Badge, Button, FormControl, call, frappeRequest } from 'frappe-ui'
++import CustomerIntake from '@/components/Customer360/CustomerIntake.vue'
+ import CustomerForm from '@/components/Customer360/CustomerForm.vue'
+ import { formatDateTime } from '@/components/Customer360/format'
+ import { RouterLink, useRouter } from 'vue-router'
+@@ -158,6 +172,7 @@ function openCustomer(customerId) {
+ const access = ref(null)
+ const accessError = ref('')
+ const showCreate = ref(false)
++const showIntake = ref(false)
+ 
+ async function loadAccess() {
+   accessError.value = ''
+@@ -166,8 +181,8 @@ async function loadAccess() {
+       url: 'cellphones_c360.api.customers.get_access',
+       method: 'GET',
+     })
+-  } catch {
+-    accessError.value = __('Unable to check customer creation permissions.')
++  } catch (err) {
++    accessError.value = customerError(err, 'Unable to check customer actions.', __)
+   }
+ }
+ 
+@@ -212,7 +227,7 @@ async function loadCustomers() {
+   } catch (err) {
+     customers.value = []
+     total.value = 0
+-    error.value = 'Unable to load customers. Check your permissions or connection.'
++    error.value = customerError(err, 'Unable to load customers. Try again.', __)
+   } finally {
+     loading.value = false
+   }
+diff --git a/frontend/src/pages/Customer360Detail.vue b/frontend/src/pages/Customer360Detail.vue
+index de7e076..c5c253a 100644
+--- a/frontend/src/pages/Customer360Detail.vue
++++ b/frontend/src/pages/Customer360Detail.vue
+@@ -7,7 +7,7 @@
+       </Button>
+       <h1 class="text-xl font-semibold">{{ __('Customer Profile') }}</h1>
+       <Button
+-        v-if="data?.customer && !data.customer.is_merged"
++        v-if="data?.customer && !data.customer.is_merged && access?.canReviewDuplicate"
+         class="ml-auto"
+         @click="showDuplicateReview = true"
+       >
+@@ -31,7 +31,7 @@
+     />
+ 
+     <DuplicateReview
+-      v-if="data?.customer && !data.customer.is_merged"
++      v-if="data?.customer && !data.customer.is_merged && access?.canReviewDuplicate"
+       v-model="showDuplicateReview"
+       :customer="data.customer"
+       @saved="refreshProfile"
+@@ -135,7 +135,7 @@
+       </div>
+ 
+       <!-- Orders -->
+-      <div v-if="activeTab === 'Orders'" class="space-y-3">
++      <div v-if="activeTab === 'Orders' && data.can_read_orders" class="space-y-3">
+         <RouterLink
+           v-if="data.can_read_orders"
+           class="inline-flex rounded-md border border-outline-gray-2 px-3 py-1 text-sm hover:underline"
+@@ -188,7 +188,7 @@
+       </div>
+ 
+       <!-- Leads and Deals -->
+-      <div v-if="activeTab === 'Leads & Deals'" class="space-y-3">
++      <div v-if="activeTab === 'Leads & Deals' && data.can_read_sales" class="space-y-3">
+         <div class="flex flex-wrap gap-2">
+           <Button v-if="access?.crmTypes?.length" @click="showLinkRecord = true">{{ __('Link CRM Record') }}</Button>
+           <Button v-if="access?.canCreateLead" @click="showCreateLead = true">{{ __('Create Lead') }}</Button>
+@@ -261,7 +261,7 @@
+       </div>
+ 
+       <!-- After-sales -->
+-      <div v-if="activeTab === 'After-sales'" class="space-y-3">
++      <div v-if="activeTab === 'After-sales' && data.can_read_tickets" class="space-y-3">
+         <RouterLink
+           v-if="data.can_read_tickets"
+           class="inline-flex rounded-md border border-outline-gray-2 px-3 py-1 text-sm hover:underline"
+@@ -353,6 +353,7 @@
+ </template>
+ 
+ <script setup>
++import { customerError } from '@/components/Customer360/errors'
+ import { ref, computed, nextTick, watch } from 'vue'
+ import { useRouter, RouterLink } from 'vue-router'
+ import { Badge, Button, call, frappeRequest } from 'frappe-ui'
+@@ -394,15 +395,18 @@ const timelineError = ref('')
+ const timelinePage = ref(1)
+ const timelineTotal = ref(0)
+ 
+-const tabs = [
++const tabs = computed(() => [
+   'Overview',
+-  'Orders',
+-  'Leads & Deals',
+-  'After-sales',
++  ...(data.value?.can_read_orders ? ['Orders'] : []),
++  ...(data.value?.can_read_sales ? ['Leads & Deals'] : []),
++  ...(data.value?.can_read_tickets ? ['After-sales'] : []),
+   'Timeline',
+-]
++])
+ 
+ const activeTab = ref('Overview')
++watch(tabs, (available) => {
++  if (data.value && !available.includes(activeTab.value)) activeTab.value = 'Overview'
++})
+ const tablist = ref(null)
+ 
+ const eventLabels = {
+@@ -445,7 +449,7 @@ const summary = computed(() => {
+     { label: 'Recorded Order Value', value: money(data.value?.summary?.recorded_order_value) },
+     { label: 'Confirmed Spend', value: money(data.value?.summary?.confirmed_spend) },
+     { label: 'Orders', value: data.value?.can_read_orders ? orders.length : '—' },
+-    { label: 'Deals', value: deals.length },
++    { label: 'Deals', value: data.value?.can_read_sales ? deals.length : '—' },
+     { label: 'Support Tickets', value: data.value?.can_read_tickets ? tickets.length : '—' },
+   ]
+ })
+@@ -461,11 +465,13 @@ const customerFields = computed(() => {
+     { label: 'Customer Type', value: c.customer_type },
+     { label: 'Customer Status', value: c.customer_status },
+     { label: 'Source Channel', value: c.source_channel },
+-    { label: 'Linked Contact', value: c.crm_contact },
+-    { label: 'Linked Lead', value: c.crm_lead },
++    ...(data.value?.can_read_sales ? [
++      { label: 'Linked Contact', value: c.crm_contact },
++      { label: 'Linked Lead', value: c.crm_lead },
++    ] : []),
+     { label: 'Created', value: formatDateTime(c.created_at) },
+     { label: 'Updated At', value: formatDateTime(c.modified_at) },
+-    { label: 'Marketing Consent', value: c.marketing_consent == null ? '—' : c.marketing_consent ? __('Granted') : __('Pending') },
++    { label: 'Marketing Consent', value: c.marketing_consent == null ? '—' : Number(c.marketing_consent) === 1 ? __('Granted') : __('Not Granted') },
+   ]
+ })
+ 
+@@ -492,9 +498,9 @@ async function loadProfile() {
+     if (request !== profileRequest) return
+     data.value = result
+     loadEditorAccess(request)
+-  } catch {
++  } catch (err) {
+     if (request === profileRequest) {
+-      error.value = 'Unable to load customer profile.'
++      error.value = customerError(err, 'Unable to load customer profile.', __)
+     }
+   } finally {
+     if (request === profileRequest) loading.value = false
+@@ -533,9 +539,9 @@ async function loadTimeline() {
+       timeline.value = result.items || []
+       timelineTotal.value = Number(result.total || 0)
+     }
+-  } catch {
++  } catch (err) {
+     if (request === timelineRequest) {
+-      timelineError.value = 'Unable to load customer timeline.'
++      timelineError.value = customerError(err, 'Unable to load customer timeline.', __)
+     }
+   } finally {
+     if (request === timelineRequest) timelineLoading.value = false
+@@ -546,12 +552,13 @@ function handleTabKey(event, index) {
+   const steps = { ArrowLeft: -1, ArrowRight: 1 }
+   if (!(event.key in steps) && event.key !== 'Home' && event.key !== 'End') return
+   event.preventDefault()
+-  const target = event.key === 'Home' ? 0 : event.key === 'End' ? tabs.length - 1 : (index + steps[event.key] + tabs.length) % tabs.length
+-  selectTab(tabs[target])
++  const target = event.key === 'Home' ? 0 : event.key === 'End' ? tabs.value.length - 1 : (index + steps[event.key] + tabs.value.length) % tabs.value.length
++  selectTab(tabs.value[target])
+   nextTick(() => tablist.value?.querySelectorAll('[role=tab]')[target]?.focus())
+ }
+ 
+ function selectTab(tab) {
++  if (!tabs.value.includes(tab)) return
+   activeTab.value = tab
+ 
+   if (tab === 'Timeline') {
+diff --git a/frontend/src/pages/CustomerAnalytics.vue b/frontend/src/pages/CustomerAnalytics.vue
+index e59f690..4a8700a 100644
+--- a/frontend/src/pages/CustomerAnalytics.vue
++++ b/frontend/src/pages/CustomerAnalytics.vue
+@@ -17,13 +17,14 @@
+ 
+       <p v-if="kpis.loading" role="status">{{ __('Loading analytics') }}</p>
+       <p v-else-if="kpis.error" role="alert" class="text-sm text-ink-red-5">
+-        {{ kpis.error.messages?.[0] || __('Unable to load analytics.') }}
++        {{ customerError(kpis.error, 'Unable to load analytics.', __) }}
+         <Button @click="kpis.reload()">{{ __('Retry') }}</Button>
+       </p>
+       <p v-else-if="!groups.length" class="text-sm text-ink-gray-6">{{ __('No analytics are available for this account.') }}</p>
+       <template v-else>
+         <section v-for="group in groups" :key="group.title" class="space-y-3">
+           <h2 class="text-lg font-semibold">{{ __(group.title) }}</h2>
++          <p v-if="group.note" class="text-sm text-ink-gray-6">{{ __(group.note) }}</p>
+           <dl class="grid grid-cols-2 gap-3 md:grid-cols-3 xl:grid-cols-5">
+             <div v-for="[label, value, format] in group.cards" :key="label" class="rounded-lg border border-outline-gray-2 p-4">
+               <dt class="text-sm text-ink-gray-6">{{ __(label) }}</dt>
+@@ -40,7 +41,7 @@
+                 :y="['count']"
+                 :series-config="{ count: { color: '#D70018', showDataLabels: true } }"
+               />
+-              <p v-else class="p-4 text-sm text-ink-gray-6">{{ __(title) }} · {{ __('No data for this period') }}</p>
++              <p v-else class="p-4 text-sm text-ink-gray-6">{{ __(title) }} · {{ data == null ? __('Unavailable for this account') : __('No data for this period') }}</p>
+             </ChartCard>
+           </div>
+         </section>
+@@ -50,6 +51,7 @@
+ </template>
+ 
+ <script setup>
++import { customerError } from '@/components/Customer360/errors'
+ import { Button, FormControl, createResource } from 'frappe-ui'
+ import { BarChart, ChartCard } from 'frappe-ui/charts'
+ import { computed, ref } from 'vue'
+@@ -87,39 +89,55 @@ function formatValue(value, format) {
+ }
+ 
+ const groups = computed(() => {
+-  const { customers, leads, deals, orders, tickets } = kpis.data || {}
++  const { customers, identity, orders, tickets } = kpis.data || {}
+   return [
+     customers && {
+       title: 'Customers',
++      note: 'Profiles and channel history up to the selected end date. New profiles are based on creation dates. Returning customers require at least two completed, paid purchases. Segments can overlap. Hotline is grouped with online/remote channels.',
+       cards: [
+-        ['Total customers', customers.total], ['New customers', customers.new], ['Returning customers', customers.repeat],
+-        ['Possible duplicate profiles', customers.duplicateCustomers], ['Pending identity reviews', customers.pendingIdentityReviews],
++        ['Total profiles (not merged)', customers.total],
++        ['Profiles created in period', customers.new],
++        ['Returning customers (confirmed purchases)', customers.repeat],
++        ['Customers with valid orders in period', customers.withOrders],
++      ],
++      charts: [
++        ['Customer channel mix', customers.interactionChannels],
++        ['Customer segments', customers.segments],
++        ['New profile sources', customers.bySource],
++        ['New profiles by customer type', customers.byType],
+       ],
+-      charts: [['Online and offline', customers.byChannel], ['Customer segments', customers.segments]],
+     },
+-    (leads || deals) && {
+-      title: 'Sales pipeline',
++    (identity || customers?.duplicateCustomers != null) && {
++      title: 'Identity & Data Quality',
++      note: 'Pending reviews (all dates) shows the current backlog. Other source metrics count records received in the selected period, using their current processing status.',
+       cards: [
+-        ['Leads', leads?.total], ['Deals', deals?.total], ['Lead conversion rate', deals?.conversionRate, 'percent'],
+-        ['Deal win rate', deals?.winRate, 'percent'], ['Open pipeline value', deals?.pipelineValue, 'money'],
++        ['Pending reviews (all dates)', identity?.currentPending],
++        ['Possible duplicate profiles', customers?.duplicateCustomers],
++        ['Source records received', identity?.total],
++        ['Created', identity?.created], ['Linked', identity?.linked],
++        ['Needs Review (in period)', identity?.needsReview], ['Invalid', identity?.invalid],
+       ],
+-      charts: [['Lead status', leads?.byStatus], ['Deal stages', deals?.byStage]],
++      charts: identity ? [['Source records by processing status', identity.byStatus]] : [],
+     },
+     orders && {
+       title: 'Orders',
++      note: 'Valid orders include Confirmed, Processing and Completed. Confirmed receipts count completed, paid orders by payment date. Multiple valid orders do not necessarily mean completed purchases.',
+       cards: [
+         ['Orders', orders.total], ['Completed', orders.completed], ['Cancelled', orders.cancelled],
+         ['Valid order value', orders.validValue, 'money'], ['Confirmed receipts', orders.confirmedReceipts, 'money'],
++        ['Average valid order value', orders.averageValue, 'money'],
++        ['Customers with 2+ valid orders', orders.repeatCustomers],
+       ],
+-      charts: [['Orders by status', orders.byStatus]],
++      charts: [['Orders by status', orders.byStatus], ['Orders by date', orders.trend]],
+     },
+     tickets && {
+       title: 'After-sales',
++      note: 'Tickets received in the selected period, grouped by current status. Resolution time uses available valid created and resolved dates.',
+       cards: [
+-        ['Tickets', tickets.total], ['Backlog', tickets.backlog], ['Resolved', tickets.resolved],
++        ['Tickets', tickets.total], ['Backlog', tickets.backlog], ['Resolved & Closed', tickets.resolved],
+         ['Resolution rate', tickets.resolutionRate, 'percent'], ['Average handling time (hours)', tickets.averageResolutionHours],
+       ],
+-      charts: [['Tickets by status', tickets.byStatus]],
++      charts: [['Tickets by status', tickets.byStatus], ['Tickets by type', tickets.byType], ['Tickets by date', tickets.trend]],
+     },
+   ].filter(Boolean)
+ })
 -- 
 2.47.3
 

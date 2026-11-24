@@ -4,7 +4,6 @@ set -euo pipefail
 mode=$1
 site=$2
 patch=$3
-role_patch=${4:-}
 bench_dir=/home/frappe/frappe-bench
 frappe_commit=2e9ecdc03fa5b5b8d1ba05224a1aff7dad832bd0
 crm_base=638bf3db23e7142870819a213368e028866b79b1
@@ -37,6 +36,7 @@ cd "$bench_dir"
 test "$(git -C apps/frappe rev-parse HEAD)" = "$frappe_commit"
 git -C apps/crm merge-base --is-ancestor "$crm_base" HEAD
 test -f apps/cellphones_c360/pyproject.toml
+test -f apps/cellphones_c360/cellphones_c360/public/branding/cellphones-brand.png
 
 if [[ $mode == verify ]]; then
     bench version
@@ -80,11 +80,6 @@ for mail in "$scratch"/mail/*; do
             -c user.email="release@example.test" am "$mail"
     fi
 done
-if [[ -n $role_patch ]] && ! git -C "$scratch/worktree" apply --reverse --check "$role_patch" 2>/dev/null; then
-    git -C "$scratch/worktree" apply --index "$role_patch"
-    git -C "$scratch/worktree" -c user.name="CellphoneS C360 release" \
-        -c user.email="release@example.test" commit -m "Enable approved CellphoneS department roles"
-fi
 git -C "$crm_repo" merge --ff-only "$(git -C "$scratch/worktree" rev-parse HEAD)"
 
 for app in crm cellphones_c360; do

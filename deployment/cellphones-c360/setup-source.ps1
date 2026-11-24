@@ -15,7 +15,6 @@ $ErrorActionPreference = "Stop"
 $bench = "/home/frappe/frappe-bench"
 $repo = (Resolve-Path (Join-Path $PSScriptRoot "../..")).Path
 $patch = Join-Path $repo "frappe-crm-native/patches/cellphones-c360.patch"
-$rolePatch = Join-Path $repo "frappe-crm-native/patches/department-access.patch"
 $release = Join-Path $PSScriptRoot "release.sh"
 $releaseText = (Get-Content -LiteralPath $release -Raw -Encoding UTF8) -replace "\r", ""
 $encodedRelease = [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($releaseText))
@@ -39,7 +38,6 @@ $helper = $null
 $project = @("compose", "--project-name", $ProjectName)
 $setupId = [Guid]::NewGuid().ToString("N")
 $releasePatch = "/tmp/c360-release-$setupId.patch"
-$releaseRolePatch = "/tmp/c360-department-$setupId.patch"
 Push-Location $PSScriptRoot
 try {
     if ($Mode -eq "New") {
@@ -71,15 +69,11 @@ try {
         Invoke-Docker @project run --rm -d --no-deps --name $helper --entrypoint sleep frappe infinity
         Invoke-Docker exec -u root $helper chown frappe:frappe $bench "$bench/apps"
         $Container = $helper
-        $ApplyDepartmentRoles = $true
     }
 
     Invoke-Docker cp $patch "${Container}:$releasePatch"
-    if ($ApplyDepartmentRoles) {
-        Invoke-Docker cp $rolePatch "${Container}:$releaseRolePatch"
-    }
     $releaseMode = $Mode.ToLowerInvariant()
-    Invoke-Docker exec -u frappe -w $bench -e C360_DB_ROOT_PASSWORD -e C360_ADMIN_PASSWORD $Container bash -c "$command $releaseMode $Site $releasePatch $releaseRolePatch"
+    Invoke-Docker exec -u frappe -w $bench -e C360_DB_ROOT_PASSWORD -e C360_ADMIN_PASSWORD $Container bash -c "$command $releaseMode $Site $releasePatch"
     if ($Mode -eq "New") {
         Invoke-Docker @project up -d frappe
     }

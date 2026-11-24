@@ -122,7 +122,11 @@ Tải lại trình duyệt bằng Ctrl+F5. Commit trong repository CRM, xuất l
 
 ## 7. Bộ triển khai và bàn giao
 
-`deployment/cellphones-c360/` hỗ trợ Verify, New và Update từ mã nguồn. Snapshot là chế độ riêng dành cho bộ sao lưu ngày 22/11/2026. Logo đóng gói trong public assets của Custom App, còn backup và cấu hình site được quản lý ngoài Git.
+`deployment/cellphones-c360/` hỗ trợ Verify, New và Update từ mã nguồn. Trên site đang chạy, dùng `./deployment/cellphones-c360/setup-source.ps1 -Mode Verify -Site crm.localhost` để kiểm tra gói ứng dụng. Patch chính đã bao gồm quyền các phòng ban. Quy trình cài từ đầu trên máy sạch chưa được kiểm thử.
+
+Bộ demo có thể chạy thử và hoàn tác bằng `./deployment/cellphones-c360/import-demo.ps1`. [Snapshot CSV demo-v2](data/snapshots/demo-v2) kèm manifest là bộ dữ liệu riêng. Preflight trên site hiện có phát hiện dữ liệu trùng và 11 ticket không đáp ứng quy tắc đơn hàng đã hoàn tất. Chế độ Snapshot của script setup dành cho bộ sao lưu ngày 22/11/2026.
+
+Logo public có URL `/assets/cellphones_c360/branding/cellphones-brand.png`. Backup và cấu hình từng site được quản lý ngoài Git.
 
 Xem [Installation Guide](docs/deployment/installation-guide.md), [Deployment Guide](docs/deployment/deployment-guide.md) và [Git workflow](docs/deployment/git-workflow.md).
 

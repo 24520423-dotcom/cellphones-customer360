@@ -47,9 +47,13 @@ Không dùng Administrator làm tài khoản mặc định cho nhân viên. Modu
 
 Mọi API truy cập hồ sơ khách hàng phải kiểm tra phiên, quyền DocType, quyền tài liệu và quyền trường trên server. Không dùng `ignore_permissions=True` để vượt quyền dữ liệu khách hàng. Ẩn nút ở frontend không thay thế phân quyền backend. Kiểm thử Guest và các role nghiệp vụ. Xử lý lỗi theo response thực tế của Frappe, không giả định mọi 403 là hết phiên hoặc mọi lỗi validation là 422.
 
+API hồ sơ trả `403` khi người dùng thiếu quyền thao tác và `404` với cùng thông báo cho mã không tồn tại hoặc ngoài phạm vi đọc. REST dành cho các DocType Customer 360 và API custom loại bỏ stack trace khỏi phản hồi lỗi. Các chuyển trạng thái đơn hàng và hậu mãi không hợp lệ trả `422 InvalidTransition`. Nhập CSV dùng `POST /api/method/cellphones_c360.api.intake.process_csv` với `csv_text` và CSRF token, tối đa 100 dòng mỗi lượt.
+
 ### Ma trận quyền
 
 Vai trò phòng ban đã được áp dụng trên `crm.localhost`. Administrator và System Manager giữ quyền quản trị tương ứng. Sales User truy cập hồ sơ mình sở hữu. CSKH và Vận hành theo phạm vi được giao. Marketing chỉ đọc hồ sơ có đồng ý tiếp thị. Hồ sơ trả `null` cho trường liên hệ bị giới hạn và các trường đó không tham gia tìm kiếm. Sales Manager cần thêm C360 Merge Approver để được hợp nhất hồ sơ. [Ma trận quyền](../design/permission-matrix.md)
+
+Vận hành chỉ cập nhật `order_status` và `fulfillment_status` của đơn trong phạm vi được giao. Các trường thanh toán, bàn giao, sản phẩm và giá trị đơn do vai trò có quyền tương ứng xử lý.
 
 ## 4. Mô hình dữ liệu Customer 360
 
