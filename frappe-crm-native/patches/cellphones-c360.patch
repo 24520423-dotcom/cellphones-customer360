@@ -1,0 +1,768 @@
+From 820f0af20e6040721470f04c535a6d84458f83d7 Mon Sep 17 00:00:00 2001
+From: 24520423-dotcom <24520423@gm.uit.edu.vn>
+Date: Tue, 24 Nov 2026 03:52:19 +0000
+Subject: [PATCH 1/3] feat: customize CellphoneS CRM theme
+
+---
+ frontend/src/cellphones-theme.css | 25 +++++++++++++++++++++++++
+ frontend/src/index.css            |  1 +
+ 2 files changed, 26 insertions(+)
+ create mode 100644 frontend/src/cellphones-theme.css
+
+diff --git a/frontend/src/cellphones-theme.css b/frontend/src/cellphones-theme.css
+new file mode 100644
+index 0000000..b289ee7
+--- /dev/null
++++ b/frontend/src/cellphones-theme.css
+@@ -0,0 +1,25 @@
++
++/* CellphoneS Customer 360 Theme */
++
++:root {
++    --cellphones-primary: #D70018;
++    --cellphones-hover: #B50014;
++    --cellphones-active: #950012;
++}
++
++/* Primary action buttons */
++button.bg-surface-gray-10.text-ink-base:not(:disabled),
++a.bg-surface-gray-10.text-ink-base:not([aria-disabled="true"]) {
++    background-color: var(--cellphones-primary);
++    color: #FFFFFF;
++}
++
++button.bg-surface-gray-10.text-ink-base:not(:disabled):hover,
++a.bg-surface-gray-10.text-ink-base:not([aria-disabled="true"]):hover {
++    background-color: var(--cellphones-hover);
++}
++
++button.bg-surface-gray-10.text-ink-base:not(:disabled):active,
++a.bg-surface-gray-10.text-ink-base:not([aria-disabled="true"]):active {
++    background-color: var(--cellphones-active);
++}
+diff --git a/frontend/src/index.css b/frontend/src/index.css
+index 7a91fc9..9391f8d 100644
+--- a/frontend/src/index.css
++++ b/frontend/src/index.css
+@@ -1,4 +1,5 @@
+ @import 'frappe-ui/style.css';
++@import "./cellphones-theme.css";
+ 
+ @layer components {
+   .prose-f {
+-- 
+2.47.3
+
+
+From 5d45d3789ad7ff407fe5945dba6886f1a6553f85 Mon Sep 17 00:00:00 2001
+From: 24520423-dotcom <24520423@gm.uit.edu.vn>
+Date: Tue, 24 Nov 2026 04:06:09 +0000
+Subject: [PATCH 2/3] feat: integrate Customer 360 customer list into Frappe
+ CRM
+
+---
+ .../src/components/Layouts/AppSidebar.vue     |  13 ++
+ frontend/src/pages/Customer360.vue            | 182 ++++++++++++++++++
+ frontend/src/router.js                        |   5 +
+ 3 files changed, 200 insertions(+)
+ create mode 100644 frontend/src/pages/Customer360.vue
+
+diff --git a/frontend/src/components/Layouts/AppSidebar.vue b/frontend/src/components/Layouts/AppSidebar.vue
+index fb918cc..a7369da 100644
+--- a/frontend/src/components/Layouts/AppSidebar.vue
++++ b/frontend/src/components/Layouts/AppSidebar.vue
+@@ -285,6 +285,19 @@ const allViews = computed(() => {
+       })),
+     },
+   ]
++  _views.push({
++    name: 'CellphoneS',
++    opened: true,
++    views: [
++      {
++        label: 'Customer 360',
++        icon: ContactsIcon,
++        key: 'Customer360',
++        to: { name: 'Customer360' },
++      },
++    ],
++  })
++
+   if (getPublicViews().length) {
+     _views.push({
+       name: 'Public Views',
+diff --git a/frontend/src/pages/Customer360.vue b/frontend/src/pages/Customer360.vue
+new file mode 100644
+index 0000000..e526d42
+--- /dev/null
++++ b/frontend/src/pages/Customer360.vue
+@@ -0,0 +1,182 @@
++<template>
++  <div class="flex h-full min-h-0 flex-col overflow-auto bg-surface-base">
++    <div class="border-b border-outline-gray-2 px-5 py-4">
++      <h1 class="text-xl font-semibold text-ink-gray-9">
++        Customer 360
++      </h1>
++    </div>
++
++    <div class="space-y-4 p-5">
++      <p class="text-sm text-ink-gray-6">
++        Unified customer profiles
++      </p>
++
++      <form
++        class="flex flex-wrap items-center gap-2"
++        @submit.prevent="searchCustomers"
++      >
++        <input
++          v-model="search"
++          class="w-full max-w-sm rounded-md border border-outline-gray-2 bg-surface-base px-3 py-2 text-sm"
++          placeholder="Search by name, phone or email"
++        />
++
++        <Button
++          variant="solid"
++          type="submit"
++          :disabled="loading"
++        >
++          Search
++        </Button>
++
++        <Button
++          :disabled="loading"
++          @click="resetSearch"
++        >
++          Reset
++        </Button>
++      </form>
++
++      <div v-if="loading" class="p-8 text-center">
++        Loading customers...
++      </div>
++
++      <div v-else-if="error" class="rounded-md border p-4 text-red-600">
++        {{ error }}
++        <Button class="ml-2" @click="loadCustomers">
++          Retry
++        </Button>
++      </div>
++
++      <div v-else class="overflow-x-auto rounded-lg border border-outline-gray-2">
++        <table class="w-full text-left text-sm">
++          <thead class="bg-surface-gray-2">
++            <tr>
++              <th class="p-3">Customer ID</th>
++              <th class="p-3">Customer Name</th>
++              <th class="p-3">Phone</th>
++              <th class="p-3">Updated At</th>
++            </tr>
++          </thead>
++
++          <tbody>
++            <tr
++              v-for="customer in customers"
++              :key="customer.customer_id"
++              class="border-t border-outline-gray-2 hover:bg-surface-gray-1"
++            >
++              <td class="p-3">
++                {{ customer.customer_id }}
++              </td>
++              <td class="p-3 font-medium">
++                {{ customer.display_name }}
++              </td>
++              <td class="p-3">
++                {{ customer.phone_masked || '-' }}
++              </td>
++              <td class="p-3">
++                {{ customer.updated_at || '-' }}
++              </td>
++            </tr>
++
++            <tr v-if="!customers.length">
++              <td colspan="4" class="p-8 text-center text-ink-gray-5">
++                No customers found
++              </td>
++            </tr>
++          </tbody>
++        </table>
++      </div>
++
++      <div class="flex items-center justify-between">
++        <span class="text-sm text-ink-gray-6">
++          {{ total }} customers
++        </span>
++
++        <div class="flex items-center gap-2">
++          <Button
++            :disabled="loading || page <= 1"
++            @click="changePage(page - 1)"
++          >
++            Previous
++          </Button>
++
++          <span class="text-sm">
++            {{ page }} / {{ totalPages }}
++          </span>
++
++          <Button
++            :disabled="loading || page >= totalPages"
++            @click="changePage(page + 1)"
++          >
++            Next
++          </Button>
++        </div>
++      </div>
++    </div>
++  </div>
++</template>
++
++<script setup>
++import { ref, computed, onMounted } from 'vue'
++import { Button, call } from 'frappe-ui'
++
++const customers = ref([])
++const search = ref('')
++const appliedSearch = ref('')
++const page = ref(1)
++const pageSize = 20
++const total = ref(0)
++const loading = ref(false)
++const error = ref('')
++
++const totalPages = computed(() =>
++  Math.max(1, Math.ceil(total.value / pageSize))
++)
++
++async function loadCustomers() {
++  loading.value = true
++  error.value = ''
++
++  try {
++    const data = await call(
++      'cellphones_c360.api.customer360.list_customers',
++      {
++        search: appliedSearch.value,
++        page: page.value,
++        page_size: pageSize,
++      }
++    )
++
++    customers.value = data.items || []
++    total.value = Number(data.total || 0)
++  } catch (err) {
++    customers.value = []
++    total.value = 0
++    error.value = 'Unable to load customers. Check your permissions or connection.'
++  } finally {
++    loading.value = false
++  }
++}
++
++function searchCustomers() {
++  if (loading.value) return
++  appliedSearch.value = search.value.trim()
++  page.value = 1
++  loadCustomers()
++}
++
++function resetSearch() {
++  search.value = ''
++  searchCustomers()
++}
++
++function changePage(newPage) {
++  if (loading.value) return
++  if (newPage < 1 || newPage > totalPages.value) return
++  page.value = newPage
++  loadCustomers()
++}
++
++onMounted(loadCustomers)
++</script>
+diff --git a/frontend/src/router.js b/frontend/src/router.js
+index fad8708..b209857 100644
+--- a/frontend/src/router.js
++++ b/frontend/src/router.js
+@@ -139,6 +139,11 @@ const routes = [
+     name: 'Setup',
+     component: () => import('@/pages/Setup.vue'),
+   },
++  {
++    path: '/customer360',
++    name: 'Customer360',
++    component: () => import('@/pages/Customer360.vue'),
++  },
+   {
+     path: '/:invalidpath',
+     name: 'Invalid Page',
+-- 
+2.47.3
+
+
+From 261dc539d1fccef78c22888464ffe7bd75df0688 Mon Sep 17 00:00:00 2001
+From: 24520423-dotcom <24520423@gm.uit.edu.vn>
+Date: Tue, 24 Nov 2026 04:15:17 +0000
+Subject: [PATCH 3/3] feat: integrate Customer 360 detailed profile into Frappe
+ CRM
+
+---
+ .../src/components/Layouts/AppSidebar.vue     |   3 +
+ frontend/src/pages/Customer360.vue            |  11 +-
+ frontend/src/pages/Customer360Detail.vue      | 384 ++++++++++++++++++
+ frontend/src/router.js                        |   6 +
+ 4 files changed, 403 insertions(+), 1 deletion(-)
+ create mode 100644 frontend/src/pages/Customer360Detail.vue
+
+diff --git a/frontend/src/components/Layouts/AppSidebar.vue b/frontend/src/components/Layouts/AppSidebar.vue
+index a7369da..4e33c92 100644
+--- a/frontend/src/components/Layouts/AppSidebar.vue
++++ b/frontend/src/components/Layouts/AppSidebar.vue
+@@ -354,6 +354,9 @@ function getIcon(routeName, icon) {
+ 
+ // A saved view's key is its name; a plain nav item's key is its route name.
+ function currentRouteKey() {
++  if (route.name === 'Customer360Detail') {
++    return 'Customer360'
++  }
+   return route.query.view || route.name
+ }
+ 
+diff --git a/frontend/src/pages/Customer360.vue b/frontend/src/pages/Customer360.vue
+index e526d42..c96d028 100644
+--- a/frontend/src/pages/Customer360.vue
++++ b/frontend/src/pages/Customer360.vue
+@@ -69,7 +69,15 @@
+                 {{ customer.customer_id }}
+               </td>
+               <td class="p-3 font-medium">
+-                {{ customer.display_name }}
++                <RouterLink
++                  :to="{
++                    name: 'Customer360Detail',
++                    params: { customerId: customer.customer_id },
++                  }"
++                  class="text-[#D70018] hover:underline"
++                >
++                  {{ customer.display_name }}
++                </RouterLink>
+               </td>
+               <td class="p-3">
+                 {{ customer.phone_masked || '-' }}
+@@ -120,6 +128,7 @@
+ <script setup>
+ import { ref, computed, onMounted } from 'vue'
+ import { Button, call } from 'frappe-ui'
++import { RouterLink } from 'vue-router'
+ 
+ const customers = ref([])
+ const search = ref('')
+diff --git a/frontend/src/pages/Customer360Detail.vue b/frontend/src/pages/Customer360Detail.vue
+new file mode 100644
+index 0000000..bbf875e
+--- /dev/null
++++ b/frontend/src/pages/Customer360Detail.vue
+@@ -0,0 +1,384 @@
++<template>
++  <div class="flex h-full min-h-0 flex-col overflow-auto bg-surface-base">
++
++    <div class="flex items-center gap-3 border-b border-outline-gray-2 p-4">
++      <Button @click="router.push({ name: 'Customer360' })">
++        Back
++      </Button>
++      <h1 class="text-xl font-semibold">Customer Profile</h1>
++    </div>
++
++    <div v-if="loading" class="p-8 text-center">
++      Loading customer profile...
++    </div>
++
++    <div v-else-if="error" class="p-5 text-red-600">
++      {{ error }}
++      <Button @click="loadProfile">Retry</Button>
++    </div>
++
++    <div v-else-if="data" class="space-y-5 p-5">
++
++      <!-- Customer header -->
++      <div class="rounded-lg border border-outline-gray-2 p-5">
++        <h2 class="text-2xl font-semibold text-ink-gray-9">
++          {{ data.customer.customer_name }}
++        </h2>
++        <p class="mt-2 text-sm">
++          {{ data.customer.phone_number || '-' }}
++          |
++          {{ data.customer.email || '-' }}
++        </p>
++        <p class="mt-2 text-sm text-ink-gray-6">
++          {{ data.customer.name }}
++        </p>
++      </div>
++
++      <!-- Summary cards -->
++      <div class="grid grid-cols-2 gap-3 lg:grid-cols-4">
++        <div
++          v-for="item in summary"
++          :key="item.label"
++          class="rounded-lg border border-outline-gray-2 p-4"
++        >
++          <p class="text-sm text-ink-gray-6">{{ item.label }}</p>
++          <p class="mt-2 text-xl font-semibold">{{ item.value }}</p>
++        </div>
++      </div>
++
++      <!-- Tabs -->
++      <div class="flex flex-wrap gap-4 border-b border-outline-gray-2">
++        <button
++          v-for="tab in tabs"
++          :key="tab"
++          type="button"
++          class="border-b-2 px-2 py-3 text-sm"
++          :class="activeTab === tab
++            ? 'border-[#D70018] font-semibold text-[#D70018]'
++            : 'border-transparent text-ink-gray-6'"
++          @click="selectTab(tab)"
++        >
++          {{ tab }}
++        </button>
++      </div>
++
++      <!-- Overview -->
++      <div
++        v-if="activeTab === 'Overview'"
++        class="grid grid-cols-1 gap-4 md:grid-cols-2"
++      >
++        <div
++          v-for="item in customerFields"
++          :key="item.label"
++          class="rounded-lg border border-outline-gray-2 p-4"
++        >
++          <p class="text-sm text-ink-gray-6">{{ item.label }}</p>
++          <p class="mt-2 font-medium break-words">
++            {{ item.value || '-' }}
++          </p>
++        </div>
++      </div>
++
++      <!-- Orders -->
++      <div v-if="activeTab === 'Orders'" class="space-y-3">
++        <p v-if="!data.orders?.length">No orders found.</p>
++
++        <div
++          v-for="order in data.orders"
++          :key="order.name"
++          class="rounded-lg border border-outline-gray-2 p-4"
++        >
++          <h3 class="font-semibold">{{ order.name }}</h3>
++          <p class="mt-2 text-sm">{{ order.order_date || '-' }}</p>
++          <p class="mt-1 text-sm">Channel: {{ order.sales_channel || '-' }}</p>
++          <p class="mt-1 text-sm">Status: {{ order.order_status }}</p>
++          <p class="mt-2 font-semibold">
++            {{ money(order.total_amount) }}
++          </p>
++
++          <div class="mt-3 overflow-x-auto">
++            <table class="w-full text-left text-sm">
++              <thead class="bg-surface-gray-2">
++                <tr>
++                  <th class="p-2">Product</th>
++                  <th class="p-2">Quantity</th>
++                  <th class="p-2">Unit Price</th>
++                  <th class="p-2">Amount</th>
++                </tr>
++              </thead>
++              <tbody>
++                <tr
++                  v-for="(item, index) in order.items"
++                  :key="index"
++                  class="border-t border-outline-gray-2"
++                >
++                  <td class="p-2">{{ item.product_name }}</td>
++                  <td class="p-2">{{ item.quantity }}</td>
++                  <td class="p-2">{{ money(item.unit_price) }}</td>
++                  <td class="p-2">{{ money(item.amount) }}</td>
++                </tr>
++              </tbody>
++            </table>
++          </div>
++        </div>
++      </div>
++
++      <!-- Leads and Deals -->
++      <div v-if="activeTab === 'Leads & Deals'" class="space-y-3">
++        <div v-if="data.lead" class="rounded-lg border p-4">
++          <h3 class="font-semibold">Linked Lead</h3>
++
++          <RouterLink
++            class="mt-2 block text-[#D70018]"
++            :to="{ name: 'Lead', params: { leadId: data.lead.name } }"
++          >
++            {{ data.lead.lead_name || data.lead.name }}
++          </RouterLink>
++
++          <p class="mt-1">Status: {{ data.lead.status }}</p>
++        </div>
++
++        <p v-else>No linked lead.</p>
++
++        <h3 class="font-semibold">Related Deals</h3>
++        <p v-if="!data.deals?.length">No deals found.</p>
++
++        <div
++          v-for="deal in data.deals"
++          :key="deal.name"
++          class="rounded-lg border border-outline-gray-2 p-4"
++        >
++          <RouterLink
++            class="font-medium text-[#D70018]"
++            :to="{ name: 'Deal', params: { dealId: deal.name } }"
++          >
++            {{ deal.name }}
++          </RouterLink>
++          <p class="mt-2">Status: {{ deal.status }}</p>
++          <p>Probability: {{ deal.probability ?? '-' }}%</p>
++        </div>
++      </div>
++
++      <!-- After-sales -->
++      <div v-if="activeTab === 'After-sales'" class="space-y-3">
++        <p v-if="!data.tickets?.length">No support tickets found.</p>
++
++        <div
++          v-for="ticket in data.tickets"
++          :key="ticket.name"
++          class="rounded-lg border border-outline-gray-2 p-4"
++        >
++          <h3 class="font-semibold">{{ ticket.subject }}</h3>
++          <p class="mt-2 text-sm">{{ ticket.name }}</p>
++          <p>Type: {{ ticket.ticket_type || '-' }}</p>
++          <p>Priority: {{ ticket.priority || '-' }}</p>
++          <p>Status: {{ ticket.ticket_status || '-' }}</p>
++          <p>Assigned to: {{ ticket.assigned_to || '-' }}</p>
++          <p>Related order: {{ ticket.related_order || '-' }}</p>
++          <p class="mt-2 whitespace-pre-wrap">
++            {{ ticket.description || '' }}
++          </p>
++        </div>
++      </div>
++
++      <!-- Timeline -->
++      <div v-if="activeTab === 'Timeline'" class="space-y-3">
++        <p v-if="timelineLoading">Loading timeline...</p>
++
++        <div v-else-if="timelineError">
++          <p class="text-red-600">{{ timelineError }}</p>
++          <Button @click="loadTimeline">Retry</Button>
++        </div>
++
++        <template v-else>
++          <p v-if="!timeline.length">No activities found.</p>
++
++          <div
++            v-for="event in timeline"
++            :key="event.id"
++            class="rounded-lg border border-outline-gray-2 p-4"
++          >
++            <p class="font-medium">{{ event.summary }}</p>
++            <p class="mt-2 text-sm text-ink-gray-6">
++              {{ event.occurred_at || '-' }}
++            </p>
++            <p class="text-sm">{{ event.type }}</p>
++          </div>
++
++          <div class="flex items-center justify-between">
++            <span>{{ timelineTotal }} activities</span>
++            <div class="flex items-center gap-2">
++              <Button
++                :disabled="timelinePage <= 1"
++                @click="changeTimelinePage(-1)"
++              >
++                Previous
++              </Button>
++              <span>{{ timelinePage }}</span>
++              <Button
++                :disabled="timelinePage * 20 >= timelineTotal"
++                @click="changeTimelinePage(1)"
++              >
++                Next
++              </Button>
++            </div>
++          </div>
++        </template>
++      </div>
++
++    </div>
++  </div>
++</template>
++
++<script setup>
++import { ref, computed, watch } from 'vue'
++import { useRouter, RouterLink } from 'vue-router'
++import { Button, call } from 'frappe-ui'
++
++const props = defineProps({
++  customerId: { type: String, required: true },
++})
++
++const router = useRouter()
++const data = ref(null)
++const loading = ref(false)
++const error = ref('')
++
++const timeline = ref([])
++const timelineLoading = ref(false)
++const timelineError = ref('')
++const timelinePage = ref(1)
++const timelineTotal = ref(0)
++
++const tabs = [
++  'Overview',
++  'Orders',
++  'Leads & Deals',
++  'After-sales',
++  'Timeline',
++]
++
++const activeTab = ref('Overview')
++
++function money(value) {
++  if (value == null || value === '') return '-'
++  return new Intl.NumberFormat('vi-VN', {
++    style: 'currency',
++    currency: 'VND',
++  }).format(Number(value))
++}
++
++const summary = computed(() => {
++  const orders = data.value?.orders || []
++  const deals = data.value?.deals || []
++  const tickets = data.value?.tickets || []
++
++  return [
++    {
++      label: 'Order Value',
++      value: money(orders.reduce(
++        (sum, order) => sum + Number(order.total_amount || 0), 0
++      )),
++    },
++    { label: 'Orders', value: orders.length },
++    { label: 'Deals', value: deals.length },
++    { label: 'Support Tickets', value: tickets.length },
++  ]
++})
++
++const customerFields = computed(() => {
++  const c = data.value?.customer || {}
++
++  return [
++    { label: 'Customer ID', value: c.name },
++    { label: 'Full Name', value: c.customer_name },
++    { label: 'Phone', value: c.phone_number },
++    { label: 'Email', value: c.email },
++    { label: 'Customer Type', value: c.customer_type },
++    { label: 'Customer Status', value: c.customer_status },
++    { label: 'Source Channel', value: c.source_channel },
++    { label: 'Linked Contact', value: c.crm_contact },
++    { label: 'Linked Lead', value: c.crm_lead },
++  ]
++})
++
++let profileRequest = 0
++let timelineRequest = 0
++
++async function loadProfile() {
++  const request = ++profileRequest
++  loading.value = true
++  error.value = ''
++  data.value = null
++
++  try {
++    const result = await call(
++      'cellphones_c360.api.customer360.get_customer_360',
++      { customer_id: props.customerId }
++    )
++    if (request === profileRequest) data.value = result
++  } catch {
++    if (request === profileRequest) {
++      error.value = 'Unable to load customer profile.'
++    }
++  } finally {
++    if (request === profileRequest) loading.value = false
++  }
++}
++
++async function loadTimeline() {
++  const request = ++timelineRequest
++  timelineLoading.value = true
++  timelineError.value = ''
++
++  try {
++    const result = await call(
++      'cellphones_c360.api.customer360.get_customer_timeline',
++      {
++        customer_id: props.customerId,
++        page: timelinePage.value,
++        page_size: 20,
++      }
++    )
++
++    if (request === timelineRequest) {
++      timeline.value = result.items || []
++      timelineTotal.value = Number(result.total || 0)
++    }
++  } catch {
++    if (request === timelineRequest) {
++      timelineError.value = 'Unable to load customer timeline.'
++    }
++  } finally {
++    if (request === timelineRequest) timelineLoading.value = false
++  }
++}
++
++function selectTab(tab) {
++  activeTab.value = tab
++
++  if (tab === 'Timeline') {
++    loadTimeline()
++  }
++}
++
++function changeTimelinePage(step) {
++  timelinePage.value += step
++  loadTimeline()
++}
++
++watch(
++  () => props.customerId,
++  () => {
++    ++timelineRequest
++    timeline.value = []
++    timelineTotal.value = 0
++    timelinePage.value = 1
++    timelineLoading.value = false
++    timelineError.value = ''
++    activeTab.value = 'Overview'
++    loadProfile()
++  },
++  { immediate: true }
++)
++</script>
+diff --git a/frontend/src/router.js b/frontend/src/router.js
+index b209857..073ca6e 100644
+--- a/frontend/src/router.js
++++ b/frontend/src/router.js
+@@ -144,6 +144,12 @@ const routes = [
+     name: 'Customer360',
+     component: () => import('@/pages/Customer360.vue'),
+   },
++  {
++    path: '/customer360/:customerId',
++    name: 'Customer360Detail',
++    component: () => import('@/pages/Customer360Detail.vue'),
++    props: true,
++  },
+   {
+     path: '/:invalidpath',
+     name: 'Invalid Page',
+-- 
+2.47.3
+
