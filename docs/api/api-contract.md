@@ -214,6 +214,12 @@ Nguồn dữ liệu hiện gồm đơn hàng, yêu cầu hỗ trợ và lịch s
 
 `GET /api/method/cellphones_c360.api.customers.find_duplicates` nhận `customer` để đối chiếu với hồ sơ đã lưu hoặc `customer_name`, `phone_number`, `email` để tra theo dữ liệu nhập. Trả tối đa 20 hồ sơ trong quyền đọc, với các trường người gọi được phép xem và `matched_fields` để phân biệt trùng tên, số điện thoại, email hoặc nhiều dấu hiệu. Kết quả là danh sách ứng viên để nhân viên xác minh.
 
+### 6.7. Tiếp nhận khách hàng đa kênh
+
+- `POST /api/method/cellphones_c360.api.intake.process_csv` nhận `csv_text`. `POST /api/method/cellphones_c360.api.intake.process_records` nhận `rows` với cùng các trường được mô tả trong [mapping dữ liệu](../integration/customer-intake.md).
+- Trả `items` theo số thứ tự dòng với `status`, `source_record_id`, `source_document`, `reason`, `customer`, `purchase_interest` và `replay` tùy kết quả. Hồ sơ chỉ được trả khi người gọi có quyền đọc.
+- `POST /api/method/cellphones_c360.api.intake.resolve_record` nhận `source_document`, `customer`, `reason` để liên kết bản ghi đang Needs Review. Yêu cầu quyền ghi bản ghi nguồn và hồ sơ đích.
+
 ## 7. Orders và After-sales
 
 DocType đã có, dữ liệu đã hiển thị trong hồ sơ Customer 360. Màn hình quản lý riêng và thao tác ghi trong giao diện native mới chưa được kiểm thử.

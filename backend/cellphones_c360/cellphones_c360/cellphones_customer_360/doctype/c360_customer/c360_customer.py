@@ -27,6 +27,12 @@ def normalize_email(value):
     return email
 
 
+def normalize_source(value):
+    channel = " ".join((value or "").split())
+    options = frappe.get_meta("C360 Customer").get_field("source_channel").options.splitlines()
+    return next((option for option in options if option.casefold() == channel.casefold()), channel)
+
+
 def lock_customer_identity_writes():
     # A shared, existing InnoDB row keeps the duplicate check and save in the same serial order.
     frappe.db.get_value("DocType", "C360 Customer", "name", for_update=True)
