@@ -239,6 +239,10 @@ Nguồn dữ liệu hiện gồm đơn hàng, yêu cầu hỗ trợ và lịch s
 
 Form chuẩn Frappe Desk dùng ORM của `Customer Order` để lưu `items`, `crm_deal`, phương thức và trạng thái thanh toán/giao nhận. Controller tính `total_amount`, tự ghi `paid_at` và `completed_at` theo chuyển trạng thái. Tổng giá trị đơn được lưu riêng khỏi chỉ số tiền thực thu.
 
+`GET /api/method/cellphones_c360.api.after_sales.get_capabilities` trả `canRead`, `canCreate` và metadata bộ lọc, hoặc `canEdit` nếu nhận mã `ticket`. `GET /api/method/cellphones_c360.api.after_sales.list_tickets` nhận `search`, `status`, `ticket_type`, `priority`, `customer`, `page`.
+
+`POST /api/method/cellphones_c360.api.after_sales.record_demo_proposal` nhận `customer` và `proposal`. Trả mã Comment khi hồ sơ đang hoạt động, có consent và tài khoản đủ quyền. Lịch chăm sóc là CRM Task do scheduler tạo từ `Customer Order.completed_at`.
+
 DocType đã có, dữ liệu đã hiển thị trong hồ sơ Customer 360. Màn hình quản lý riêng và thao tác ghi trong giao diện native mới chưa được kiểm thử.
 
 | Nghiệp vụ | API / mã nguồn cần đối chiếu | Trạng thái |

@@ -121,7 +121,7 @@
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-11-21 22:24:24.004103",
+ "modified": "2026-11-24 13:08:00.000000",
  "modified_by": "Administrator",
  "module": "CellphoneS Customer 360",
  "name": "Customer Support Ticket",
@@ -143,8 +143,10 @@
  ],
  "row_format": "Dynamic",
  "rows_threshold_for_grid_search": 20,
+ "search_fields": "subject,customer,ticket_status,ticket_type",
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": [],
- "title_field": "subject"
+ "title_field": "subject",
+ "track_changes": 1
 }

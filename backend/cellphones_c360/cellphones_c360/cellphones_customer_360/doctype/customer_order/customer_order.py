@@ -90,6 +90,8 @@ class CustomerOrder(Document):
             now_datetime() if self.order_status == "Completed" and self.has_value_changed("order_status")
             else previous.completed_at if previous else None
         )
+        if self.meta.has_field("care_task"):
+            self.care_task = previous.get("care_task") if previous else None
 
     def item_values(self):
         return [

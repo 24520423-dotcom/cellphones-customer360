@@ -12,6 +12,14 @@ from cellphones_c360.cellphones_customer_360.doctype.c360_customer.c360_customer
     lock_customer_identity_writes,
 )
 
+ORDER_REQUIRED = {"Warranty", "Return", "Exchange"}
+TRANSITIONS = {
+    "Open": {"In Progress", "Pending"},
+    "In Progress": {"Pending", "Resolved"},
+    "Pending": {"In Progress", "Resolved"},
+    "Resolved": {"Closed", "In Progress"},
+}
+
 
 class CustomerSupportTicket(Document):
     def check_if_latest(self):
@@ -22,35 +30,53 @@ class CustomerSupportTicket(Document):
         if self.has_value_changed("customer"):
             check_customer_link(self.customer)
         self.validate_related_order()
+        self.validate_assignment()
+        self.validate_status()
         self.validate_resolution()
         self.set_resolved_date()
         self.validate_resolved_date()
 
     def validate_related_order(self):
-        # Không bắt buộc Ticket phải có đơn hàng
+        requires_purchase = self.ticket_type in ORDER_REQUIRED
+        changed = any(self.has_value_changed(field) for field in ("customer", "related_order", "ticket_type"))
         if not self.related_order:
+            if changed and requires_purchase:
+                frappe.throw(_("Select a completed order for warranty, return or exchange."))
             return
 
-        # Lấy khách hàng của đơn hàng liên quan
-        order_customer = frappe.db.get_value(
-            "Customer Order",
-            self.related_order,
-            "customer"
-        )
+        order = frappe.get_doc("Customer Order", self.related_order, for_update=True)
+        if changed:
+            order.check_permission("read")
+        if order.customer != self.customer:
+            frappe.throw(_("The related order must belong to this customer."))
+        if changed and requires_purchase:
+            if order.order_status != "Completed":
+                frappe.throw(_("Select a completed order for warranty, return or exchange."))
+            purchase_date = order.get("completed_at") or order.order_date
+            if purchase_date and self.created_date and get_datetime(self.created_date) < get_datetime(purchase_date):
+                frappe.throw(_("The support request cannot predate the purchase."))
 
-        if not order_customer:
-            frappe.throw(
-                _("Đơn hàng liên quan không tồn tại.")
-            )
+    def validate_assignment(self):
+        if not self.assigned_to or not self.has_value_changed("assigned_to"):
+            return
+        user = frappe.db.get_value("User", self.assigned_to, ("enabled", "user_type"), as_dict=True)
+        if not user or not user.enabled or user.user_type != "System User" or not frappe.has_permission(
+            self.doctype, "write", user=self.assigned_to,
+        ):
+            frappe.throw(_("Assign the ticket to an active employee with support permissions."))
 
-        # Kiểm tra đơn hàng có thuộc đúng khách hàng
-        if order_customer != self.customer:
-            frappe.throw(
-                _(
-                    "Đơn hàng {0} không thuộc khách hàng "
-                    "được chọn trong Ticket."
-                ).format(self.related_order)
-            )
+    def validate_status(self):
+        previous = self.get_doc_before_save()
+        if not previous:
+            if self.ticket_status != "Open":
+                frappe.throw(_("New tickets must start in Open."))
+            return
+        if self.ticket_status == previous.ticket_status:
+            return
+        if self.ticket_status not in TRANSITIONS.get(previous.ticket_status, ()):
+            frappe.throw(_("This ticket status transition is not allowed."))
+        if self.ticket_status in {"In Progress", "Resolved", "Closed"} and not self.assigned_to:
+            frappe.throw(_("Assign the ticket before progressing it."))
 
     def validate_resolution(self):
         # Ticket đã giải quyết phải có nội dung xử lý
@@ -64,15 +90,13 @@ class CustomerSupportTicket(Document):
                 )
 
     def set_resolved_date(self):
-        # Chỉ tự ghi ngày khi chuyển sang Resolved
-        if self.ticket_status != "Resolved":
-            return
-
-        # Không ghi đè thời điểm đã được lưu
-        if self.resolved_date:
-            return
-
-        self.resolved_date = now_datetime()
+        previous = self.get_doc_before_save()
+        if self.ticket_status == "Resolved" and self.has_value_changed("ticket_status"):
+            self.resolved_date = now_datetime()
+        elif self.ticket_status in {"Resolved", "Closed"} and previous:
+            self.resolved_date = previous.resolved_date
+        else:
+            self.resolved_date = None
 
     def validate_resolved_date(self):
         if not self.resolved_date or not self.created_date:

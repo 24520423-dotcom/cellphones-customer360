@@ -25,6 +25,7 @@ def get_customer_360(customer_id):
         "customer_type": customer.customer_type,
         "customer_status": customer.customer_status,
         "source_channel": customer.source_channel,
+        "marketing_consent": customer.get("marketing_consent"),
         "crm_contact": next((row.name for row in contacts if row.name == customer.crm_contact), None),
         "crm_lead": next((row.name for row in crm["CRM Lead"] if row.name == customer.crm_lead), None),
         "modified": str(customer.modified),
@@ -92,6 +93,7 @@ def get_customer_360(customer_id):
         })
 
     # 5. Lấy lịch sử hỗ trợ khách hàng
+    can_read_tickets = frappe.has_permission("Customer Support Ticket", "read")
     tickets = (
         frappe.get_list(
             "Customer Support Ticket",
@@ -102,7 +104,7 @@ def get_customer_360(customer_id):
             order_by="created_date desc, name desc",
             page_length=0,
         )
-        if frappe.has_permission("Customer Support Ticket", "read") else []
+        if can_read_tickets else []
     )
 
     # 6. Lấy thông tin liên hệ CRM Contact
@@ -140,6 +142,7 @@ def get_customer_360(customer_id):
         "orders": orders,
         "can_read_orders": bool(can_read_orders),
         "tickets": tickets,
+        "can_read_tickets": bool(can_read_tickets),
     }
 
 @frappe.whitelist()

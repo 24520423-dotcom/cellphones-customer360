@@ -165,6 +165,8 @@ app_license = "mit"
 # Scheduled Tasks
 # ---------------
 
+scheduler_events = {"hourly": ["cellphones_c360.care.schedule_follow_ups"]}
+
 # scheduler_events = {
 # 	"all": [
 # 		"cellphones_c360.tasks.all"
