@@ -1,6 +1,7 @@
 from uuid import uuid4
 
 import frappe
+from frappe.client import set_value
 from frappe.tests.utils import FrappeTestCase
 from crm.api import check_app_permission
 
@@ -59,6 +60,10 @@ class TestC360Permissions(FrappeTestCase):
         order.update({
             "order_status": "Confirmed", "payment_method": "COD", "fulfillment_method": "Delivery",
         }).save()
+        outside_order = frappe.get_doc({
+            "doctype": "Customer Order", "customer": outside.name, "sales_channel": "Store",
+            "items": [{"product_name": "Unassigned item", "quantity": 1, "unit_price": 30}],
+        }).insert()
         ticket = frappe.get_doc({
             "doctype": "Customer Support Ticket", "customer": assigned.name, "ticket_type": "Other",
             "subject": "C360 Permission Ticket", "description": "Synthetic request", "assigned_to": service,
@@ -72,9 +77,27 @@ class TestC360Permissions(FrappeTestCase):
         self.assertEqual(list_customers(search=self.email)["total"], 0)
         with self.assertRaises(frappe.PermissionError):
             get_customer_360(outside.name)
-        order.reload().update({"fulfillment_status": "Preparing"}).save()
+        order.reload()
+        updated = set_value(order.doctype, order.name, {
+            "order_status": "Processing",
+            "fulfillment_status": "Preparing",
+        })
+        self.assertEqual((updated.order_status, updated.fulfillment_status), ("Processing", "Preparing"))
+        item = order.items[0].as_dict()
+        prohibited = {
+            "payment_method": "Direct",
+            "payment_status": "Paid",
+            "fulfillment_method": "Pickup",
+            "fulfillment_owner": service,
+            "total_amount": 1000,
+            "items": [{**item, "quantity": 2, "unit_price": 50}],
+        }
+        for field, value in prohibited.items():
+            with self.subTest(field=field), self.assertRaises(frappe.PermissionError):
+                set_value(order.doctype, order.name, {field: value})
         with self.assertRaises(frappe.PermissionError):
-            order.update({"payment_status": "Paid"}).save()
+            set_value(outside_order.doctype, outside_order.name, {"order_status": "Cancelled"})
+        self.assertFalse(frappe.has_permission(outside_order.doctype, "read", doc=outside_order))
 
         frappe.set_user(service)
         self.assertTrue(check_app_permission())

@@ -9,6 +9,8 @@ DEPARTMENTS = (SERVICE, OPERATIONS, MARKETING)
 CUSTOMER = "C360 Customer"
 ORDER = "Customer Order"
 TICKET = "Customer Support Ticket"
+ORDER_STATUS_FIELDS = {"order_status", "fulfillment_status"}
+MANAGEMENT_ROLES = {"System Manager", "Sales Manager"}
 
 
 def install_roles():
@@ -26,9 +28,15 @@ def install_roles():
 def department(user=None):
     user = user or frappe.session.user
     roles = set(frappe.get_roles(user))
-    if user == "Administrator" or roles.intersection({"System Manager", "Sales Manager"}):
+    if user == "Administrator" or roles.intersection(MANAGEMENT_ROLES):
         return None
     return next((role for role in DEPARTMENTS if role in roles), None)
+
+
+def is_operations_order_editor(user=None):
+    user = user or frappe.session.user
+    roles = set(frappe.get_roles(user))
+    return user != "Administrator" and OPERATIONS in roles and not roles.intersection(MANAGEMENT_ROLES)
 
 
 def _grant(customer, user_sql, doctype):
@@ -67,7 +75,7 @@ def _scope(doctype, user):
         return _assigned_customer(f"{table}.name", user_sql, doctype, role)
     if role == MARKETING:
         return "1 = 0"
-    if doctype == ORDER and role == OPERATIONS:
+    if doctype == ORDER and is_operations_order_editor(user):
         return f"{table}.fulfillment_owner = {user_sql}"
     if doctype == TICKET and role == SERVICE:
         return (
@@ -104,12 +112,20 @@ def document_permission(doc, user=None, permission_type=None):
 
 
 def validate_operations_order(doc):
-    if department() != OPERATIONS:
+    if not is_operations_order_editor():
         return
     previous = doc.get_doc_before_save()
+    protected_fields = set(doc.meta.get_valid_columns()).intersection(
+        {"owner", "docstatus", *(field.fieldname for field in doc.meta.fields)}
+    ) - ORDER_STATUS_FIELDS
     if not previous or any(
-        doc.has_value_changed(field)
-        for field in ("customer", "crm_deal", "order_date", "sales_channel", "payment_method",
-                      "payment_status", "fulfillment_owner")
-    ) or doc.item_values() != previous.item_values():
-        frappe.throw(_("Operations can change fulfillment and order status only."), frappe.PermissionError)
+        doc.has_value_changed(field) for field in protected_fields
+    ) or _order_items(doc) != _order_items(previous):
+        frappe.throw(_("Operations can change only Order Status and Fulfillment Status."), frappe.PermissionError)
+
+
+def _order_items(doc):
+    return [
+        {field: value for field, value in item.get_valid_dict().items() if field not in {"modified", "modified_by"}}
+        for item in doc.get("items")
+    ]
