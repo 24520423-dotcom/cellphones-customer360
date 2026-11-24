@@ -1,0 +1,3 @@
+data/snapshots/demo-v2/*.csv -text
+data/snapshots/demo-v2/*.json -text
+frappe-crm-native/patches/*.patch text eol=lf
