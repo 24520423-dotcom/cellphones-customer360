@@ -1,0 +1,70 @@
+{
+  "snapshot_id": "cellphones-c360-demo-v2",
+  "snapshot_version": "2.0.0",
+  "data_type": "synthetic_demo",
+  "status": "offline_generated_not_yet_imported_to_frappe",
+  "created_on": "2026-11-23",
+  "description": "Kịch bản CRM CellphoneS giả lập: đa kênh, khách trùng và nghi trùng, pipeline, đơn hàng, hỗ trợ, KPI và danh sách đăng ký nhân viên. Không phải backup MariaDB.",
+  "app_versions_test_target": {
+    "frappe": "15.127.1",
+    "crm": "1.92.0",
+    "cellphones_c360": "0.0.1 plus CV2 patch"
+  },
+  "import_order": [
+    "customers.csv",
+    "intakes.csv",
+    "leads.csv",
+    "deals.csv",
+    "orders.csv",
+    "order_items.csv",
+    "tickets.csv",
+    "registration_requests.csv"
+  ],
+  "files": {
+    "customers.csv": {
+      "record_count": 54,
+      "sha256": "21ce8156697bca7ad1560d5ed65e105415a00b7b68de1a44400fec8d90697861"
+    },
+    "intakes.csv": {
+      "record_count": 144,
+      "sha256": "9337ddf7c2883527fd1a3080d306fdbe8448171b243f4481af915287b8947664"
+    },
+    "leads.csv": {
+      "record_count": 94,
+      "sha256": "5a27ef506d58dead5f9b6575e6ec2f8b16cb2cfe9722649d113e709cd2e1aa73"
+    },
+    "deals.csv": {
+      "record_count": 76,
+      "sha256": "d61077ef648697bc09c6f21bf157a3b821692ce7f718f367ec196fca0044f2da"
+    },
+    "orders.csv": {
+      "record_count": 62,
+      "sha256": "bf61d70ce3589f6c0f6a99ef520e3695b578fb1217d55f9017810c3743d98536"
+    },
+    "order_items.csv": {
+      "record_count": 100,
+      "sha256": "8107076ee76f2f3043aa1002aaf90b22052b225d0df39ff088a7c3f392a9ffb8"
+    },
+    "tickets.csv": {
+      "record_count": 45,
+      "sha256": "b0b9fef4966c4302faef708660a3ff4da3513b4d9fd996488444464fed4b5cef"
+    },
+    "registration_requests.csv": {
+      "record_count": 12,
+      "sha256": "73b204fcb815af9999696a41abab9650461e2d9398c34c9e7a1a1f920a3c468e"
+    }
+  },
+  "privacy": "Dữ liệu 100% giả lập. Email example.test và số điện thoại demo không dùng để liên hệ. Không chứa mật khẩu/token.",
+  "limitations": [
+    "CRM Lead/Deal creation timestamps reflect actual import time; other business dates are preserved.",
+    "Registration approvals and employee users must be tested manually; seed only Pending/Rejected, no User is provisioned.",
+    "Timeline includes confirmed Intake, Orders, Tickets; Call Log/Task not seeded.",
+    "Snapshot importer requires CV2 backend patch and System Manager/Administrator permissions.",
+    "Import is additive and does not replace or synchronize existing databases."
+  ],
+  "supplemental_files": {
+    "offline_expected_kpis.json": {
+      "sha256": "76b9f49f6448bd541a5725f1a9fec716937b954e0bb089fd24c7354e2f1c8107"
+    }
+  }
+}
