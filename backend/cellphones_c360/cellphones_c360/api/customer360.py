@@ -49,6 +49,7 @@ def get_customer_360(customer_id):
     # 4. Lấy lịch sử đơn hàng của khách hàng
     orders = []
 
+    can_read_orders = frappe.has_permission("Customer Order", "read")
     order_names = (
         frappe.get_list(
             "Customer Order",
@@ -57,7 +58,7 @@ def get_customer_360(customer_id):
             order_by="creation desc",
             page_length=0,
         )
-        if frappe.has_permission("Customer Order", "read") else []
+        if can_read_orders else []
     )
 
     for order_name in order_names:
@@ -81,6 +82,11 @@ def get_customer_360(customer_id):
             "order_date": order.order_date,
             "sales_channel": order.sales_channel,
             "order_status": order.order_status,
+            "payment_status": order.get("payment_status"),
+            "fulfillment_method": order.get("fulfillment_method"),
+            "fulfillment_status": order.get("fulfillment_status"),
+            "paid_at": order.get("paid_at"),
+            "completed_at": order.get("completed_at"),
             "total_amount": order.total_amount,
             "items": order_items,
         })
@@ -132,6 +138,7 @@ def get_customer_360(customer_id):
         "leads": leads,
         "deals": deals,
         "orders": orders,
+        "can_read_orders": bool(can_read_orders),
         "tickets": tickets,
     }
 

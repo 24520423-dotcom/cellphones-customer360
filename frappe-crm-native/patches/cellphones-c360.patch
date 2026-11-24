@@ -1,7 +1,7 @@
 From 820f0af20e6040721470f04c535a6d84458f83d7 Mon Sep 17 00:00:00 2001
 From: 24520423-dotcom <24520423@gm.uit.edu.vn>
 Date: Tue, 24 Nov 2026 03:52:19 +0000
-Subject: [PATCH 1/7] feat: customize CellphoneS CRM theme
+Subject: [PATCH 1/8] feat: customize CellphoneS CRM theme
 
 ---
  frontend/src/cellphones-theme.css | 25 +++++++++++++++++++++++++
@@ -57,7 +57,7 @@ index 7a91fc9..9391f8d 100644
 From 5d45d3789ad7ff407fe5945dba6886f1a6553f85 Mon Sep 17 00:00:00 2001
 From: 24520423-dotcom <24520423@gm.uit.edu.vn>
 Date: Tue, 24 Nov 2026 04:06:09 +0000
-Subject: [PATCH 2/7] feat: integrate Customer 360 customer list into Frappe
+Subject: [PATCH 2/8] feat: integrate Customer 360 customer list into Frappe
  CRM
 
 ---
@@ -302,7 +302,7 @@ index fad8708..b209857 100644
 From 261dc539d1fccef78c22888464ffe7bd75df0688 Mon Sep 17 00:00:00 2001
 From: 24520423-dotcom <24520423@gm.uit.edu.vn>
 Date: Tue, 24 Nov 2026 04:15:17 +0000
-Subject: [PATCH 3/7] feat: integrate Customer 360 detailed profile into Frappe
+Subject: [PATCH 3/8] feat: integrate Customer 360 detailed profile into Frappe
  CRM
 
 ---
@@ -770,7 +770,7 @@ index b209857..073ca6e 100644
 From 8bbfc82323a3ec6a91d8695a611ccaa5b76a8f8d Mon Sep 17 00:00:00 2001
 From: 24520423-dotcom <24520423@gm.uit.edu.vn>
 Date: Tue, 24 Nov 2026 05:33:36 +0000
-Subject: [PATCH 4/7] feat: add native Customer 360 creation form
+Subject: [PATCH 4/8] feat: add native Customer 360 creation form
 
 ---
  .../components/Customer360/CustomerForm.vue   | 91 +++++++++++++++++++
@@ -957,7 +957,7 @@ index c96d028..e076461 100644
 From 1d90c4db31efc81d9f0a6408090fc415b3e12b36 Mon Sep 17 00:00:00 2001
 From: 24520423-dotcom <24520423@gm.uit.edu.vn>
 Date: Tue, 24 Nov 2026 05:37:41 +0000
-Subject: [PATCH 5/7] feat: edit Customer 360 profiles in native CRM
+Subject: [PATCH 5/8] feat: edit Customer 360 profiles in native CRM
 
 ---
  .../components/Customer360/CustomerForm.vue   | 25 ++++++----
@@ -1125,7 +1125,7 @@ index bbf875e..28da65a 100644
 From 138e5a70d71a505b3df83d51ec14a1b62118cee5 Mon Sep 17 00:00:00 2001
 From: 24520423-dotcom <24520423@gm.uit.edu.vn>
 Date: Tue, 24 Nov 2026 05:52:52 +0000
-Subject: [PATCH 6/7] feat: review and merge verified profiles in CRM
+Subject: [PATCH 6/8] feat: review and merge verified profiles in CRM
 
 ---
  .../Customer360/DuplicateReview.vue           | 170 ++++++++++++++++++
@@ -1392,7 +1392,7 @@ index 28da65a..8a112d7 100644
 From a19381dc20309d8b71af4e18782e9ab588385dce Mon Sep 17 00:00:00 2001
 From: 24520423-dotcom <24520423@gm.uit.edu.vn>
 Date: Tue, 24 Nov 2026 06:02:25 +0000
-Subject: [PATCH 7/7] feat: connect Customer 360 to native CRM sales workflows
+Subject: [PATCH 7/8] feat: connect Customer 360 to native CRM sales workflows
 
 ---
  .../components/Customer360/LinkCRMRecord.vue  | 65 +++++++++++++++++
@@ -1712,6 +1712,285 @@ index 8a112d7..80852a5 100644
  
    try {
      const result = await call(
+-- 
+2.47.3
+
+
+From 9755203942b9f9b65c34b4a35803ce9073794cdc Mon Sep 17 00:00:00 2001
+From: 24520423-dotcom <24520423@gm.uit.edu.vn>
+Date: Tue, 24 Nov 2026 06:06:35 +0000
+Subject: [PATCH 8/8] feat: add order worklist and native form navigation
+
+---
+ frontend/src/components/Customer360/format.js |  12 ++
+ .../src/components/Layouts/AppSidebar.vue     |  13 ++
+ frontend/src/pages/Customer360Detail.vue      |  24 ++--
+ frontend/src/pages/CustomerOrders.vue         | 125 ++++++++++++++++++
+ frontend/src/router.js                        |   5 +
+ 5 files changed, 168 insertions(+), 11 deletions(-)
+ create mode 100644 frontend/src/components/Customer360/format.js
+ create mode 100644 frontend/src/pages/CustomerOrders.vue
+
+diff --git a/frontend/src/components/Customer360/format.js b/frontend/src/components/Customer360/format.js
+new file mode 100644
+index 0000000..3708668
+--- /dev/null
++++ b/frontend/src/components/Customer360/format.js
+@@ -0,0 +1,12 @@
++const currency = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' })
++const date = new Intl.DateTimeFormat('vi-VN', { dateStyle: 'short', timeZone: 'UTC' })
++
++export function formatVND(value) {
++  return value == null || value === '' ? '—' : currency.format(Number(value))
++}
++
++export function formatDate(value) {
++  if (!value) return '—'
++  const parsed = new Date(String(value).slice(0, 10) + 'T00:00:00Z')
++  return Number.isNaN(parsed.getTime()) ? '—' : date.format(parsed)
++}
+diff --git a/frontend/src/components/Layouts/AppSidebar.vue b/frontend/src/components/Layouts/AppSidebar.vue
+index 4e33c92..858a3a1 100644
+--- a/frontend/src/components/Layouts/AppSidebar.vue
++++ b/frontend/src/components/Layouts/AppSidebar.vue
+@@ -188,6 +188,7 @@
+ </template>
+ 
+ <script setup>
++import { createResource as createC360Resource } from 'frappe-ui'
+ import BrushCleaningIcon from '~icons/lucide/brush-cleaning'
+ import CRMLogo from '@/components/Icons/CRMLogo.vue'
+ import InviteIcon from '@/components/Icons/InviteIcon.vue'
+@@ -271,6 +272,12 @@ const isDemoSite = ref(window.is_demo_site)
+ 
+ const links = getNavigationItems({ mobile: props.mobile })
+ 
++const ordersAccess = createC360Resource({
++  url: 'cellphones_c360.api.orders.get_access',
++  method: 'GET',
++  auto: true,
++})
++
+ const allViews = computed(() => {
+   let _views = [
+     {
+@@ -295,6 +302,12 @@ const allViews = computed(() => {
+         key: 'Customer360',
+         to: { name: 'Customer360' },
+       },
++      ...(ordersAccess.data?.canRead ? [{
++        label: 'Orders',
++        icon: 'lucide-package',
++        key: 'CustomerOrders',
++        to: { name: 'CustomerOrders' },
++      }] : []),
+     ],
+   })
+ 
+diff --git a/frontend/src/pages/Customer360Detail.vue b/frontend/src/pages/Customer360Detail.vue
+index 80852a5..dd0103f 100644
+--- a/frontend/src/pages/Customer360Detail.vue
++++ b/frontend/src/pages/Customer360Detail.vue
+@@ -121,17 +121,26 @@
+ 
+       <!-- Orders -->
+       <div v-if="activeTab === 'Orders'" class="space-y-3">
+-        <p v-if="!data.orders?.length">No orders found.</p>
++        <RouterLink
++          v-if="data.can_read_orders"
++          class="inline-flex rounded-md border border-outline-gray-2 px-3 py-1 text-sm hover:underline"
++          :to="{ name: 'CustomerOrders', query: { customer: data.customer.name } }"
++        >{{ __('View Orders') }}</RouterLink>
++        <p v-if="!data.orders?.length">{{ __('No orders found') }}</p>
+ 
+         <div
+           v-for="order in data.orders"
+           :key="order.name"
+           class="rounded-lg border border-outline-gray-2 p-4"
+         >
+-          <h3 class="font-semibold">{{ order.name }}</h3>
+-          <p class="mt-2 text-sm">{{ order.order_date || '-' }}</p>
++          <h3 class="font-semibold">
++            <a class="hover:underline" :href="'/app/customer-order/' + encodeURIComponent(order.name)">{{ order.name }}</a>
++          </h3>
++          <p class="mt-2 text-sm">{{ formatDate(order.order_date) }}</p>
+           <p class="mt-1 text-sm">Channel: {{ order.sales_channel || '-' }}</p>
+           <p class="mt-1 text-sm">Status: {{ order.order_status }}</p>
++          <p v-if="order.payment_status" class="mt-1 text-sm">{{ __('Payment') }} · {{ __(order.payment_status) }}</p>
++          <p v-if="order.fulfillment_status" class="mt-1 text-sm">{{ __('Fulfillment') }} · {{ __(order.fulfillment_status) }}</p>
+           <p class="mt-2 font-semibold">
+             {{ money(order.total_amount) }}
+           </p>
+@@ -311,6 +320,7 @@
+ import { ref, computed, watch } from 'vue'
+ import { useRouter, RouterLink } from 'vue-router'
+ import { Button, call, frappeRequest } from 'frappe-ui'
++import { formatDate, formatVND as money } from '@/components/Customer360/format'
+ import CustomerForm from '@/components/Customer360/CustomerForm.vue'
+ import DuplicateReview from '@/components/Customer360/DuplicateReview.vue'
+ import LinkCRMRecord from '@/components/Customer360/LinkCRMRecord.vue'
+@@ -358,14 +368,6 @@ const tabs = [
+ 
+ const activeTab = ref('Overview')
+ 
+-function money(value) {
+-  if (value == null || value === '') return '-'
+-  return new Intl.NumberFormat('vi-VN', {
+-    style: 'currency',
+-    currency: 'VND',
+-  }).format(Number(value))
+-}
+-
+ const summary = computed(() => {
+   const orders = data.value?.orders || []
+   const deals = data.value?.deals || []
+diff --git a/frontend/src/pages/CustomerOrders.vue b/frontend/src/pages/CustomerOrders.vue
+new file mode 100644
+index 0000000..9e4c5bb
+--- /dev/null
++++ b/frontend/src/pages/CustomerOrders.vue
+@@ -0,0 +1,125 @@
++<template>
++  <main class="flex h-full min-h-0 flex-col overflow-auto bg-surface-base">
++    <header class="flex flex-wrap items-center justify-between gap-3 border-b border-outline-gray-2 px-5 py-4">
++      <h1 class="text-xl font-semibold text-ink-gray-9">{{ __('Orders') }}</h1>
++      <a
++        v-if="access.data?.canCreate"
++        class="rounded-md bg-surface-gray-7 px-3 py-2 text-sm font-medium text-white hover:underline"
++        href="/app/customer-order/new-customer-order-1"
++      >
++        {{ __('New Order') }}
++      </a>
++    </header>
++
++    <section class="space-y-4 p-5">
++      <p v-if="access.loading" role="status">{{ __('Checking access') }}</p>
++      <p v-else-if="access.error" role="alert">{{ __('Unable to check access to orders.') }}</p>
++      <p v-else-if="!access.data?.canRead" role="alert">{{ __('You do not have access to orders.') }}</p>
++
++      <template v-else>
++        <form class="flex flex-wrap items-end gap-3" @submit.prevent="search">
++          <FormControl v-model="filters.search" :label="__('Order ID or customer')" />
++          <FormControl v-model="filters.status" :label="__('Order status')" type="select" :options="options('order_status')" />
++          <FormControl v-model="filters.channel" :label="__('Sales channel')" type="select" :options="options('sales_channel')" />
++          <FormControl v-model="filters.from_date" :label="__('From date')" type="date" />
++          <FormControl v-model="filters.to_date" :label="__('To date')" type="date" />
++          <Button type="submit" variant="solid" :loading="orders.loading">{{ __('Search') }}</Button>
++        </form>
++
++        <p v-if="orders.loading" role="status">{{ __('Loading orders') }}</p>
++        <div v-else-if="orders.error" role="alert" class="flex flex-wrap items-center gap-2 text-sm text-ink-red-5">
++          {{ orders.error.messages?.[0] || __('Unable to load orders.') }}
++          <Button @click="orders.reload()">{{ __('Retry') }}</Button>
++        </div>
++        <p v-else-if="!orders.data?.items?.length" class="text-sm text-ink-gray-6">{{ __('No orders found') }}</p>
++        <div v-else class="overflow-x-auto rounded-lg border border-outline-gray-2">
++          <table class="w-full text-left text-sm">
++            <thead class="bg-surface-gray-2">
++              <tr>
++                <th v-for="column in columns" :key="column" scope="col" class="p-3">{{ __(column) }}</th>
++              </tr>
++            </thead>
++            <tbody>
++              <tr v-for="order in orders.data.items" :key="order.name" class="border-t border-outline-gray-2">
++                <th scope="row" class="whitespace-nowrap p-3 font-medium">
++                  <a class="text-[#D70018] hover:underline" :href="deskOrder(order.name)">{{ order.name }}</a>
++                </th>
++                <td class="whitespace-nowrap p-3">
++                  <RouterLink
++                    v-if="order.customer"
++                    class="hover:underline"
++                    :to="{ name: 'Customer360Detail', params: { customerId: order.customer } }"
++                  >{{ order.customer }}</RouterLink>
++                  <span v-else>—</span>
++                </td>
++                <td class="whitespace-nowrap p-3">{{ formatDate(order.order_date) }}</td>
++                <td class="p-3">{{ order.sales_channel ? __(order.sales_channel) : '—' }}</td>
++                <td class="p-3"><Badge :label="order.order_status ? __(order.order_status) : '—'" /></td>
++                <td class="p-3">{{ order.payment_status ? __(order.payment_status) : '—' }}</td>
++                <td class="p-3">{{ order.fulfillment_status ? __(order.fulfillment_status) : '—' }}</td>
++                <td class="whitespace-nowrap p-3 tabular-nums">{{ formatVND(order.total_amount) }}</td>
++              </tr>
++            </tbody>
++          </table>
++        </div>
++        <nav v-if="orders.data" :aria-label="__('Order pages')" class="flex items-center justify-end gap-3">
++          <Button :disabled="page <= 1 || orders.loading" @click="turnPage(-1)">{{ __('Previous') }}</Button>
++          <span class="text-sm">{{ page }}</span>
++          <Button :disabled="!orders.data.has_more || orders.loading" @click="turnPage(1)">{{ __('Next') }}</Button>
++        </nav>
++      </template>
++    </section>
++  </main>
++</template>
++
++<script setup>
++import { Badge, Button, FormControl, createResource } from 'frappe-ui'
++import { reactive, ref } from 'vue'
++import { RouterLink, useRoute } from 'vue-router'
++import { formatDate, formatVND } from '@/components/Customer360/format'
++
++const route = useRoute()
++const filters = reactive({
++  search: String(route.query.customer || ''), status: '', channel: '', from_date: '', to_date: '',
++})
++const page = ref(1)
++let applied = { ...filters }
++const columns = ['Order ID', 'Customer', 'Order date', 'Sales channel', 'Order status', 'Payment', 'Fulfillment', 'Order value']
++
++const orders = createResource({
++  url: 'cellphones_c360.api.orders.list_orders',
++  method: 'GET',
++  makeParams: () => ({ ...applied, page: page.value }),
++})
++
++const access = createResource({
++  url: 'cellphones_c360.api.orders.get_access',
++  method: 'GET',
++  auto: true,
++  onSuccess(data) {
++    if (data.canRead) search()
++  },
++})
++
++function options(field) {
++  return [
++    { label: __('All'), value: '' },
++    ...(access.data?.filters[field] || []).map((value) => ({ label: __(value), value })),
++  ]
++}
++
++function deskOrder(name) {
++  return '/app/customer-order/' + encodeURIComponent(name)
++}
++
++function search() {
++  applied = { ...filters }
++  page.value = 1
++  orders.fetch()
++}
++
++function turnPage(step) {
++  page.value += step
++  orders.fetch()
++}
++</script>
+diff --git a/frontend/src/router.js b/frontend/src/router.js
+index 073ca6e..1e7d339 100644
+--- a/frontend/src/router.js
++++ b/frontend/src/router.js
+@@ -144,6 +144,11 @@ const routes = [
+     name: 'Customer360',
+     component: () => import('@/pages/Customer360.vue'),
+   },
++  {
++    path: '/orders',
++    name: 'CustomerOrders',
++    component: () => import('@/pages/CustomerOrders.vue'),
++  },
+   {
+     path: '/customer360/:customerId',
+     name: 'Customer360Detail',
 -- 
 2.47.3
 

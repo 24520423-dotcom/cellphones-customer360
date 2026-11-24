@@ -235,6 +235,10 @@ Nguồn dữ liệu hiện gồm đơn hàng, yêu cầu hỗ trợ và lịch s
 
 ## 7. Orders và After-sales
 
+`GET /api/method/cellphones_c360.api.orders.get_access` trả quyền đọc, quyền tạo và options bộ lọc. `GET /api/method/cellphones_c360.api.orders.list_orders` nhận `search`, `status`, `channel`, `from_date`, `to_date` và `page`. Trả `items`, `has_more` và trang hiện tại. Tìm kiếm hỗ trợ mã đơn, mã hoặc tên khách hàng được phép đọc.
+
+Form chuẩn Frappe Desk dùng ORM của `Customer Order` để lưu `items`, `crm_deal`, phương thức và trạng thái thanh toán/giao nhận. Controller tính `total_amount`, tự ghi `paid_at` và `completed_at` theo chuyển trạng thái. Tổng giá trị đơn được lưu riêng khỏi chỉ số tiền thực thu.
+
 DocType đã có, dữ liệu đã hiển thị trong hồ sơ Customer 360. Màn hình quản lý riêng và thao tác ghi trong giao diện native mới chưa được kiểm thử.
 
 | Nghiệp vụ | API / mã nguồn cần đối chiếu | Trạng thái |

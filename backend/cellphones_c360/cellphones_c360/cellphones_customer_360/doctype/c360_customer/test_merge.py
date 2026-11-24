@@ -25,10 +25,10 @@ class TestCustomerMerge(FrappeTestCase):
         self.source.save()
         self.order = frappe.get_doc({
             "doctype": "Customer Order", "customer": self.source.name, "sales_channel": "Store",
-            "order_status": "Completed", "items": [{"product_name": "Demo", "quantity": 1, "unit_price": 100}],
+            "items": [{"product_name": "Demo", "quantity": 1, "unit_price": 100}],
         }).insert()
         self.ticket = frappe.get_doc({
-            "doctype": "Customer Support Ticket", "subject": "Example request", "ticket_type": "Warranty",
+            "doctype": "Customer Support Ticket", "subject": "Example request", "ticket_type": "Technical Support",
             "customer": self.source.name, "related_order": self.order.name, "description": "Synthetic ticket",
         }).insert()
 
