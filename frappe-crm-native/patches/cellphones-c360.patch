@@ -1,7 +1,7 @@
 From 820f0af20e6040721470f04c535a6d84458f83d7 Mon Sep 17 00:00:00 2001
 From: 24520423-dotcom <24520423@gm.uit.edu.vn>
 Date: Tue, 24 Nov 2026 03:52:19 +0000
-Subject: [PATCH 1/9] feat: customize CellphoneS CRM theme
+Subject: [PATCH 01/10] feat: customize CellphoneS CRM theme
 
 ---
  frontend/src/cellphones-theme.css | 25 +++++++++++++++++++++++++
@@ -57,7 +57,7 @@ index 7a91fc9..9391f8d 100644
 From 5d45d3789ad7ff407fe5945dba6886f1a6553f85 Mon Sep 17 00:00:00 2001
 From: 24520423-dotcom <24520423@gm.uit.edu.vn>
 Date: Tue, 24 Nov 2026 04:06:09 +0000
-Subject: [PATCH 2/9] feat: integrate Customer 360 customer list into Frappe
+Subject: [PATCH 02/10] feat: integrate Customer 360 customer list into Frappe
  CRM
 
 ---
@@ -302,8 +302,8 @@ index fad8708..b209857 100644
 From 261dc539d1fccef78c22888464ffe7bd75df0688 Mon Sep 17 00:00:00 2001
 From: 24520423-dotcom <24520423@gm.uit.edu.vn>
 Date: Tue, 24 Nov 2026 04:15:17 +0000
-Subject: [PATCH 3/9] feat: integrate Customer 360 detailed profile into Frappe
- CRM
+Subject: [PATCH 03/10] feat: integrate Customer 360 detailed profile into
+ Frappe CRM
 
 ---
  .../src/components/Layouts/AppSidebar.vue     |   3 +
@@ -770,7 +770,7 @@ index b209857..073ca6e 100644
 From 8bbfc82323a3ec6a91d8695a611ccaa5b76a8f8d Mon Sep 17 00:00:00 2001
 From: 24520423-dotcom <24520423@gm.uit.edu.vn>
 Date: Tue, 24 Nov 2026 05:33:36 +0000
-Subject: [PATCH 4/9] feat: add native Customer 360 creation form
+Subject: [PATCH 04/10] feat: add native Customer 360 creation form
 
 ---
  .../components/Customer360/CustomerForm.vue   | 91 +++++++++++++++++++
@@ -957,7 +957,7 @@ index c96d028..e076461 100644
 From 1d90c4db31efc81d9f0a6408090fc415b3e12b36 Mon Sep 17 00:00:00 2001
 From: 24520423-dotcom <24520423@gm.uit.edu.vn>
 Date: Tue, 24 Nov 2026 05:37:41 +0000
-Subject: [PATCH 5/9] feat: edit Customer 360 profiles in native CRM
+Subject: [PATCH 05/10] feat: edit Customer 360 profiles in native CRM
 
 ---
  .../components/Customer360/CustomerForm.vue   | 25 ++++++----
@@ -1125,7 +1125,7 @@ index bbf875e..28da65a 100644
 From 138e5a70d71a505b3df83d51ec14a1b62118cee5 Mon Sep 17 00:00:00 2001
 From: 24520423-dotcom <24520423@gm.uit.edu.vn>
 Date: Tue, 24 Nov 2026 05:52:52 +0000
-Subject: [PATCH 6/9] feat: review and merge verified profiles in CRM
+Subject: [PATCH 06/10] feat: review and merge verified profiles in CRM
 
 ---
  .../Customer360/DuplicateReview.vue           | 170 ++++++++++++++++++
@@ -1392,7 +1392,8 @@ index 28da65a..8a112d7 100644
 From a19381dc20309d8b71af4e18782e9ab588385dce Mon Sep 17 00:00:00 2001
 From: 24520423-dotcom <24520423@gm.uit.edu.vn>
 Date: Tue, 24 Nov 2026 06:02:25 +0000
-Subject: [PATCH 7/9] feat: connect Customer 360 to native CRM sales workflows
+Subject: [PATCH 07/10] feat: connect Customer 360 to native CRM sales
+ workflows
 
 ---
  .../components/Customer360/LinkCRMRecord.vue  | 65 +++++++++++++++++
@@ -1719,7 +1720,7 @@ index 8a112d7..80852a5 100644
 From 9755203942b9f9b65c34b4a35803ce9073794cdc Mon Sep 17 00:00:00 2001
 From: 24520423-dotcom <24520423@gm.uit.edu.vn>
 Date: Tue, 24 Nov 2026 06:06:35 +0000
-Subject: [PATCH 8/9] feat: add order worklist and native form navigation
+Subject: [PATCH 08/10] feat: add order worklist and native form navigation
 
 ---
  frontend/src/components/Customer360/format.js |  12 ++
@@ -1998,7 +1999,7 @@ index 073ca6e..1e7d339 100644
 From e81fb609909d9aab5f87f817a36616666626c2c3 Mon Sep 17 00:00:00 2001
 From: 24520423-dotcom <24520423@gm.uit.edu.vn>
 Date: Tue, 24 Nov 2026 06:13:50 +0000
-Subject: [PATCH 9/9] feat: add after-sales worklist and native ticket forms
+Subject: [PATCH 09/10] feat: add after-sales worklist and native ticket forms
 
 ---
  .../Customer360/CustomerWorklist.vue          | 164 ++++++++++++++++++
@@ -2410,6 +2411,185 @@ index 1e7d339..fbe2383 100644
    {
      path: '/orders',
      name: 'CustomerOrders',
+-- 
+2.47.3
+
+
+From dc56080cc5a579e46f6492d6b44355e43f89718f Mon Sep 17 00:00:00 2001
+From: 24520423-dotcom <24520423@gm.uit.edu.vn>
+Date: Tue, 24 Nov 2026 06:18:25 +0000
+Subject: [PATCH 10/10] feat: show complete Customer 360 history and confirmed
+ spend
+
+---
+ frontend/src/components/Customer360/format.js | 10 +++
+ frontend/src/pages/Customer360Detail.vue      | 88 ++++++++++++++-----
+ 2 files changed, 74 insertions(+), 24 deletions(-)
+
+diff --git a/frontend/src/components/Customer360/format.js b/frontend/src/components/Customer360/format.js
+index 3708668..2f90433 100644
+--- a/frontend/src/components/Customer360/format.js
++++ b/frontend/src/components/Customer360/format.js
+@@ -10,3 +10,13 @@ export function formatDate(value) {
+   const parsed = new Date(String(value).slice(0, 10) + 'T00:00:00Z')
+   return Number.isNaN(parsed.getTime()) ? '—' : date.format(parsed)
+ }
++
++const dateTime = new Intl.DateTimeFormat('vi-VN', {
++  dateStyle: 'short', timeStyle: 'short', timeZone: 'Asia/Ho_Chi_Minh',
++})
++
++export function formatDateTime(value) {
++  if (!value) return '—'
++  const parsed = new Date(value)
++  return Number.isNaN(parsed.getTime()) ? '—' : dateTime.format(parsed)
++}
+diff --git a/frontend/src/pages/Customer360Detail.vue b/frontend/src/pages/Customer360Detail.vue
+index 3aa26e7..7521639 100644
+--- a/frontend/src/pages/Customer360Detail.vue
++++ b/frontend/src/pages/Customer360Detail.vue
+@@ -75,13 +75,13 @@
+       </div>
+ 
+       <!-- Summary cards -->
+-      <div class="grid grid-cols-2 gap-3 lg:grid-cols-4">
++      <div class="grid grid-cols-2 gap-3 xl:grid-cols-5">
+         <div
+           v-for="item in summary"
+           :key="item.label"
+           class="rounded-lg border border-outline-gray-2 p-4"
+         >
+-          <p class="text-sm text-ink-gray-6">{{ item.label }}</p>
++          <p class="text-sm text-ink-gray-6">{{ __(item.label) }}</p>
+           <p class="mt-2 text-xl font-semibold">{{ item.value }}</p>
+         </div>
+       </div>
+@@ -112,7 +112,7 @@
+           :key="item.label"
+           class="rounded-lg border border-outline-gray-2 p-4"
+         >
+-          <p class="text-sm text-ink-gray-6">{{ item.label }}</p>
++          <p class="text-sm text-ink-gray-6">{{ __(item.label) }}</p>
+           <p class="mt-2 font-medium break-words">
+             {{ item.value || '-' }}
+           </p>
+@@ -289,17 +289,27 @@
+         <template v-else>
+           <p v-if="!timeline.length">No activities found.</p>
+ 
+-          <div
+-            v-for="event in timeline"
+-            :key="event.id"
+-            class="rounded-lg border border-outline-gray-2 p-4"
+-          >
+-            <p class="font-medium">{{ event.summary }}</p>
+-            <p class="mt-2 text-sm text-ink-gray-6">
+-              {{ event.occurred_at || '-' }}
+-            </p>
+-            <p class="text-sm">{{ event.type }}</p>
+-          </div>
++          <ol v-if="timeline.length" class="space-y-1 border-l border-outline-gray-2 pl-5">
++            <li v-for="event in timeline" :key="event.id" class="relative space-y-2 py-3">
++              <span class="absolute -left-[25px] top-5 size-2 rounded-full bg-[#D70018]" aria-hidden="true"></span>
++              <div class="flex flex-wrap items-center gap-2">
++                <Badge :label="__(eventLabels[event.type] || event.type)" />
++                <time :datetime="event.occurred_at" class="text-sm text-ink-gray-6">
++                  {{ formatDateTime(event.occurred_at) }}
++                </time>
++              </div>
++              <p class="font-medium">{{ event.summary }}</p>
++              <div class="flex flex-wrap items-center gap-3 text-sm text-ink-gray-6">
++                <span>{{ __(event.source) }}</span>
++                <RouterLink v-if="eventRoute(event)" :to="eventRoute(event)" class="text-[#D70018] hover:underline">
++                  {{ __('Open record') }}
++                </RouterLink>
++                <a v-else-if="eventHref(event)" :href="eventHref(event)" class="text-[#D70018] hover:underline">
++                  {{ __('Open record') }}
++                </a>
++              </div>
++            </li>
++          </ol>
+ 
+           <div class="flex items-center justify-between">
+             <span>{{ timelineTotal }} activities</span>
+@@ -329,8 +339,8 @@
+ <script setup>
+ import { ref, computed, watch } from 'vue'
+ import { useRouter, RouterLink } from 'vue-router'
+-import { Button, call, frappeRequest } from 'frappe-ui'
+-import { formatDate, formatVND as money } from '@/components/Customer360/format'
++import { Badge, Button, call, frappeRequest } from 'frappe-ui'
++import { formatDate, formatDateTime, formatVND as money } from '@/components/Customer360/format'
+ import CustomerForm from '@/components/Customer360/CustomerForm.vue'
+ import DuplicateReview from '@/components/Customer360/DuplicateReview.vue'
+ import LinkCRMRecord from '@/components/Customer360/LinkCRMRecord.vue'
+@@ -378,21 +388,48 @@ const tabs = [
+ 
+ const activeTab = ref('Overview')
+ 
++const eventLabels = {
++  customer: 'Customer', intake: 'Source Record', merge: 'Merge', change: 'Update',
++  lead: 'Lead', deal: 'Deal', order: 'Order', payment: 'Payment', fulfillment: 'Handover',
++  support: 'Support Ticket', resolution: 'Resolution', task: 'Task', call: 'Call',
++  note: 'Note', comment: 'Comment', email: 'Email',
++}
++
++function eventRoute(event) {
++  const routes = {
++    'C360 Customer': ['Customer360Detail', 'customerId'],
++    'CRM Lead': ['Lead', 'leadId'],
++    'CRM Deal': ['Deal', 'dealId'],
++  }
++  const route = routes[event.related_doctype]
++  return route && { name: route[0], params: { [route[1]]: event.related_name } }
++}
++
++function eventHref(event) {
++  const routes = {
++    'C360 Source Record': 'c360-source-record',
++    'Customer Order': 'customer-order',
++    'Customer Support Ticket': 'customer-support-ticket',
++    'CRM Task': 'crm-task',
++    'CRM Call Log': 'crm-call-log',
++    'FCRM Note': 'fcrm-note',
++    'Communication': 'communication',
++  }
++  const route = routes[event.related_doctype]
++  return route && '/app/' + route + '/' + encodeURIComponent(event.related_name)
++}
++
+ const summary = computed(() => {
+   const orders = data.value?.orders || []
+   const deals = data.value?.deals || []
+   const tickets = data.value?.tickets || []
+ 
+   return [
+-    {
+-      label: 'Order Value',
+-      value: money(orders.reduce(
+-        (sum, order) => sum + Number(order.total_amount || 0), 0
+-      )),
+-    },
+-    { label: 'Orders', value: orders.length },
++    { label: 'Recorded Order Value', value: money(data.value?.summary?.recorded_order_value) },
++    { label: 'Confirmed Spend', value: money(data.value?.summary?.confirmed_spend) },
++    { label: 'Orders', value: data.value?.can_read_orders ? orders.length : '—' },
+     { label: 'Deals', value: deals.length },
+-    { label: 'Support Tickets', value: tickets.length },
++    { label: 'Support Tickets', value: data.value?.can_read_tickets ? tickets.length : '—' },
+   ]
+ })
+ 
+@@ -409,6 +446,9 @@ const customerFields = computed(() => {
+     { label: 'Source Channel', value: c.source_channel },
+     { label: 'Linked Contact', value: c.crm_contact },
+     { label: 'Linked Lead', value: c.crm_lead },
++    { label: 'Created', value: formatDateTime(c.created_at) },
++    { label: 'Updated At', value: formatDateTime(c.modified_at) },
++    { label: 'Marketing Consent', value: c.marketing_consent == null ? '—' : c.marketing_consent ? __('Granted') : __('Pending') },
+   ]
+ })
+ 
 -- 
 2.47.3
 

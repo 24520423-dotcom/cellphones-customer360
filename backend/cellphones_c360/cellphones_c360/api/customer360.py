@@ -1,10 +1,9 @@
-from datetime import datetime, time
-
 import frappe
 from frappe.model import get_permitted_fields
 
 from cellphones_c360.api.crm_links import related_records, visible_doc
-from cellphones_c360.api.leads import get_linked_history
+from cellphones_c360.api.orders import is_confirmed_purchase
+from cellphones_c360.api.timeline import build_timeline, iso_timestamp
 
 
 @frappe.whitelist()
@@ -29,6 +28,8 @@ def get_customer_360(customer_id):
         "crm_contact": next((row.name for row in contacts if row.name == customer.crm_contact), None),
         "crm_lead": next((row.name for row in crm["CRM Lead"] if row.name == customer.crm_lead), None),
         "modified": str(customer.modified),
+        "created_at": iso_timestamp(customer.creation),
+        "modified_at": iso_timestamp(customer.modified),
         "is_merged": bool(customer.get("merged_into")),
         "merged_into": merged_into.name if merged_into else None,
     }
@@ -132,7 +133,19 @@ def get_customer_360(customer_id):
             ],
         }
 
+    can_read_amounts = can_read_orders and "total_amount" in get_permitted_fields(
+        "Customer Order", permission_type="read",
+    )
+    can_read_payment = {"order_status", "payment_status", "paid_at"}.issubset(
+        get_permitted_fields("Customer Order", permission_type="read"),
+    )
     return {
+        "summary": {
+            "recorded_order_value": sum(order["total_amount"] or 0 for order in orders) if can_read_amounts else None,
+            "confirmed_spend": sum(
+                order["total_amount"] or 0 for order in orders if is_confirmed_purchase(order)
+            ) if can_read_amounts and can_read_payment else None,
+        },
         "customer": customer_data,
         "contact": contact_data,
         "contacts": [{"name": row.name, "full_name": row.full_name} for row in contacts],
@@ -265,125 +278,23 @@ def get_customer_profile(customer_id):
 
 @frappe.whitelist()
 def get_customer_timeline(customer_id, page=1, page_size=20):
-    if frappe.session.user == "Guest":
-        frappe.throw("Vui lòng đăng nhập", frappe.PermissionError)
-
     if not customer_id:
-        frappe.throw("Thiếu customer_id", frappe.ValidationError)
-
+        frappe.throw("Thiếu mã khách hàng.", frappe.ValidationError)
     customer = frappe.get_doc("C360 Customer", customer_id)
     customer.check_permission("read")
     customer.apply_fieldlevel_read_permissions()
-
     try:
         page = int(page)
         page_size = int(page_size)
     except (TypeError, ValueError):
-        frappe.throw("Tham số phân trang không hợp lệ", frappe.ValidationError)
-
+        frappe.throw("Tham số phân trang không hợp lệ.", frappe.ValidationError)
     if page < 1 or not 1 <= page_size <= 100:
-        frappe.throw("page hoặc page_size không hợp lệ", frappe.ValidationError)
+        frappe.throw("Tham số phân trang không hợp lệ.", frappe.ValidationError)
 
-    events = []
-
-    def format_datetime(value):
-        if not value:
-            return None
-        if isinstance(value, datetime):
-            return value.isoformat()
-        return datetime.combine(value, time.min).isoformat()
-
-    # 1. Lịch sử đơn hàng
-    if frappe.has_permission("Customer Order", "read"):
-        orders = frappe.get_list(
-            "Customer Order",
-            filters={"customer": customer_id},
-            fields=[
-                "name", "order_date", "order_status",
-                "total_amount", "creation"
-            ],
-            limit_page_length=0
-        )
-
-        for order in orders:
-            occurred_at = order.order_date or order.creation
-
-            events.append({
-                "id": f"order-{order.name}",
-                "type": "order",
-                "summary": (
-                    f"Đơn hàng {order.name} - "
-                    f"Trạng thái: {order.order_status}"
-                ),
-                "occurred_at": format_datetime(occurred_at),
-                "related_doctype": "Customer Order",
-                "related_name": order.name
-            })
-
-    # 2. Lịch sử yêu cầu hỗ trợ
-    if frappe.has_permission("Customer Support Ticket", "read"):
-        tickets = frappe.get_list(
-            "Customer Support Ticket",
-            filters={"customer": customer_id},
-            fields=[
-                "name", "subject", "ticket_status",
-                "created_date", "creation"
-            ],
-            limit_page_length=0
-        )
-
-        for ticket in tickets:
-            occurred_at = ticket.created_date or ticket.creation
-
-            events.append({
-                "id": f"ticket-{ticket.name}",
-                "type": "support",
-                "summary": (
-                    f"Yêu cầu hỗ trợ: {ticket.subject} - "
-                    f"Trạng thái: {ticket.ticket_status}"
-                ),
-                "occurred_at": format_datetime(occurred_at),
-                "related_doctype": "Customer Support Ticket",
-                "related_name": ticket.name
-            })
-
-    lead = visible_doc("CRM Lead", customer.crm_lead)
-    if lead:
-        deals = (
-            frappe.get_list("CRM Deal", filters={"lead": lead.name}, pluck="name", page_length=0)
-            if frappe.has_permission("CRM Deal", "read") else []
-        )
-        references = {"CRM Lead": [lead.name], "CRM Deal": deals}
-        for item in get_linked_history(references):
-            events.append({
-                "id": item["id"],
-                "type": item["kind"],
-                "summary": " · ".join(value for value in (item["type"], item["title"], item["status"]) if value),
-                "occurred_at": item["date"],
-                "related_doctype": item["reference_type"],
-                "related_name": item["reference_name"],
-            })
-
-    # 3. Sắp xếp mới nhất trước
-    events.sort(
-        key=lambda event: (
-            event["occurred_at"] or "",
-            event["id"]
-        ),
-        reverse=True
-    )
-
-    # 4. Phân trang
-    total = len(events)
+    events = build_timeline(customer)
     start = (page - 1) * page_size
-    end = start + page_size
+    return {"items": events[start:start + page_size], "total": len(events), "page": page, "page_size": page_size}
 
-    return {
-        "items": events[start:end],
-        "page": page,
-        "page_size": page_size,
-        "total": total
-    }
 
 @frappe.whitelist(methods=["GET"])
 def get_session_csrf_token():

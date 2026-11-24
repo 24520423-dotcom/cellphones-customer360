@@ -9,6 +9,14 @@ DOCTYPE = "Customer Order"
 CUSTOMER = "C360 Customer"
 
 
+def is_confirmed_purchase(order):
+    return (
+        order.get("order_status") == "Completed"
+        and order.get("payment_status") == "Paid"
+        and bool(order.get("paid_at"))
+    )
+
+
 @frappe.whitelist(methods=["GET"])
 def get_access():
     readable = frappe.has_permission(DOCTYPE, "read")

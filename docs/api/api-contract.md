@@ -233,6 +233,12 @@ Nguồn dữ liệu hiện gồm đơn hàng, yêu cầu hỗ trợ và lịch s
 - `POST /api/method/cellphones_c360.api.crm_links.create_linked_lead` và `create_linked_deal` nhận `customer`, `doc` từ form CRM chuẩn. Lead trả object có `name`, Deal trả mã Deal theo quy ước của modal gốc.
 - `get_customer_360` trả thêm `leads` và `contacts`. `lead` và `contact` vẫn phục vụ các caller hiện có. `deals` gồm liên kết trực tiếp, Lead được liên kết và Contact qua child table CRM Contacts theo quyền đọc.
 
+### 6.10. Hồ sơ và Timeline đầy đủ
+
+`get_customer_360` trả `summary.recorded_order_value` và `summary.confirmed_spend`. Chỉ số chi tiêu yêu cầu đơn Completed, Paid và có `paid_at`. `customer.created_at` và `customer.modified_at` chứa timestamp ISO 8601 có offset của site.
+
+`get_customer_timeline` giữ `items`, `page`, `page_size` và `total`. Mỗi sự kiện có `source`, `related_doctype`, `related_name` và `occurred_at` theo ISO 8601. Event types gồm tạo hồ sơ, tiếp nhận nguồn, hợp nhất, Version, Lead, Deal, Order, Payment, Handover, Ticket, Resolution, Task, Call, Note, Comment và Email.
+
 ## 7. Orders và After-sales
 
 `GET /api/method/cellphones_c360.api.orders.get_access` trả quyền đọc, quyền tạo và options bộ lọc. `GET /api/method/cellphones_c360.api.orders.list_orders` nhận `search`, `status`, `channel`, `from_date`, `to_date` và `page`. Trả `items`, `has_more` và trang hiện tại. Tìm kiếm hỗ trợ mã đơn, mã hoặc tên khách hàng được phép đọc.
