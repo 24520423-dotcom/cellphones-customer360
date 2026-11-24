@@ -1,0 +1,15 @@
+{
+  "enable_forecasting": 0,
+  "enable_sales_hierarchy": 1,
+  "auto_update_expected_deal_value": 1,
+  "update_timestamp_on_new_communication": 1,
+  "auto_mark_replied_on_response": 0,
+  "auto_reopen_on_new_communication": 0,
+  "crm_timeline_timestamp_format": "Relative",
+  "crm_timeline_sort_order": "Oldest First",
+  "currency": "VND",
+  "brand_name": "CellphoneS Customer 360",
+  "brand_logo": "/files/cellphones-brand.png",
+  "favicon": "/files/cellphones-brand.png",
+  "setup_completed": 1
+}

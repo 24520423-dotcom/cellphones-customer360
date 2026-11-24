@@ -1,0 +1,64 @@
+{
+  "snapshot": "demo-final",
+  "schema_version": 1,
+  "exported_at": "2026-11-25 00:22:35.363861",
+  "record_counts": {
+    "C360 Customer": 64,
+    "C360 Source Record": 144,
+    "C360 Registration Request": 13,
+    "CRM Lead": 102,
+    "CRM Deal": 80,
+    "Contact": 68,
+    "CRM Organization": 1,
+    "Customer Order": 64,
+    "Customer Support Ticket": 36,
+    "FCRM Note": 6,
+    "CRM Task": 28,
+    "CRM Call Log": 1,
+    "Role Profile": 5,
+    "User": 6,
+    "CRM Communication Status": 2,
+    "CRM Deal Status": 7,
+    "CRM Lead Source": 18,
+    "CRM Lead Status": 7,
+    "CRM Lost Reason": 12,
+    "CRM Product": 2,
+    "ToDo": 14,
+    "DocShare": 10,
+    "CRM Sales Hierarchy": 3
+  },
+  "files": {
+    "business_data.json": {
+      "bytes": 941228,
+      "sha256": "974f6907d62b1606138e0991fbaeb4471372615b27689792489dff47f0d7d3f4"
+    },
+    "cellphones-brand.png": {
+      "bytes": 4846,
+      "sha256": "26c1483d54fdde297603f067fab3ad51b8d49c1e8b374ce9dd8dd58a9737716a"
+    },
+    "crm_settings.json": {
+      "bytes": 496,
+      "sha256": "729feeedb98efdeeb1663b5b090bf0063482c75964834b20f3da0f22a006a751"
+    },
+    "supplementary_data.json": {
+      "bytes": 35771,
+      "sha256": "50338cf0d2117aadef6a951e902912daa1b31d44c8e0313b3e13fbf5812e826a"
+    },
+    "naming_series.json": {
+      "bytes": 361,
+      "sha256": "41b0ebd23fa34e827fd092ddc3299bd469978af647c536b9dde0a283ec110ada"
+    }
+  },
+  "sanitization": {
+    "masked_emails": 37,
+    "remapped_owner_fields": 6
+  },
+  "excluded_data": [
+    "Passwords and credentials",
+    "Sessions and tokens",
+    "Private attachments",
+    "Raw Communication and Version history"
+  ],
+  "privacy_review_completed": false,
+  "restore_tested": false
+}
