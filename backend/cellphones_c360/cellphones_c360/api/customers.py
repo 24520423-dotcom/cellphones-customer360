@@ -2,7 +2,9 @@ import frappe
 from frappe import _
 from frappe.model import get_permitted_fields
 
+from cellphones_c360.api.access import get_scoped_document
 from cellphones_c360.api.crm_links import can_link
+from cellphones_c360.api.intake import intake_access
 from cellphones_c360.cellphones_customer_360.doctype.c360_customer.c360_customer import (
     CRM_DOCTYPES,
     normalize_email,
@@ -11,6 +13,7 @@ from cellphones_c360.cellphones_customer_360.doctype.c360_customer.c360_customer
 
 DOCTYPE = "C360 Customer"
 EDIT_FIELDS = ("customer_name", "phone_number", "email", "customer_type", "customer_status", "source_channel")
+FORM_FIELDS = EDIT_FIELDS + ("marketing_consent",)
 LINK_FIELDS = ("crm_contact", "crm_lead")
 
 
@@ -20,10 +23,10 @@ def get_access(customer=None):
         return {
             "canCreate": bool(frappe.has_permission(DOCTYPE, "create")),
             "fields": form_fields("create"),
+            **intake_access(),
         }
 
-    doc = frappe.get_doc(DOCTYPE, customer)
-    doc.check_permission("read")
+    doc = get_scoped_document(DOCTYPE, customer)
     writable = set(get_permitted_fields(DOCTYPE, permission_type="write"))
     readable = set(get_permitted_fields(DOCTYPE, permission_type="read"))
     can_edit = (
@@ -31,8 +34,11 @@ def get_access(customer=None):
         and set(EDIT_FIELDS).issubset(writable & readable)
     )
     can_associate = can_link(doc)
+    from cellphones_c360.api.merge import _can_merge
+    can_review = not doc.get("merged_into") and _can_merge(doc)
     return {
         "canEdit": bool(can_edit),
+        "canReviewDuplicate": bool(can_review),
         "fields": form_fields("write") if can_edit else [],
         "crmTypes": [doctype for doctype in CRM_DOCTYPES if frappe.has_permission(doctype, "read")]
         if can_associate else [],
@@ -46,10 +52,13 @@ def form_fields(action):
         return []
     meta = frappe.get_meta(DOCTYPE)
     permitted = set(get_permitted_fields(DOCTYPE, permission_type="write"))
+    readable = set(get_permitted_fields(DOCTYPE, permission_type="read"))
     fields = []
-    for fieldname in EDIT_FIELDS + (LINK_FIELDS if action == "create" else ()):
+    for fieldname in FORM_FIELDS + (LINK_FIELDS if action == "create" else ()):
         df = meta.get_field(fieldname)
         if fieldname not in permitted or df.read_only or df.hidden:
+            continue
+        if fieldname == "marketing_consent" and fieldname not in readable:
             continue
         if df.fieldtype == "Link" and not (
             frappe.has_permission(df.options, "read") or frappe.has_permission(df.options, "select")
@@ -68,8 +77,7 @@ def form_fields(action):
 
 @frappe.whitelist(methods=["POST"])
 def update_customer(customer, values: dict, modified):
-    doc = frappe.get_doc(DOCTYPE, customer)
-    doc.check_permission("read")
+    doc = get_scoped_document(DOCTYPE, customer)
     doc.check_permission("write")
     allowed = {field["fieldname"] for field in form_fields("write")}
     if not set(values).issubset(allowed):
@@ -92,8 +100,7 @@ def find_duplicates(customer=None, customer_name=None, phone_number=None, email=
     readable_identity = [field for field in fields if field in readable]
 
     if customer:
-        doc = frappe.get_doc(DOCTYPE, customer)
-        doc.check_permission("read")
+        doc = get_scoped_document(DOCTYPE, customer)
         doc.apply_fieldlevel_read_permissions()
         values = {field: doc.get(field) for field in readable_identity}
     else:

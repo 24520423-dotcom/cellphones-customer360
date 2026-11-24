@@ -3,6 +3,7 @@ from itertools import count
 import frappe
 from frappe.model import get_permitted_fields
 
+from cellphones_c360.api.access import get_scoped_document
 from cellphones_c360.api.crm_links import related_records, visible_doc
 from cellphones_c360.api.orders import is_confirmed_purchase
 from cellphones_c360.api.segments import SEGMENTS, UNRESOLVED_TICKET_STATES, summarize, summarize_many
@@ -12,8 +13,7 @@ from cellphones_c360.api.timeline import build_timeline, iso_timestamp
 @frappe.whitelist()
 def get_customer_360(customer_id):
     # 1. Lấy hồ sơ khách hàng
-    customer = frappe.get_doc("C360 Customer", customer_id)
-    customer.check_permission("read")
+    customer = get_scoped_document("C360 Customer", customer_id)
     customer.apply_fieldlevel_read_permissions()
     merged_into = visible_doc("C360 Customer", customer.get("merged_into"))
     crm = related_records(customer)
@@ -164,6 +164,8 @@ def get_customer_360(customer_id):
         "deals": deals,
         "orders": orders,
         "can_read_orders": bool(can_read_orders),
+        "can_read_sales": bool(frappe.has_permission("CRM Lead", "read")
+                               or frappe.has_permission("CRM Deal", "read")),
         "tickets": tickets,
         "can_read_tickets": bool(can_read_tickets),
     }
@@ -294,8 +296,7 @@ def get_customer_profile(customer_id):
 def get_customer_timeline(customer_id, page=1, page_size=20):
     if not customer_id:
         frappe.throw("Thiếu mã khách hàng.", frappe.ValidationError)
-    customer = frappe.get_doc("C360 Customer", customer_id)
-    customer.check_permission("read")
+    customer = get_scoped_document("C360 Customer", customer_id)
     customer.apply_fieldlevel_read_permissions()
     try:
         page = int(page)

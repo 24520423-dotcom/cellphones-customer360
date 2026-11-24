@@ -7,6 +7,7 @@ import frappe
 from frappe import _
 from frappe.utils import get_system_timezone, now_datetime
 
+from cellphones_c360.api.access import get_scoped_document
 from cellphones_c360.cellphones_customer_360.doctype.c360_customer.c360_customer import (
     find_identity_matches,
     lock_customer_identity_writes,
@@ -19,10 +20,20 @@ from cellphones_c360.cellphones_customer_360.doctype.c360_source_record.c360_sou
 DOCTYPE = "C360 Source Record"
 CUSTOMER = "C360 Customer"
 MAX_BATCH = 100
-CSV_COLUMNS = {
+CSV_COLUMNS = (
     "source_channel", "source_record_id", "received_at", "customer_name",
     "phone_number", "email", "customer_type", "purchase_interest",
-}
+)
+
+
+def intake_access():
+    can_read = frappe.has_permission(DOCTYPE, "read")
+    can_import = can_read and frappe.has_permission(DOCTYPE, "create") and frappe.has_permission(CUSTOMER, "create")
+    return {
+        "canReadSources": bool(can_read),
+        "canImport": bool(can_import),
+        "csvHeader": ",".join(CSV_COLUMNS) if can_import else None,
+    }
 
 
 def _text(value, maximum=140):
@@ -172,7 +183,7 @@ def process_csv(csv_text: str):
     reader = csv.DictReader(StringIO(csv_text.lstrip("\ufeff")), strict=True)
     try:
         headers = reader.fieldnames or []
-        if set(headers) != CSV_COLUMNS or len(headers) != len(CSV_COLUMNS):
+        if set(headers) != set(CSV_COLUMNS) or len(headers) != len(CSV_COLUMNS):
             frappe.throw(_("Use the Customer 360 intake CSV template."))
         rows = list(reader)
     except csv.Error:
@@ -186,13 +197,11 @@ def process_csv(csv_text: str):
 def resolve_record(source_document, customer, reason):
     _require(DOCTYPE, "write")
     lock_customer_identity_writes()
-    record = frappe.get_doc(DOCTYPE, source_document, for_update=True)
-    record.check_permission("read")
+    record = get_scoped_document(DOCTYPE, source_document, for_update=True)
     record.check_permission("write")
     if record.processing_status != "Needs Review":
         frappe.throw(_("Only records awaiting identity review can be resolved."))
-    target = frappe.get_doc(CUSTOMER, customer, for_update=True)
-    target.check_permission("read")
+    target = get_scoped_document(CUSTOMER, customer, for_update=True)
     target.check_permission("write")
     if target.get("merged_into"):
         frappe.throw(_("Choose the current customer profile. This profile was merged."))

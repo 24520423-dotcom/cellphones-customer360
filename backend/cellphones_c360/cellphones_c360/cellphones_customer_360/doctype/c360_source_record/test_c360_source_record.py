@@ -4,6 +4,7 @@ import frappe
 from frappe.tests.utils import FrappeTestCase
 
 from cellphones_c360.api import intake
+from cellphones_c360.api.customers import get_access
 
 
 class TestC360SourceRecord(FrappeTestCase):
@@ -58,11 +59,15 @@ class TestC360SourceRecord(FrappeTestCase):
         self.assertEqual(frappe.db.get_value(intake.DOCTYPE, results[0]["source_document"], "customer"), None)
 
     def test_csv_schema_and_permissions(self):
-        schema = "source_channel,source_record_id,received_at,customer_name,phone_number,email,customer_type,purchase_interest"
+        access = get_access()
+        self.assertTrue(access["canImport"])
+        self.assertTrue(access["canReadSources"])
+        schema = access["csvHeader"]
         row = f"App,{self.token},,Khách Demo App,,{self.token}@example.test,Individual,0"
         self.assertEqual(intake.process_csv(f"\ufeff{schema}\n{row}\n")["items"][0]["status"], "Created")
         with self.assertRaises(frappe.ValidationError):
             intake.process_csv("source_channel,source_record_id\nApp,1")
         frappe.set_user("Guest")
+        self.assertFalse(get_access()["canImport"])
         with self.assertRaises(frappe.PermissionError):
             intake.process_csv(f"{schema}\n{row}\n")

@@ -99,6 +99,63 @@ def _orders(start, end):
     }, customers
 
 
+def _identity(start, end):
+    """Current status of received records; backlog is deliberately not period-limited."""
+    doctype = "C360 Source Record"
+    if not _readable(doctype, ["processing_status", "received_at"]):
+        return None
+    statuses = Counter(row.processing_status for row in _rows(
+        doctype, ["processing_status"], _window("received_at", start, end),
+    ))
+    pending = sum(1 for _ in _rows(doctype, ["name"], [
+        ("processing_status", "=", "Needs Review"),
+    ]))
+    return {
+        "total": sum(statuses.values()),
+        "created": statuses["Created"],
+        "linked": statuses["Linked"],
+        "needsReview": statuses["Needs Review"],
+        "invalid": statuses["Invalid"],
+        "currentPending": pending,
+        "byStatus": _counts(statuses),
+    }
+
+
+def _interaction_channels(customers, end):
+    """Channel mix of visible profiles, using origin, linked intake and valid orders."""
+    source_fields = ["customer", "source_channel", "processing_status", "received_at"]
+    order_fields = ["customer", "sales_channel", "order_status", "order_date"]
+    if not (_readable("C360 Source Record", source_fields)
+            and _readable("Customer Order", order_fields)):
+        return None
+    channels = {row.name: {row.source_channel} if row.source_channel else set() for row in customers}
+    names = list(channels)
+    for offset in range(0, len(names), 500):
+        batch = names[offset:offset + 500]
+        for row in _rows("C360 Source Record", source_fields,
+                         _window("received_at", None, end) + [
+                             ("customer", "in", batch),
+                             ("processing_status", "in", ["Created", "Linked"]),
+                         ]):
+            if row.customer in channels and row.source_channel:
+                channels[row.customer].add(row.source_channel)
+        for row in _rows("Customer Order", order_fields,
+                         _window("order_date", None, end) + [
+                             ("customer", "in", batch),
+                             ("order_status", "in", sorted(VALID_ORDERS)),
+                         ]):
+            if row.customer in channels and row.sales_channel:
+                channels[row.customer].add(row.sales_channel)
+    counts = Counter({"Online only": 0, "Offline only": 0, "Omnichannel": 0, "Unspecified": 0})
+    for values in channels.values():
+        online = bool(values & ONLINE)
+        offline = "Store" in values
+        key = ("Omnichannel" if online and offline else "Online only" if online
+               else "Offline only" if offline else "Unspecified")
+        counts[key] += 1
+    return _counts(counts)
+
+
 def _customers(start, end, order_counts):
     fields = ["name", "creation", "source_channel", "customer_type"]
     if not _readable("C360 Customer", fields):
@@ -147,6 +204,7 @@ def _customers(start, end, order_counts):
         "repeat": segment_counts["returning"] if _readable("Customer Order", ORDER_FIELDS) else None,
         "bySource": _counts(sources),
         "byChannel": _counts(channels),
+        "interactionChannels": _interaction_channels(rows, end),
         "byType": _counts(types),
         "segments": _counts(Counter({SEGMENTS[key]: value for key, value in segment_counts.items()})),
         "pendingIdentityReviews": needs_review,
@@ -299,6 +357,7 @@ def get_analytics_overview(period="all", activities=0, from_date=None, to_date=N
     leads, lead_names = _leads(start, end)
     result = {
         "customers": _customers(start, end, customers_with_orders),
+        "identity": _identity(start, end),
         "leads": leads,
         "deals": _deals(start, end, lead_names),
         "orders": orders,
