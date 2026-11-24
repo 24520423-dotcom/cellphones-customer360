@@ -17,6 +17,16 @@ class TestEmployeeAdministration(FrappeTestCase):
         self.addCleanup(frappe.set_user, frappe.session.user)
         frappe.set_user("Administrator")
         self.prefix = f"c360-employees-{uuid4().hex[:10]}"
+        self.addCleanup(self.rollback_fixtures)
+        self.enterContext(patch.dict(frappe.flags, {"mute_emails": True}))
+        # A native notification can otherwise commit fixtures before FrappeTestCase rolls back.
+        self.enterContext(patch.object(
+            frappe.db, "commit", side_effect=AssertionError("Unexpected commit in employee administration test"),
+        ))
+
+    def rollback_fixtures(self):
+        frappe.db.rollback()
+        self.assertFalse(frappe.db.exists("User", {"name": ("like", self.prefix + "-%")}))
 
     def create(self, label, role, *, enabled=False, merge_approver=False):
         return employees.create_employee(
