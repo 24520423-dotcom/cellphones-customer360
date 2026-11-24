@@ -55,3 +55,38 @@ class TestC360Customer(FrappeTestCase):
         self.assertFalse(customers.get_access()["canCreate"])
         with self.assertRaises(frappe.PermissionError):
             self.insert_customer(email=self.email)
+
+    def test_edit_preserves_contact_and_records_version(self):
+        contact = frappe.get_doc({"doctype": "Contact", "first_name": "C360 Test Contact"}).insert()
+        customer = self.insert_customer(crm_contact=contact.name, email=self.email)
+        name = customer["name"]
+        self.assertTrue(customers.get_access(name)["canEdit"])
+        original_test_flag = frappe.flags.in_test
+        frappe.flags.in_test = False
+        try:
+            customers.update_customer(name, {"customer_name": "Renamed customer"}, customer["modified"])
+        finally:
+            frappe.flags.in_test = original_test_flag
+
+        stored = frappe.get_doc("C360 Customer", name)
+        self.assertEqual(stored.customer_name, "Renamed customer")
+        self.assertEqual(stored.crm_contact, contact.name)
+        self.assertTrue(frappe.db.exists("Version", {"ref_doctype": stored.doctype, "docname": name}))
+
+    def test_edit_rejects_unchanged_revision_and_protected_fields(self):
+        customer = self.insert_customer(email=self.email)
+        name, modified = customer["name"], customer["modified"]
+        with self.assertRaises(frappe.PermissionError):
+            customers.update_customer(name, {"name": "wrong-id"}, modified)
+
+        customers.update_customer(name, {"customer_name": "First editor"}, modified)
+        with self.assertRaises(frappe.TimestampMismatchError):
+            customers.update_customer(name, {"customer_name": "Stale editor"}, modified)
+        self.assertEqual(frappe.db.get_value("C360 Customer", name, "customer_name"), "First editor")
+
+    def test_edit_checks_duplicate_excluding_current_customer(self):
+        first = self.insert_customer(email=self.email)
+        second = self.insert_customer()
+        customers.update_customer(first["name"], {"email": self.email.upper()}, first["modified"])
+        with self.assertRaises(frappe.ValidationError):
+            customers.update_customer(second["name"], {"email": self.email}, second["modified"])

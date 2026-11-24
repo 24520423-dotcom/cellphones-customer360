@@ -93,7 +93,7 @@
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-11-21 20:52:25.996781",
+ "modified": "2026-11-24 12:34:00.000000",
  "modified_by": "Administrator",
  "module": "CellphoneS Customer 360",
  "name": "C360 Customer",
@@ -118,5 +118,6 @@
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": [],
- "title_field": "customer_name"
+ "title_field": "customer_name",
+ "track_changes": 1
 }

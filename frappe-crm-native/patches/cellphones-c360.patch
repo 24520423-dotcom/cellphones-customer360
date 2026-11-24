@@ -1,7 +1,7 @@
 From 820f0af20e6040721470f04c535a6d84458f83d7 Mon Sep 17 00:00:00 2001
 From: 24520423-dotcom <24520423@gm.uit.edu.vn>
 Date: Tue, 24 Nov 2026 03:52:19 +0000
-Subject: [PATCH 1/4] feat: customize CellphoneS CRM theme
+Subject: [PATCH 1/5] feat: customize CellphoneS CRM theme
 
 ---
  frontend/src/cellphones-theme.css | 25 +++++++++++++++++++++++++
@@ -57,7 +57,7 @@ index 7a91fc9..9391f8d 100644
 From 5d45d3789ad7ff407fe5945dba6886f1a6553f85 Mon Sep 17 00:00:00 2001
 From: 24520423-dotcom <24520423@gm.uit.edu.vn>
 Date: Tue, 24 Nov 2026 04:06:09 +0000
-Subject: [PATCH 2/4] feat: integrate Customer 360 customer list into Frappe
+Subject: [PATCH 2/5] feat: integrate Customer 360 customer list into Frappe
  CRM
 
 ---
@@ -302,7 +302,7 @@ index fad8708..b209857 100644
 From 261dc539d1fccef78c22888464ffe7bd75df0688 Mon Sep 17 00:00:00 2001
 From: 24520423-dotcom <24520423@gm.uit.edu.vn>
 Date: Tue, 24 Nov 2026 04:15:17 +0000
-Subject: [PATCH 3/4] feat: integrate Customer 360 detailed profile into Frappe
+Subject: [PATCH 3/5] feat: integrate Customer 360 detailed profile into Frappe
  CRM
 
 ---
@@ -770,7 +770,7 @@ index b209857..073ca6e 100644
 From 8bbfc82323a3ec6a91d8695a611ccaa5b76a8f8d Mon Sep 17 00:00:00 2001
 From: 24520423-dotcom <24520423@gm.uit.edu.vn>
 Date: Tue, 24 Nov 2026 05:33:36 +0000
-Subject: [PATCH 4/4] feat: add native Customer 360 creation form
+Subject: [PATCH 4/5] feat: add native Customer 360 creation form
 
 ---
  .../components/Customer360/CustomerForm.vue   | 91 +++++++++++++++++++
@@ -950,6 +950,174 @@ index c96d028..e076461 100644
 +  loadAccess()
 +})
  </script>
+-- 
+2.47.3
+
+
+From 1d90c4db31efc81d9f0a6408090fc415b3e12b36 Mon Sep 17 00:00:00 2001
+From: 24520423-dotcom <24520423@gm.uit.edu.vn>
+Date: Tue, 24 Nov 2026 05:37:41 +0000
+Subject: [PATCH 5/5] feat: edit Customer 360 profiles in native CRM
+
+---
+ .../components/Customer360/CustomerForm.vue   | 25 ++++++----
+ frontend/src/pages/Customer360Detail.vue      | 47 +++++++++++++++++--
+ 2 files changed, 61 insertions(+), 11 deletions(-)
+
+diff --git a/frontend/src/components/Customer360/CustomerForm.vue b/frontend/src/components/Customer360/CustomerForm.vue
+index 743011a..1b91dd0 100644
+--- a/frontend/src/components/Customer360/CustomerForm.vue
++++ b/frontend/src/components/Customer360/CustomerForm.vue
+@@ -1,5 +1,5 @@
+ <template>
+-  <Dialog v-model:open="open" :title="__('Create Customer')">
++  <Dialog v-model:open="open" :title="profile ? __('Edit Customer') : __('Create Customer')">
+     <form class="space-y-4" @submit.prevent="save">
+       <template v-for="field in fields" :key="field.fieldname">
+         <Link
+@@ -39,17 +39,22 @@ import Link from '@/components/Controls/Link.vue'
+ import { Button, Dialog, FormControl, call, toast } from 'frappe-ui'
+ import { ref, watch } from 'vue'
+ 
+-const props = defineProps({ fields: { type: Array, required: true } })
++const props = defineProps({
++  fields: { type: Array, required: true },
++  profile: { type: Object, default: null },
++})
+ const emit = defineEmits(['saved'])
+ const open = defineModel({ type: Boolean })
+ const values = ref({})
+ const error = ref('')
+ const saving = ref(false)
++let revision = null
+ 
+ watch(open, (shown) => {
+   if (!shown) return
++  revision = props.profile ? { customer: props.profile.name, modified: props.profile.modified } : null
+   values.value = Object.fromEntries(
+-    props.fields.map((field) => [field.fieldname, field.default ?? '']),
++    props.fields.map((field) => [field.fieldname, (props.profile ? props.profile[field.fieldname] : field.default) ?? '']),
+   )
+   error.value = ''
+ })
+@@ -76,14 +81,18 @@ async function save() {
+   }
+   saving.value = true
+   try {
+-    const result = await call('frappe.client.insert', {
+-      doc: { ...values.value, doctype: 'C360 Customer' },
+-    })
++    const result = revision
++      ? await call('cellphones_c360.api.customers.update_customer', { ...revision, values: values.value })
++      : await call('frappe.client.insert', {
++          doc: { ...values.value, doctype: 'C360 Customer' },
++        })
+     open.value = false
+-    toast.success(__('Customer created'))
++    toast.success(revision ? __('Customer updated') : __('Customer created'))
+     emit('saved', result.name)
+   } catch (err) {
+-    error.value = err.messages?.[0] || __('Unable to create the customer.')
++    error.value = err.exc_type === 'TimestampMismatchError'
++      ? __('The customer changed after you opened the form. Close it and reload the profile.')
++      : err.messages?.[0] || __('Unable to save the customer.')
+   } finally {
+     saving.value = false
+   }
+diff --git a/frontend/src/pages/Customer360Detail.vue b/frontend/src/pages/Customer360Detail.vue
+index bbf875e..28da65a 100644
+--- a/frontend/src/pages/Customer360Detail.vue
++++ b/frontend/src/pages/Customer360Detail.vue
+@@ -5,9 +5,25 @@
+       <Button @click="router.push({ name: 'Customer360' })">
+         Back
+       </Button>
+-      <h1 class="text-xl font-semibold">Customer Profile</h1>
++      <h1 class="text-xl font-semibold">{{ __('Customer Profile') }}</h1>
++      <Button
++        v-if="data?.customer && access?.canEdit"
++        class="ml-auto"
++        variant="solid"
++        @click="showEdit = true"
++      >
++        {{ __('Edit Customer') }}
++      </Button>
+     </div>
+ 
++    <CustomerForm
++      v-if="data?.customer && access?.canEdit"
++      v-model="showEdit"
++      :profile="data.customer"
++      :fields="access.fields"
++      @saved="refreshAfterEdit"
++    />
++
+     <div v-if="loading" class="p-8 text-center">
+       Loading customer profile...
+     </div>
+@@ -233,7 +249,8 @@
+ <script setup>
+ import { ref, computed, watch } from 'vue'
+ import { useRouter, RouterLink } from 'vue-router'
+-import { Button, call } from 'frappe-ui'
++import { Button, call, frappeRequest } from 'frappe-ui'
++import CustomerForm from '@/components/Customer360/CustomerForm.vue'
+ 
+ const props = defineProps({
+   customerId: { type: String, required: true },
+@@ -243,6 +260,13 @@ const router = useRouter()
+ const data = ref(null)
+ const loading = ref(false)
+ const error = ref('')
++const access = ref(null)
++const showEdit = ref(false)
++
++function refreshAfterEdit() {
++  loadProfile()
++  if (activeTab.value === 'Timeline') loadTimeline()
++}
+ 
+ const timeline = ref([])
+ const timelineLoading = ref(false)
+@@ -310,13 +334,17 @@ async function loadProfile() {
+   loading.value = true
+   error.value = ''
+   data.value = null
++  access.value = null
++  showEdit.value = false
+ 
+   try {
+     const result = await call(
+       'cellphones_c360.api.customer360.get_customer_360',
+       { customer_id: props.customerId }
+     )
+-    if (request === profileRequest) data.value = result
++    if (request !== profileRequest) return
++    data.value = result
++    loadEditorAccess(request)
+   } catch {
+     if (request === profileRequest) {
+       error.value = 'Unable to load customer profile.'
+@@ -326,6 +354,19 @@ async function loadProfile() {
+   }
+ }
+ 
++async function loadEditorAccess(request) {
++  try {
++    const result = await frappeRequest({
++      url: 'cellphones_c360.api.customers.get_access',
++      method: 'GET',
++      params: { customer: props.customerId },
++    })
++    if (request === profileRequest) access.value = result
++  } catch {
++    if (request === profileRequest) access.value = null
++  }
++}
++
+ async function loadTimeline() {
+   const request = ++timelineRequest
+   timelineLoading.value = true
 -- 
 2.47.3
 

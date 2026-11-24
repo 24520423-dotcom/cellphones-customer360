@@ -203,6 +203,13 @@ Nguồn dữ liệu hiện gồm đơn hàng, yêu cầu hỗ trợ và lịch s
 - Giao diện dùng session và CSRF của Frappe UI. ORM kiểm tra quyền tạo, trường bắt buộc và Link. Controller chuẩn hóa các trường nhận diện và trả ValidationError khi có xung đột.
 - `crm_contact` liên kết trực tiếp `Contact`, còn `crm_lead` liên kết `CRM Lead`. Khi tài khoản không đọc được Contact, hồ sơ Customer 360 vẫn tải được và không gửi phần chi tiết của Contact đó.
 
+### 6.5. Sửa hồ sơ khách hàng
+
+- `GET /api/method/cellphones_c360.api.customers.get_access?customer=CUST-00001` trả `canEdit` và metadata cho các trường được phép sửa. Phương thức kiểm tra quyền đọc hồ sơ trước.
+- `POST /api/method/cellphones_c360.api.customers.update_customer` nhận `customer`, `modified` từ `customer.modified` của API hồ sơ và object `values`. Các trường được phép chỉnh sửa gồm tên, điện thoại, email, loại, trạng thái và nguồn, tùy metadata và quyền.
+- Response `message.name` giữ nguyên mã hồ sơ. Gửi một phiên bản cũ trả `TimestampMismatchError`. Người dùng tải lại hồ sơ trước khi nhập lại thay đổi.
+- Frappe ghi bản ghi `Version` khi nội dung thay đổi. API cập nhật thông tin khách hàng giữ liên kết CRM, đơn hàng và Ticket hiện có.
+
 ## 7. Orders và After-sales
 
 DocType đã có, dữ liệu đã hiển thị trong hồ sơ Customer 360. Màn hình quản lý riêng và thao tác ghi trong giao diện native mới chưa được kiểm thử.
