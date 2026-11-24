@@ -220,6 +220,12 @@ Nguồn dữ liệu hiện gồm đơn hàng, yêu cầu hỗ trợ và lịch s
 - Trả `items` theo số thứ tự dòng với `status`, `source_record_id`, `source_document`, `reason`, `customer`, `purchase_interest` và `replay` tùy kết quả. Hồ sơ chỉ được trả khi người gọi có quyền đọc.
 - `POST /api/method/cellphones_c360.api.intake.resolve_record` nhận `source_document`, `customer`, `reason` để liên kết bản ghi đang Needs Review. Yêu cầu quyền ghi bản ghi nguồn và hồ sơ đích.
 
+### 6.8. Hợp nhất khách hàng
+
+- `GET /api/method/cellphones_c360.api.merge.preview` nhận `source` và `target`, trả dữ liệu đối chiếu được phép đọc, mốc phiên bản và `can_merge`.
+- `POST /api/method/cellphones_c360.api.merge.merge_customers` nhận `source`, `target`, `source_modified`, `target_modified`, `selected` (mapping trường → `source` hoặc `target`), `reason` và `verified: true`. Yêu cầu Administrator hoặc System Manager có quyền ghi từng hồ sơ và bản ghi phụ thuộc.
+- Response có `customer` là Golden Record, `archived_customer`, `moved` theo DocType và `crm_links_added`. Hồ sơ nguồn từ API chi tiết có `is_merged` và `merged_into` nếu người dùng có quyền đọc hồ sơ hiện hành.
+
 ## 7. Orders và After-sales
 
 DocType đã có, dữ liệu đã hiển thị trong hồ sơ Customer 360. Màn hình quản lý riêng và thao tác ghi trong giao diện native mới chưa được kiểm thử.

@@ -7,10 +7,20 @@ from frappe import _
 from frappe.model.document import Document
 from frappe.utils import flt
 
+from cellphones_c360.cellphones_customer_360.doctype.c360_customer.c360_customer import (
+    check_customer_link,
+    lock_customer_identity_writes,
+)
+
 
 class CustomerOrder(Document):
+    def check_if_latest(self):
+        lock_customer_identity_writes()
+        super().check_if_latest()
 
     def validate(self):
+        if self.has_value_changed("customer"):
+            check_customer_link(self.customer)
         self.calculate_order_total()
 
     def calculate_order_total(self):

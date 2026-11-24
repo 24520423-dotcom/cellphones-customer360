@@ -1,6 +1,7 @@
 from datetime import datetime, time
 
 import frappe
+from frappe.model import get_permitted_fields
 
 from cellphones_c360.api.leads import get_linked_history
 
@@ -26,6 +27,7 @@ def get_customer_360(customer_id):
     customer = frappe.get_doc("C360 Customer", customer_id)
     customer.check_permission("read")
     customer.apply_fieldlevel_read_permissions()
+    merged_into = _visible_doc("C360 Customer", customer.get("merged_into"))
 
     customer_data = {
         "name": customer.name,
@@ -38,6 +40,8 @@ def get_customer_360(customer_id):
         "crm_contact": customer.crm_contact,
         "crm_lead": customer.crm_lead,
         "modified": str(customer.modified),
+        "is_merged": bool(customer.get("merged_into")),
+        "merged_into": merged_into.name if merged_into else None,
     }
 
     # 2. Lấy CRM Lead được liên kết
@@ -171,14 +175,17 @@ def list_customers(search="", page=1, page_size=20):
     start = (page - 1) * page_size
 
     # 4. Tìm kiếm theo tên, số điện thoại hoặc email
-    filters = []
+    conditions = {}
+    if frappe.get_meta("C360 Customer").has_field("merged_into"):
+        conditions["merged_into"] = ("is", "not set")
 
+    search_filters = []
+    readable = set(get_permitted_fields("C360 Customer", permission_type="read"))
     if search and search.strip():
         keyword = f"%{search.strip()}%"
-        filters = [
-            ["customer_name", "like", keyword],
-            ["phone_number", "like", keyword],
-            ["email", "like", keyword],
+        search_filters = [
+            [field, "like", keyword] for field in ("name", "customer_name", "phone_number", "email")
+            if field in readable
         ]
 
     # 5. Lấy danh sách theo quyền của người đăng nhập
@@ -191,7 +198,8 @@ def list_customers(search="", page=1, page_size=20):
             "email",
             "modified",
         ],
-        or_filters=filters if filters else None,
+        filters=conditions,
+        or_filters=search_filters,
         start=start,
         page_length=page_size,
         order_by="modified desc",
@@ -203,7 +211,8 @@ def list_customers(search="", page=1, page_size=20):
         frappe.get_list(
             "C360 Customer",
             fields=["name"],
-            or_filters=filters if filters else None,
+            filters=conditions,
+            or_filters=search_filters,
             limit_page_length=0,
         )
     )

@@ -1,7 +1,7 @@
 From 820f0af20e6040721470f04c535a6d84458f83d7 Mon Sep 17 00:00:00 2001
 From: 24520423-dotcom <24520423@gm.uit.edu.vn>
 Date: Tue, 24 Nov 2026 03:52:19 +0000
-Subject: [PATCH 1/5] feat: customize CellphoneS CRM theme
+Subject: [PATCH 1/6] feat: customize CellphoneS CRM theme
 
 ---
  frontend/src/cellphones-theme.css | 25 +++++++++++++++++++++++++
@@ -57,7 +57,7 @@ index 7a91fc9..9391f8d 100644
 From 5d45d3789ad7ff407fe5945dba6886f1a6553f85 Mon Sep 17 00:00:00 2001
 From: 24520423-dotcom <24520423@gm.uit.edu.vn>
 Date: Tue, 24 Nov 2026 04:06:09 +0000
-Subject: [PATCH 2/5] feat: integrate Customer 360 customer list into Frappe
+Subject: [PATCH 2/6] feat: integrate Customer 360 customer list into Frappe
  CRM
 
 ---
@@ -302,7 +302,7 @@ index fad8708..b209857 100644
 From 261dc539d1fccef78c22888464ffe7bd75df0688 Mon Sep 17 00:00:00 2001
 From: 24520423-dotcom <24520423@gm.uit.edu.vn>
 Date: Tue, 24 Nov 2026 04:15:17 +0000
-Subject: [PATCH 3/5] feat: integrate Customer 360 detailed profile into Frappe
+Subject: [PATCH 3/6] feat: integrate Customer 360 detailed profile into Frappe
  CRM
 
 ---
@@ -770,7 +770,7 @@ index b209857..073ca6e 100644
 From 8bbfc82323a3ec6a91d8695a611ccaa5b76a8f8d Mon Sep 17 00:00:00 2001
 From: 24520423-dotcom <24520423@gm.uit.edu.vn>
 Date: Tue, 24 Nov 2026 05:33:36 +0000
-Subject: [PATCH 4/5] feat: add native Customer 360 creation form
+Subject: [PATCH 4/6] feat: add native Customer 360 creation form
 
 ---
  .../components/Customer360/CustomerForm.vue   | 91 +++++++++++++++++++
@@ -957,7 +957,7 @@ index c96d028..e076461 100644
 From 1d90c4db31efc81d9f0a6408090fc415b3e12b36 Mon Sep 17 00:00:00 2001
 From: 24520423-dotcom <24520423@gm.uit.edu.vn>
 Date: Tue, 24 Nov 2026 05:37:41 +0000
-Subject: [PATCH 5/5] feat: edit Customer 360 profiles in native CRM
+Subject: [PATCH 5/6] feat: edit Customer 360 profiles in native CRM
 
 ---
  .../components/Customer360/CustomerForm.vue   | 25 ++++++----
@@ -1118,6 +1118,273 @@ index bbf875e..28da65a 100644
  async function loadTimeline() {
    const request = ++timelineRequest
    timelineLoading.value = true
+-- 
+2.47.3
+
+
+From 138e5a70d71a505b3df83d51ec14a1b62118cee5 Mon Sep 17 00:00:00 2001
+From: 24520423-dotcom <24520423@gm.uit.edu.vn>
+Date: Tue, 24 Nov 2026 05:52:52 +0000
+Subject: [PATCH 6/6] feat: review and merge verified profiles in CRM
+
+---
+ .../Customer360/DuplicateReview.vue           | 170 ++++++++++++++++++
+ frontend/src/pages/Customer360Detail.vue      |  29 ++-
+ 2 files changed, 198 insertions(+), 1 deletion(-)
+ create mode 100644 frontend/src/components/Customer360/DuplicateReview.vue
+
+diff --git a/frontend/src/components/Customer360/DuplicateReview.vue b/frontend/src/components/Customer360/DuplicateReview.vue
+new file mode 100644
+index 0000000..853065b
+--- /dev/null
++++ b/frontend/src/components/Customer360/DuplicateReview.vue
+@@ -0,0 +1,170 @@
++<template>
++  <Dialog v-model:open="open" :title="__('Review Duplicate')" size="3xl">
++    <div class="space-y-4">
++      <p class="text-sm text-ink-gray-6">
++        {{ __('This profile will be kept') }} · {{ customer.customer_name }} ({{ customer.name }})
++      </p>
++
++      <p v-if="loadingCandidates" role="status">{{ __('Looking for similar profiles') }}</p>
++      <p v-else-if="!candidates.length" class="text-sm text-ink-gray-6">
++        {{ __('No similar profiles found. You can choose another profile to compare.') }}
++      </p>
++      <div v-else class="flex flex-wrap gap-2">
++        <Button
++          v-for="candidate in candidates"
++          :key="candidate.name"
++          :label="candidate.customer_name || candidate.name"
++          :title="candidate.matched_fields.join(', ')"
++          :disabled="saving"
++          @click="source = candidate.name"
++        />
++      </div>
++
++      <Link
++        v-model="source"
++        :label="__('Profile to compare and archive')"
++        doctype="C360 Customer"
++        :filters="{ name: ['!=', customer.name], merged_into: ['is', 'not set'] }"
++        :disabled="saving"
++      />
++
++      <p v-if="loadingPreview" role="status">{{ __('Loading comparison') }}</p>
++      <template v-else-if="comparison">
++        <div class="overflow-x-auto">
++          <table class="w-full text-left text-sm">
++            <thead class="bg-surface-gray-2">
++              <tr>
++                <th scope="col" class="p-2">{{ __('Field') }}</th>
++                <th scope="col" class="p-2">{{ comparison.target }}</th>
++                <th scope="col" class="p-2">{{ comparison.source }}</th>
++                <th v-if="comparison.can_merge" scope="col" class="p-2">{{ __('Keep value from') }}</th>
++              </tr>
++            </thead>
++            <tbody>
++              <tr v-for="field in comparison.fields" :key="field.fieldname" class="border-t border-outline-gray-2">
++                <th scope="row" class="p-2 font-medium">{{ __(field.label) }}</th>
++                <td class="break-words p-2">{{ field.target || '—' }}</td>
++                <td class="break-words p-2">{{ field.source || '—' }}</td>
++                <td v-if="comparison.can_merge" class="p-2">
++                  <FormControl
++                    v-model="selected[field.fieldname]"
++                    type="select"
++                    :aria-label="__('Keep value for {0}', [field.label])"
++                    :options="[
++                      { value: 'target', label: comparison.target },
++                      { value: 'source', label: comparison.source },
++                    ]"
++                    :disabled="saving"
++                  />
++                </td>
++              </tr>
++            </tbody>
++          </table>
++        </div>
++
++        <form v-if="comparison.can_merge" class="space-y-4" @submit.prevent="confirmMerge">
++          <FormControl v-model="reason" type="textarea" :label="__('Merge reason')" required :disabled="saving" />
++          <FormControl v-model="verified" type="checkbox" :label="__('I verified that these profiles belong to the same customer.')" :disabled="saving" />
++          <div class="flex justify-end">
++            <Button
++              type="submit"
++              variant="solid"
++              theme="red"
++              :loading="saving"
++              :disabled="!verified || !reason.trim()"
++            >
++              {{ __('Merge Customer') }}
++            </Button>
++          </div>
++        </form>
++      </template>
++
++      <p v-if="error" role="alert" class="text-sm text-ink-red-5">{{ error }}</p>
++    </div>
++  </Dialog>
++</template>
++
++<script setup>
++import Link from '@/components/Controls/Link.vue'
++import { Button, Dialog, FormControl, call, frappeRequest, toast } from 'frappe-ui'
++import { ref, watch } from 'vue'
++
++const props = defineProps({ customer: { type: Object, required: true } })
++const emit = defineEmits(['saved'])
++const open = defineModel({ type: Boolean })
++const candidates = ref([])
++const source = ref('')
++const comparison = ref(null)
++const selected = ref({})
++const reason = ref('')
++const verified = ref(false)
++const loadingCandidates = ref(false)
++const loadingPreview = ref(false)
++const saving = ref(false)
++const error = ref('')
++
++watch(open, async (shown) => {
++  if (!shown) return
++  source.value = ''
++  comparison.value = null
++  candidates.value = []
++  error.value = ''
++  loadingCandidates.value = true
++  try {
++    candidates.value = await frappeRequest({
++      url: 'cellphones_c360.api.customers.find_duplicates',
++      method: 'GET',
++      params: { customer: props.customer.name },
++    })
++  } catch {
++    error.value = __('Unable to look for similar profiles.')
++  } finally {
++    loadingCandidates.value = false
++  }
++})
++
++watch(source, async (name, _, onCleanup) => {
++  comparison.value = null
++  reason.value = ''
++  verified.value = false
++  error.value = ''
++  loadingPreview.value = !!name
++  if (!name) return
++  let current = true
++  onCleanup(() => { current = false })
++  try {
++    const result = await frappeRequest({
++      url: 'cellphones_c360.api.merge.preview',
++      method: 'GET',
++      params: { source: name, target: props.customer.name },
++    })
++    if (!current) return
++    comparison.value = result
++    selected.value = Object.fromEntries(result.fields.map((field) => [field.fieldname, field.suggested]))
++  } catch (err) {
++    if (current) error.value = err.messages?.[0] || __('Unable to compare these profiles.')
++  } finally {
++    if (current) loadingPreview.value = false
++  }
++})
++
++async function confirmMerge() {
++  if (saving.value || !comparison.value?.can_merge || !verified.value || !reason.value.trim()) return
++  const { source, target, source_modified, target_modified } = comparison.value
++  saving.value = true
++  error.value = ''
++  try {
++    await call('cellphones_c360.api.merge.merge_customers', {
++      source, target, source_modified, target_modified,
++      selected: selected.value, reason: reason.value.trim(), verified: verified.value,
++    })
++    open.value = false
++    toast.success(__('Profiles merged'))
++    emit('saved')
++  } catch (err) {
++    error.value = err.messages?.[0] || __('Unable to merge these profiles.')
++  } finally {
++    saving.value = false
++  }
++}
++</script>
+diff --git a/frontend/src/pages/Customer360Detail.vue b/frontend/src/pages/Customer360Detail.vue
+index 28da65a..8a112d7 100644
+--- a/frontend/src/pages/Customer360Detail.vue
++++ b/frontend/src/pages/Customer360Detail.vue
+@@ -7,8 +7,14 @@
+       </Button>
+       <h1 class="text-xl font-semibold">{{ __('Customer Profile') }}</h1>
+       <Button
+-        v-if="data?.customer && access?.canEdit"
++        v-if="data?.customer && !data.customer.is_merged"
+         class="ml-auto"
++        @click="showDuplicateReview = true"
++      >
++        {{ __('Review Duplicate') }}
++      </Button>
++      <Button
++        v-if="data?.customer && access?.canEdit"
+         variant="solid"
+         @click="showEdit = true"
+       >
+@@ -24,6 +30,13 @@
+       @saved="refreshAfterEdit"
+     />
+ 
++    <DuplicateReview
++      v-if="data?.customer && !data.customer.is_merged"
++      v-model="showDuplicateReview"
++      :customer="data.customer"
++      @saved="refreshAfterEdit"
++    />
++
+     <div v-if="loading" class="p-8 text-center">
+       Loading customer profile...
+     </div>
+@@ -35,6 +48,17 @@
+ 
+     <div v-else-if="data" class="space-y-5 p-5">
+ 
++      <div v-if="data.customer.is_merged" role="status" class="rounded-lg border border-outline-gray-2 bg-surface-gray-2 p-4 text-sm">
++        {{ __('This profile was archived after merging.') }}
++        <RouterLink
++          v-if="data.customer.merged_into"
++          class="font-medium underline"
++          :to="{ name: 'Customer360Detail', params: { customerId: data.customer.merged_into } }"
++        >
++          {{ __('Open current profile') }}
++        </RouterLink>
++      </div>
++
+       <!-- Customer header -->
+       <div class="rounded-lg border border-outline-gray-2 p-5">
+         <h2 class="text-2xl font-semibold text-ink-gray-9">
+@@ -251,6 +275,7 @@ import { ref, computed, watch } from 'vue'
+ import { useRouter, RouterLink } from 'vue-router'
+ import { Button, call, frappeRequest } from 'frappe-ui'
+ import CustomerForm from '@/components/Customer360/CustomerForm.vue'
++import DuplicateReview from '@/components/Customer360/DuplicateReview.vue'
+ 
+ const props = defineProps({
+   customerId: { type: String, required: true },
+@@ -262,6 +287,7 @@ const loading = ref(false)
+ const error = ref('')
+ const access = ref(null)
+ const showEdit = ref(false)
++const showDuplicateReview = ref(false)
+ 
+ function refreshAfterEdit() {
+   loadProfile()
+@@ -336,6 +362,7 @@ async function loadProfile() {
+   data.value = null
+   access.value = null
+   showEdit.value = false
++  showDuplicateReview.value = false
+ 
+   try {
+     const result = await call(
 -- 
 2.47.3
 

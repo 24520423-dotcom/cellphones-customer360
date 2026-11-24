@@ -7,10 +7,20 @@ from frappe import _
 from frappe.model.document import Document
 from frappe.utils import get_datetime, now_datetime
 
+from cellphones_c360.cellphones_customer_360.doctype.c360_customer.c360_customer import (
+    check_customer_link,
+    lock_customer_identity_writes,
+)
+
 
 class CustomerSupportTicket(Document):
+    def check_if_latest(self):
+        lock_customer_identity_writes()
+        super().check_if_latest()
 
     def validate(self):
+        if self.has_value_changed("customer"):
+            check_customer_link(self.customer)
         self.validate_related_order()
         self.validate_resolution()
         self.set_resolved_date()

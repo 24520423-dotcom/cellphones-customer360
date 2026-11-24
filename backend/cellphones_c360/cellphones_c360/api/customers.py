@@ -24,7 +24,10 @@ def get_access(customer=None):
     doc.check_permission("read")
     writable = set(get_permitted_fields(DOCTYPE, permission_type="write"))
     readable = set(get_permitted_fields(DOCTYPE, permission_type="read"))
-    can_edit = doc.has_permission("write") and set(EDIT_FIELDS).issubset(writable & readable)
+    can_edit = (
+        not doc.get("merged_into") and doc.has_permission("write")
+        and set(EDIT_FIELDS).issubset(writable & readable)
+    )
     return {"canEdit": bool(can_edit), "fields": form_fields("write") if can_edit else []}
 
 
@@ -94,9 +97,12 @@ def find_duplicates(customer=None, customer_name=None, phone_number=None, email=
     predicates = {field: value for field, value in values.items() if value}
     if not predicates:
         return []
+    filters = {"name": ("!=", customer)} if customer else {}
+    if frappe.get_meta(DOCTYPE).has_field("merged_into"):
+        filters["merged_into"] = ("is", "not set")
     rows = frappe.get_list(
         DOCTYPE,
-        filters={"name": ("!=", customer)} if customer else None,
+        filters=filters,
         or_filters=predicates,
         fields=["name", *readable_identity, "modified"],
         order_by="modified desc, name",
