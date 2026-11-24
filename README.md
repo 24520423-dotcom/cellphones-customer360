@@ -42,12 +42,14 @@ cellphones-customer360/
 │   └── cellphones_c360/       # Custom App duy nhất
 ├── data/                     # Tài liệu và dữ liệu mẫu
 ├── deployment/
-│   └── cellphones-c360/       # Docker và script Snapshot
+│   └── cellphones-c360/       # Docker, release nguồn và Snapshot
 ├── docs/
 │   ├── api/                  # API Contract
 │   ├── design/               # CV02, CV03 và tài liệu thiết kế
 │   ├── frappe/               # Tài liệu kỹ thuật
-│   └── integration/          # Tài liệu tích hợp
+│   ├── integration/          # Tài liệu tích hợp
+│   ├── deployment/           # Cài đặt và bàn giao
+│   └── testing/              # BPMN, test report và kịch bản demo
 ├── frappe-crm-native/
 │   └── patches/
 │       └── cellphones-c360.patch
@@ -61,20 +63,19 @@ Thư mục `backend/cellphones_c360` là nguồn chính cho Custom App. Không d
 
 | Phân hệ | Trạng thái |
 |---|---|
-| Leads, Deals, Contacts, Tasks | Tận dụng giao diện và chức năng Frappe CRM; kiểm thử nghiệp vụ theo role còn cần bổ sung |
-| Thương hiệu CellphoneS | Đã thiết lập tên, logo, favicon và theme cơ bản |
-| Customer 360 – danh sách | Đã hiển thị dữ liệu backend, có tìm kiếm và phân trang; cần kiểm thử biên |
-| Customer 360 – hồ sơ | Đã kiểm tra hiển thị Overview, Orders, Leads & Deals, After-sales, Timeline với Administrator |
-| Tạo/sửa khách hàng trong giao diện mới | Chưa tích hợp và kiểm thử |
-| Hợp nhất khách hàng đa kênh | Cần hoàn thiện và kiểm thử quy tắc nghiệp vụ |
-| Orders và After-sales | Đã có DocType, hiển thị trong hồ sơ; màn hình quản lý riêng chưa hoàn thiện |
-| Dashboard, Analytics | Tận dụng chức năng có sẵn và rà soát API mở rộng; chưa xác nhận tích hợp mới |
-| Phân quyền, bảo mật | Cần kiểm thử theo role, quyền tài liệu và quyền trường |
-| Deployment Snapshot | Đã đổi đường dẫn backend; chưa kiểm thử lại theo kiến trúc mới |
+| Hồ sơ Customer 360 | Tạo, sửa, tìm kiếm, phân khúc, năm tab và Timeline đã kiểm thử trên site hiện có |
+| Đa kênh và hợp nhất | CSV có lịch sử và khả năng replay, đối chiếu và merge đã kiểm thử cả thành công lẫn rollback |
+| Lead, Deal và Contact | Dùng CRM gốc, hỗ trợ nhiều cơ hội và mua lại trên một khách hàng |
+| Orders và After-sales | Danh sách CRM, form chuẩn Frappe, thanh toán/giao nhận, Ticket và lịch CRM Task |
+| Customer Analytics | KPI và biểu đồ theo kỳ, tách giá trị đơn khỏi khoản thu xác nhận |
+| Thương hiệu | Logo, favicon, CSS CellphoneS, hỗ trợ điều hướng tab bàn phím và màn hình nhỏ |
+| Phân quyền | Đã kiểm tra quyền hiện hành. Ma trận mới, Role Profile và kiểm thử phòng ban chờ migration được duyệt |
+| Triển khai nguồn | Đã kiểm tra scripts, Git Patch, Verify và demo trial trên site hiện có. Cài New/Snapshot cần môi trường được duyệt |
+| GitHub | Các commit cục bộ đã được lưu. Push chờ xác nhận quyền gửi ra remote |
 
 ### DocType tùy chỉnh
 
-`C360 Customer`, `Customer Order`, `Customer Order Item`, `Customer Support Ticket`, `C360 Registration Request`.
+`C360 Customer`, `C360 Source Record`, `Customer Order`, `Customer Order Item`, `Customer Support Ticket`, `C360 Registration Request`.
 
 ## 5. Chạy môi trường phát triển hiện có
 
@@ -104,7 +105,7 @@ Dừng môi trường bằng `docker compose stop` tại thư mục Compose. Kh�
 - Repository nguồn CRM trong container: `/home/frappe/frappe-bench/apps/crm`.
 - Commit nền: `638bf3db23e7142870819a213368e028866b79b1`.
 - Nhánh tùy chỉnh trong CRM: `feature/cellphones-c360`.
-- Ba commit đã xuất patch: `820f0af`, `5d45d37`, `261dc53`.
+- Commit CRM tại mốc bàn giao: `ed135bb`. Patch lưu toàn bộ thay đổi từ base.
 - Nhánh repository đồ án: `feature/frappe-crm-native`.
 
 Các file tùy chỉnh chính trong CRM: `frontend/src/cellphones-theme.css`, `frontend/src/index.css`, `frontend/src/router.js`, `frontend/src/components/Layouts/AppSidebar.vue`, `frontend/src/pages/Customer360.vue`, `frontend/src/pages/Customer360Detail.vue`.
@@ -121,13 +122,16 @@ Tải lại trình duyệt bằng Ctrl+F5. Commit trong repository CRM, xuất l
 
 ## 7. Bộ triển khai và bàn giao
 
-`deployment/cellphones-c360/` chứa bộ Snapshot dựa trên bản sao lưu ngày 22/11/2026. Script đã chuyển sang backend dùng chung nhưng chưa có quy trình áp dụng patch mới được kiểm thử. Không xem bộ Snapshot hiện tại là bản bàn giao mới nhất; không chạy đè lên môi trường đang hoạt động.
+`deployment/cellphones-c360/` hỗ trợ Verify, New và Update từ mã nguồn. Snapshot là chế độ riêng dành cho bộ sao lưu ngày 22/11/2026. Logo đóng gói trong public assets của Custom App, còn backup và cấu hình site được quản lý ngoài Git.
 
-Trước khi bàn giao cần cập nhật backup, kiểm tra phiên bản CRM trong bản sao lưu, áp dụng patch đúng cách, cấu hình thương hiệu, kiểm tra quyền, chạy thử trên môi trường riêng khi nhóm quyết định. Dữ liệu, site config, logo tải lên và cấu hình thương hiệu trong database không nằm trong Git Patch.
+Xem [Installation Guide](docs/deployment/installation-guide.md), [Deployment Guide](docs/deployment/deployment-guide.md) và [Git workflow](docs/deployment/git-workflow.md).
 
 ## 8. Tài liệu và nguyên tắc bảo mật
 
 - [API Contract](docs/api/api-contract.md)
+- [Data Dictionary](docs/design/data-dictionary.md), [ERD](docs/design/erd.md) và [BPMN](docs/design/bpmn.md)
+- [Permission Matrix](docs/design/permission-matrix.md) và [User Guide](docs/user-guide.md)
+- [Test Report](docs/testing/test-report.md), [Demo Scenario](docs/testing/demo-scenario.md) và [Known Issues](docs/known-issues.md)
 - [Tài liệu thiết kế](docs/design/)
 - [Tài liệu Frappe](docs/frappe/)
 - [Tài liệu tích hợp](docs/integration/)

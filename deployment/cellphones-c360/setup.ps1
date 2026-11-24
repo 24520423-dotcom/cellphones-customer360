@@ -1,4 +1,18 @@
 
+param(
+    [ValidateSet("Snapshot", "New", "Update", "Verify")]
+    [string]$Mode = "Snapshot",
+    [string]$Site = "crm.localhost",
+    [string]$Container = "crm-frappe-1",
+    [string]$ProjectName = "cellphones-c360-source",
+    [switch]$ApplyDepartmentRoles
+)
+
+if ($Mode -ne "Snapshot") {
+    & (Join-Path $PSScriptRoot "setup-source.ps1") -Mode $Mode -Site $Site -Container $Container -ProjectName $ProjectName -ApplyDepartmentRoles:$ApplyDepartmentRoles
+    return
+}
+
 $ErrorActionPreference = "Stop"
 Set-Location $PSScriptRoot
 

@@ -1,6 +1,6 @@
 # API Contract – CellphoneS Customer 360
 
-> Phiên bản: 2.0 – bản cập nhật theo kiến trúc Frappe CRM native, chờ nhóm rà soát kỹ thuật.  
+> Phiên bản: 2.1 – tích hợp Customer 360 trên Frappe CRM native.
 > Ngày: 24/11/2026.  
 > Hệ thống: Frappe Framework 15.126.1, Frappe CRM 1.92.0, Custom App `cellphones_c360` 0.0.1, Vue.js và frappe-ui.  
 > Base URL phát triển: `http://crm.localhost:8000`.
@@ -13,7 +13,7 @@ Contract 1.0 ngày 17/11/2026 là tài liệu đề xuất theo kiến trúc fro
 
 | Trạng thái | Ý nghĩa |
 |---|---|
-| VERIFIED-UI | Đã quan sát dữ liệu hiển thị qua giao diện Frappe CRM, bằng Administrator; chưa chứng minh mọi role hay mọi HTTP method |
+| VERIFIED-UI | Đã kiểm thử luồng liên quan trên Chrome với phiên Frappe |
 | VERIFIED-GET | Đã kiểm thử đọc dữ liệu qua REST trên site ở lần kiểm tra trước |
 | AVAILABLE / UNTESTED | Có chức năng/API nền tảng nhưng chưa kiểm thử cụ thể trong phạm vi hiện tại |
 | REVIEW | Có module hoặc DocType liên quan; cần đối chiếu mã nguồn, tham số, response và quyền trước khi xác nhận endpoint |
@@ -39,7 +39,7 @@ Frontend chạy cùng origin với backend, tận dụng Frappe Session và frap
 
 | Endpoint nền tảng | Mục đích | Trạng thái |
 |---|---|---|
-| `POST /api/method/login` | Đăng nhập Frappe (`usr`, `pwd`) | AVAILABLE / UNTESTED ở mức API riêng |
+| `POST /api/method/login` | Đăng nhập Frappe (`usr`, `pwd`) | VERIFIED-UI |
 | `GET /api/method/frappe.auth.get_logged_user` | Người dùng của phiên hiện tại | AVAILABLE / UNTESTED |
 | `POST /api/method/logout` | Đăng xuất | AVAILABLE / UNTESTED ở mức API riêng |
 
@@ -47,23 +47,16 @@ Không dùng Administrator làm tài khoản mặc định cho nhân viên. Modu
 
 Mọi API truy cập hồ sơ khách hàng phải kiểm tra phiên, quyền DocType, quyền tài liệu và quyền trường trên server. Không dùng `ignore_permissions=True` để vượt quyền dữ liệu khách hàng. Ẩn nút ở frontend không thay thế phân quyền backend. Kiểm thử Guest và các role nghiệp vụ. Xử lý lỗi theo response thực tế của Frappe, không giả định mọi 403 là hết phiên hoặc mọi lỗi validation là 422.
 
-### Ma trận quyền mục tiêu (chưa xác nhận cấu hình thực tế)
+### Ma trận quyền
 
-| Vai trò nghiệp vụ | Leads / Deals | Customer 360 | Orders / After-sales | Analytics |
-|---|---|---|---|---|
-| Administrator | Quản trị | Quản trị | Quản trị | Toàn bộ |
-| Sales Manager | Phạm vi đội | Phạm vi đội | Theo quyền | Tổng hợp đội |
-| Sales User | Được phân công | Theo quyền | Theo quyền | Dữ liệu được phép |
-| CSKH | Theo nhu cầu và quyền | Khách được hỗ trợ | Xử lý hỗ trợ được phân công | Giới hạn |
-| Guest | Không | Không | Không | Không |
-
-Tên role nghiệp vụ và quyền cụ thể cần đối chiếu role/permission thực tế trước khi triển khai.
+Kiểm tra [quyền hiện hành và cấu hình chuẩn bị](../design/permission-matrix.md). Guest và Sales User ngoài quyền hiện hành đã được kiểm tra. Migration vai trò phòng ban đang chờ phê duyệt trên site phát triển.
 
 ## 4. Mô hình dữ liệu Customer 360
 
 | DocType | Vai trò / quan hệ xác định |
 |---|---|
-| `C360 Customer` | Hồ sơ tập trung; `crm_contact` Link tới `Contact`; `crm_lead` Link tới `CRM Lead` |
+| `C360 Customer` | Hồ sơ tập trung, liên kết chính và bảng `crm_links`, trạng thái lưu trữ sau hợp nhất |
+| `C360 Source Record` | Mã nguồn, thời điểm, kết quả intake và liên kết hồ sơ được xác minh |
 | `CRM Lead` | Khách hàng tiềm năng có sẵn của CRM |
 | `CRM Deal` | Cơ hội bán hàng; liên kết Lead trong luồng tổng hợp hiện tại |
 | `Contact` | Thông tin liên hệ |
@@ -72,7 +65,7 @@ Tên role nghiệp vụ và quyền cụ thể cần đối chiếu role/permiss
 | `Customer Support Ticket` | `customer` Link tới C360 Customer; `related_order` Link tới Customer Order; `assigned_to` Link tới User |
 | `C360 Registration Request` | Yêu cầu đăng ký; quy trình và quyền cần rà soát |
 
-Mô hình hiện tại tổng hợp Deal thông qua Lead được liên kết trong hồ sơ. Không mặc nhiên bao phủ mọi Deal không có Lead hoặc nhiều Lead của cùng một khách hàng. Cần hoàn thiện quy tắc nhận diện, chống trùng, hợp nhất và bảo toàn lịch sử đa kênh.
+Deal thuộc hồ sơ qua liên kết trực tiếp, một trong các Lead liên kết hoặc Contact trong bảng con `CRM Contacts`. [ERD](../design/erd.md) · [Data Dictionary](../design/data-dictionary.md)
 
 ## 5. API nền tảng Leads và Deals
 
@@ -99,15 +92,15 @@ Module: `backend/cellphones_c360/cellphones_c360/api/customer360.py`.
 
 | Method Python (tiền tố `cellphones_c360.api.customer360.`) | Input | Trạng thái |
 |---|---|---|
-| `list_customers` | `search`, `page`, `page_size` | VERIFIED-UI: danh sách hiển thị; cần kiểm thử tìm kiếm, phân trang và quyền |
+| `list_customers` | `search`, `page`, `page_size`, `segment` | VERIFIED-UI |
 | `get_customer_360` | `customer_id` | VERIFIED-UI: hồ sơ và các tab dữ liệu |
-| `get_customer_timeline` | `customer_id`, `page`, `page_size` | VERIFIED-UI: lịch sử đơn hàng, hỗ trợ; cần kiểm thử thêm tương tác |
+| `get_customer_timeline` | `customer_id`, `page`, `page_size` | VERIFIED-UI và kiểm thử phân trang trên MariaDB |
 
 ### 6.1. Danh sách khách hàng
 
 Endpoint: `/api/method/cellphones_c360.api.customer360.list_customers`.
 
-Tham số mặc định: `search=""`, `page=1`, `page_size=20`. Tìm kiếm theo dữ liệu nhận diện được backend hỗ trợ. Danh sách hiển thị tên và điện thoại đã che; các trường `lead_count` và `deal_count` hiện có thể là null, không tự diễn giải thành 0.
+Tham số mặc định gồm `search=""`, `page=1`, `page_size=20`, `segment=""`. Tìm theo mã, tên và các trường liên hệ được phép đọc. `items` chứa `segments` là mã nhãn tính tự động và `updated_at_iso` có offset. `segment_labels` ánh xạ mã sang nhãn. Hai trường tương thích `lead_count` và `deal_count` hiện có thể là null.
 
 Ví dụ minh họa cấu trúc HTTP response (không phải bản ghi thật):
 
@@ -182,7 +175,8 @@ Ví dụ minh họa:
         "id": "timeline-demo",
         "type": "order",
         "summary": "Đơn hàng mẫu",
-        "occurred_at": "2026-11-24 10:00:00",
+        "occurred_at": "2026-11-24T10:00:00+07:00",
+        "source": "Customer Order",
         "related_doctype": "Customer Order",
         "related_name": "ORD-DEMO"
       }
@@ -194,7 +188,7 @@ Ví dụ minh họa:
 }
 ```
 
-Nguồn dữ liệu hiện gồm đơn hàng, yêu cầu hỗ trợ và lịch sử liên kết được backend hỗ trợ. Kiểm thử thực tế hiện đã thấy sự kiện đơn hàng và ticket; cần kiểm thử cuộc gọi, email, công việc và lịch sử Lead/Deal. Không tự tạo sự kiện giả khi thiếu dữ liệu.
+Timeline tổng hợp dữ liệu thực từ hồ sơ và các tài liệu liên kết trong quyền đọc. [Kiểm thử hồ sơ và Timeline](../integration/customer-profile.md)
 
 ### 6.4. Tạo hồ sơ khách hàng
 
@@ -249,24 +243,13 @@ Form chuẩn Frappe Desk dùng ORM của `Customer Order` để lưu `items`, `c
 
 `POST /api/method/cellphones_c360.api.after_sales.record_demo_proposal` nhận `customer` và `proposal`. Trả mã Comment khi hồ sơ đang hoạt động, có consent và tài khoản đủ quyền. Lịch chăm sóc là CRM Task do scheduler tạo từ `Customer Order.completed_at`.
 
-DocType đã có, dữ liệu đã hiển thị trong hồ sơ Customer 360. Màn hình quản lý riêng và thao tác ghi trong giao diện native mới chưa được kiểm thử.
-
-| Nghiệp vụ | API / mã nguồn cần đối chiếu | Trạng thái |
-|---|---|---|
-| Quản lý đơn hàng | REST `/api/resource/Customer%20Order`, controller `customer_order.py`, bảng con `Customer Order Item` | REVIEW |
-| Quản lý ticket | REST `/api/resource/Customer%20Support%20Ticket`, `api/after_sales.py`, controller `customer_support_ticket.py` | REVIEW |
-
-Không sử dụng tên `C360 After Sales Request` hoặc các method `list_requests`, `get_request`, `create_request`, `update_request` từ đề xuất cũ nếu chưa đối chiếu. Tên method, input, output, enum trạng thái và phân quyền cụ thể cần trích từ mã nguồn hiện tại.
-
-Quy tắc mục tiêu: đơn hàng phải thuộc đúng khách; sản phẩm lưu trong bảng con; ticket liên kết đúng khách và đơn hàng liên quan; xác minh trạng thái và người phụ trách trước khi cập nhật; bảo toàn lịch sử; không cho sửa trái quyền. Rà soát dữ liệu demo để tránh mâu thuẫn giữa trạng thái đơn hàng và yêu cầu bảo hành.
+Danh sách, form chuẩn và controller đã kiểm thử. Xem [Orders](../integration/customer-orders.md) và [After-sales](../integration/after-sales.md).
 
 ## 8. Dashboard và Analytics
 
 `GET /api/method/cellphones_c360.api.analytics.get_access` cho biết quyền đọc nhóm KPI. `GET /api/method/cellphones_c360.api.analytics.get_analytics_overview` nhận `period` (`all`, `7d`, `30d`, `90d`) hoặc cặp `from_date`, `to_date` định dạng YYYY-MM-DD. `activities=1` yêu cầu danh sách hoạt động gần đây trong quyền đọc. Xem [công thức và kỳ đo KPI](../design/kpi-definition.md).
 
-Ưu tiên Dashboard có sẵn của Frappe CRM. Module `api/analytics.py` đã có nhưng tên endpoint, tham số, phạm vi dữ liệu và kết quả cần đối chiếu trước khi tích hợp native. Không coi `api/dashboard.py` hoặc các API đề xuất trong v1.0 là đã triển khai.
-
-Các KPI mục tiêu: tổng Lead, tổng Deal, Won Deal, tỷ lệ Won Deal, pipeline theo trạng thái, hoạt động gần đây, phân khúc khách hàng. Quy ước đề xuất: `deal_win_rate = won_deals / total_deals * 100`; `conversion_rate = converted_leads / total_leads * 100`; xử lý mẫu số 0; phải thống nhất kỳ lọc và phạm vi quyền. Giá trị Deal dự kiến không phải doanh thu. CLV/ABC cần nguồn giao dịch và định nghĩa riêng trước khi triển khai.
+Trang Customer Analytics chạy cùng Dashboard gốc. Deal Win Rate dùng mẫu số Won + Lost. Giá trị pipeline dự kiến, giá trị đơn hợp lệ và tiền thu xác nhận được hiển thị riêng.
 
 ## 9. Tích hợp frontend native
 
@@ -277,7 +260,7 @@ Các trang hiện tại nằm trong repository CRM:
 - `frontend/src/router.js`
 - `frontend/src/components/Layouts/AppSidebar.vue`
 
-Route: `/crm/customer360` và `/crm/customer360/:customerId` trên trình duyệt. Dùng router của CRM để điều hướng sang Lead/Deal gốc.
+Các route trên trình duyệt gồm `/crm/customer360`, `/crm/customer360/:customerId`, `/crm/orders`, `/crm/after-sales` và `/crm/customer-analytics`. Form đơn và Ticket mở theo route Desk chuẩn. Router CRM mở Lead, Deal và Contact.
 
 Ví dụ gọi API đọc bằng frappe-ui:
 
@@ -294,18 +277,10 @@ const result = await call(
 
 ## 10. Tiêu chí chấp nhận và việc còn mở
 
-- [x] Xác nhận Custom App và 5 DocType trên site hiện tại.
-- [x] Hiển thị danh sách và mở hồ sơ Customer 360 bằng Administrator.
-- [x] Hiển thị 5 tab hồ sơ với dữ liệu demo.
-- [ ] Kiểm thử tìm kiếm, phân trang, ID không tồn tại, khách chưa có dữ liệu.
-- [ ] Kiểm thử điều hướng Lead/Deal và nhiều khách khác nhau.
-- [ ] Kiểm thử quyền Guest, Sales User, Sales Manager, CSKH và quyền tài liệu/trường.
-- [ ] Rà soát dữ liệu Contact và lịch sử tương tác theo quyền.
-- [ ] Đối chiếu module customers, after_sales, analytics, registration, administration, employee_administration và access.
-- [ ] Hoàn thiện tạo/sửa khách hàng, chống trùng, hợp nhất đa kênh.
-- [ ] Kiểm thử quản lý Orders và After-sales riêng, thao tác ghi và validation.
-- [ ] Thống nhất định nghĩa doanh thu, KPI và nguồn dữ liệu phân tích.
-- [ ] Kiểm thử bộ triển khai native trên môi trường bàn giao.
-- [ ] Không lộ mật khẩu, token, dữ liệu cá nhân trong log, backup chia sẻ hoặc Git.
+- [x] Kiểm thử tạo và sửa hồ sơ, trùng định danh, hợp nhất và rollback.
+- [x] Kiểm thử nhiều Lead/Deal, Orders, After-sales, Timeline, phân khúc và KPI.
+- [x] Kiểm thử quyền Guest và Sales User ngoài quyền hiện hành.
+- [ ] Cấu hình quyền phòng ban và kiểm thử phạm vi mới sau khi migration được duyệt.
+- [ ] Kiểm thử cài nguồn trên môi trường triển khai được duyệt.
 
-Các thay đổi endpoint và schema phải được cập nhật đồng bộ với frontend qua commit/PR. Chỉ nâng trạng thái kiểm thử khi có minh chứng tương ứng; không đánh dấu toàn bộ backend hay phân quyền đã hoàn thành dựa trên một lần kiểm thử Administrator.
+[Test Report](../testing/test-report.md) · [Known Issues](../known-issues.md)

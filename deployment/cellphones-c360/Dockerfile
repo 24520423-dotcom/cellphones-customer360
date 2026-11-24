@@ -1,4 +1,5 @@
-FROM frappe/bench:latest
+ARG C360_BENCH_IMAGE=frappe/bench@sha256:0b7b1602cd7295666a260dcd2838903bed5a1b97bc003690a04c803189e1e4b4
+FROM ${C360_BENCH_IMAGE}
 
 USER frappe
 

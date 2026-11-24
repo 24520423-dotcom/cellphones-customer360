@@ -11,3 +11,27 @@
  		return True
  
  	return False
+--- a/frontend/src/components/Layouts/AppSidebar.vue
++++ b/frontend/src/components/Layouts/AppSidebar.vue
+@@ -272,6 +272,12 @@
+ 
+ const links = getNavigationItems({ mobile: props.mobile })
+ 
++const staffAccess = createC360Resource({
++  url: 'cellphones_c360.api.administration.get_access',
++  method: 'GET',
++  auto: true,
++})
++
+ const analyticsAccess = createC360Resource({
+   url: 'cellphones_c360.api.analytics.get_access',
+   method: 'GET',
+@@ -296,7 +302,7 @@
+       name: 'All Views',
+       hideLabel: true,
+       opened: true,
+-      views: links.map((link) => ({
++      views: (staffAccess.data?.nativeSales === false ? [] : links).map((link) => ({
+         label: link.label,
+         icon: link.icon,
+         key: link.route,
