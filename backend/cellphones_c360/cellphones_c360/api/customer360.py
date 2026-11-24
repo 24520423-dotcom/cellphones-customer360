@@ -212,7 +212,7 @@ def list_customers(search="", page=1, page_size=20):
         )
     )
 
-    # 7. Chuẩn hóa dữ liệu cho React
+    # 7. Chuẩn hóa dữ liệu hồ sơ Customer 360
     items = []
 
     for customer in customers:
