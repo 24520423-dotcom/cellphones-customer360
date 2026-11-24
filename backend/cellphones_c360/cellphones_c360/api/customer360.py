@@ -1,8 +1,11 @@
+from itertools import count
+
 import frappe
 from frappe.model import get_permitted_fields
 
 from cellphones_c360.api.crm_links import related_records, visible_doc
 from cellphones_c360.api.orders import is_confirmed_purchase
+from cellphones_c360.api.segments import SEGMENTS, UNRESOLVED_TICKET_STATES, summarize, summarize_many
 from cellphones_c360.api.timeline import build_timeline, iso_timestamp
 
 
@@ -139,7 +142,14 @@ def get_customer_360(customer_id):
     can_read_payment = {"order_status", "payment_status", "paid_at"}.issubset(
         get_permitted_fields("Customer Order", permission_type="read"),
     )
+    segments = summarize(
+        customer,
+        [frappe._dict(order) for order in orders] if can_read_amounts and can_read_payment else None,
+        any(ticket.get("ticket_status") in UNRESOLVED_TICKET_STATES for ticket in tickets),
+    ) if not customer_data["is_merged"] else {"segments": [], "rfm": None}
     return {
+        **segments,
+        "segment_labels": SEGMENTS,
         "summary": {
             "recorded_order_value": sum(order["total_amount"] or 0 for order in orders) if can_read_amounts else None,
             "confirmed_spend": sum(
@@ -159,7 +169,7 @@ def get_customer_360(customer_id):
     }
 
 @frappe.whitelist()
-def list_customers(search="", page=1, page_size=20):
+def list_customers(search="", page=1, page_size=20, segment=""):
     # 1. Kiểm tra đăng nhập
     if frappe.session.user == "Guest":
         frappe.throw("Vui lòng đăng nhập.", frappe.PermissionError)
@@ -167,6 +177,8 @@ def list_customers(search="", page=1, page_size=20):
     # 2. Kiểm tra quyền đọc khách hàng
     if not frappe.has_permission("C360 Customer", "read"):
         frappe.throw("Không có quyền xem khách hàng.", frappe.PermissionError)
+    if segment and segment not in SEGMENTS:
+        frappe.throw("Phân khúc không hợp lệ.", frappe.ValidationError)
 
     # 3. Chuẩn hóa tham số phân trang
     page = max(1, frappe.utils.cint(page))
@@ -188,33 +200,31 @@ def list_customers(search="", page=1, page_size=20):
         ]
 
     # 5. Lấy danh sách theo quyền của người đăng nhập
-    customers = frappe.get_list(
-        "C360 Customer",
-        fields=[
-            "name",
-            "customer_name",
-            "phone_number",
-            "email",
-            "modified",
-        ],
-        filters=conditions,
-        or_filters=search_filters,
-        start=start,
-        page_length=page_size,
-        order_by="modified desc",
-    )
-
-    # 6. Đếm tổng số khách phù hợp
-    # Cùng bộ lọc và quyền với danh sách
-    total = len(
-        frappe.get_list(
-            "C360 Customer",
-            fields=["name"],
-            filters=conditions,
-            or_filters=search_filters,
-            limit_page_length=0,
-        )
-    )
+    criteria = {"filters": conditions, "or_filters": search_filters}
+    fields = ["name", "customer_name", "phone_number", "modified", "creation", "source_channel"]
+    if segment:
+        customers = []
+        total = 0
+        classification = {}
+        for offset in count(0, 500):
+            batch = frappe.get_list("C360 Customer", fields=fields, start=offset, page_length=500,
+                                    order_by="modified desc, name desc", **criteria)
+            summaries = summarize_many(batch)
+            for row in batch:
+                if segment not in summaries[row.name]["segments"]:
+                    continue
+                if start <= total < start + page_size:
+                    customers.append(row)
+                    classification[row.name] = summaries[row.name]
+                total += 1
+            if len(batch) < 500:
+                break
+    else:
+        customers = frappe.get_list("C360 Customer", fields=fields, start=start, page_length=page_size,
+                                    order_by="modified desc, name desc", **criteria)
+        classification = summarize_many(customers)
+        counts = frappe.get_list("C360 Customer", fields=["count(name) as total"], page_length=1, **criteria)
+        total = counts[0].total if counts else 0
 
     # 7. Chuẩn hóa dữ liệu hồ sơ Customer 360
     items = []
@@ -232,6 +242,7 @@ def list_customers(search="", page=1, page_size=20):
             "lead_count": None,
             "deal_count": None,
             "updated_at": str(customer.modified),
+            "segments": classification[customer.name]["segments"],
         })
 
     return {
@@ -239,6 +250,7 @@ def list_customers(search="", page=1, page_size=20):
         "page": page,
         "page_size": page_size,
         "total": total,
+        "segment_labels": SEGMENTS,
     }
 
 @frappe.whitelist()
@@ -255,7 +267,7 @@ def get_customer_profile(customer_id):
         "display_name": customer["customer_name"],
         "phone": customer["phone_number"],
         "email": customer["email"],
-        "segments": [],
+        "segments": data["segments"],
         "owner": None,
         "updated_at": None,
         "leads": data["leads"],
