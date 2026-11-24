@@ -22,6 +22,8 @@ DocType dùng mã `CUST-.#####` và lưu số điện thoại, email, tên, ngu�
 
 Tạo và sửa hồ sơ qua ORM chia sẻ khóa giao dịch trên hàng DocType. Truy vấn đối chiếu đọc dữ liệu mới nhất theo khóa, gồm dữ liệu vừa được giao dịch trước đó commit. Khi sửa, controller kiểm tra các trường định danh thay đổi. Giá trị cũ còn nguyên có thể được xem và sửa từng phần.
 
+`customers.find_duplicates` chỉ trả hồ sơ trong quyền đọc, kèm `matched_fields`. Dùng cả số điện thoại và email để phân biệt mức độ tương đồng. Chỉ trùng tên là tín hiệu tra cứu và có thể tồn tại nhiều hồ sơ khác nhau.
+
 ## 4. Các file liên quan
 
 Windows và Custom App được bind mount vào Docker dùng cùng mã trong `backend/cellphones_c360/cellphones_c360/cellphones_customer_360/doctype/c360_customer/c360_customer.py`. Các kiểm thử đặt cạnh controller trong `test_c360_customer.py`.
@@ -38,16 +40,16 @@ Nhân viên → gửi dữ liệu từ form hoặc import → chuẩn hóa → k
 
 ## 7. Kiểm thử
 
-Đã chạy tạo hồ sơ với tên nhiều khoảng trắng, email hoa và nguồn khác kiểu chữ. Đã kiểm tra từ chối email sai, số điện thoại sai, tên trống và email trùng. Các bản ghi kiểm thử backend được rollback.
+Đã chạy tạo hồ sơ với tên nhiều khoảng trắng, email hoa và nguồn khác kiểu chữ. Đã kiểm tra từ chối email sai, số điện thoại sai, tên trống và email trùng. Kiểm thử hai kết nối MariaDB tạo cùng email xác nhận giao dịch thứ hai bị từ chối ngay cả khi đã đọc dữ liệu trước lúc giao dịch đầu commit. Chỉ có một bản ghi được lưu và bản ghi giả lập đó được dọn sau kiểm thử.
 
 ## 8. Output bàn giao
 
-Quy tắc dữ liệu, controller dùng chung và test cases backend.
+Quy tắc dữ liệu, controller dùng chung, API trả ứng viên theo quyền, test cases backend và dữ liệu [đối chiếu trùng](../../data/customers_duplicates.csv).
 
 ## 9. Tiêu chí hoàn thành
 
-Kịch bản đồng thời và đối chiếu đa kênh được kiểm chứng cùng các bước nhận diện và xử lý trùng tiếp theo.
+Đã kiểm chứng chuẩn hóa, đối chiếu tên/điện thoại/email, chỉnh sửa hồ sơ hiện tại và hai luồng tạo đồng thời. Đối chiếu từ CSV và hợp nhất được kiểm thử tại Task 05–06.
 
 ## 10. Commit và cập nhật tiến độ
 
-Commit quy tắc chuẩn hóa cùng tính năng tạo hồ sơ để cả API chuẩn và giao diện dùng chung một luồng ghi.
+Quy tắc chuẩn hóa dùng chung đã được commit ở Task 02. Task 04 bổ sung API đối chiếu, dữ liệu mẫu và kiểm thử định danh.

@@ -1,0 +1,5 @@
+source_channel,source_record_id,received_at,customer_name,phone_number,email,customer_type,purchase_interest
+Facebook,FB-DEMO-DUP-001,2026-11-21T09:15:00+07:00,Khách Demo Trực Tuyến A,+84 (28) 0000 0123,customer-online-a@example.test,Individual,0
+Zalo,ZALO-DEMO-DUP-001,2026-11-21T10:12:00+07:00,Khách Demo Dùng Chung Số,84.28.0000.0123,shared-phone@example.test,Individual,0
+Website,WEB-DEMO-DUP-001,2026-11-21T13:00:00+07:00,Khách Demo Trực Tuyến A,02800000189,same-name@example.test,Individual,0
+Hotline,HL-DEMO-INVALID-001,2026-11-21T15:30:00+07:00,Khách Demo Dữ Liệu Sai,123,bad@@example.test,Individual,0

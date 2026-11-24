@@ -2,6 +2,11 @@ import frappe
 from frappe import _
 from frappe.model import get_permitted_fields
 
+from cellphones_c360.cellphones_customer_360.doctype.c360_customer.c360_customer import (
+    normalize_email,
+    normalize_phone,
+)
+
 DOCTYPE = "C360 Customer"
 EDIT_FIELDS = ("customer_name", "phone_number", "email", "customer_type", "customer_status", "source_channel")
 LINK_FIELDS = ("crm_contact", "crm_lead")
@@ -63,3 +68,43 @@ def update_customer(customer, values: dict, modified):
     doc.modified = modified
     doc.save()
     return {"name": doc.name}
+
+
+@frappe.whitelist(methods=["GET"])
+def find_duplicates(customer=None, customer_name=None, phone_number=None, email=None):
+    if not frappe.has_permission(DOCTYPE, "read"):
+        frappe.throw(_("You cannot review customer identities."), frappe.PermissionError)
+    fields = ("customer_name", "phone_number", "email")
+    readable = set(get_permitted_fields(DOCTYPE, permission_type="read"))
+    readable_identity = [field for field in fields if field in readable]
+
+    if customer:
+        doc = frappe.get_doc(DOCTYPE, customer)
+        doc.check_permission("read")
+        doc.apply_fieldlevel_read_permissions()
+        values = {field: doc.get(field) for field in readable_identity}
+    else:
+        supplied = {
+            "customer_name": " ".join((customer_name or "").split()),
+            "phone_number": normalize_phone(phone_number),
+            "email": normalize_email(email),
+        }
+        values = {field: supplied[field] for field in readable_identity}
+
+    predicates = {field: value for field, value in values.items() if value}
+    if not predicates:
+        return []
+    rows = frappe.get_list(
+        DOCTYPE,
+        filters={"name": ("!=", customer)} if customer else None,
+        or_filters=predicates,
+        fields=["name", *readable_identity, "modified"],
+        order_by="modified desc, name",
+        page_length=20,
+    )
+    for row in rows:
+        row.matched_fields = [
+            field for field, value in predicates.items()
+            if (row.get(field) or "").casefold() == value.casefold()
+        ]
+    return [row for row in rows if row.matched_fields]

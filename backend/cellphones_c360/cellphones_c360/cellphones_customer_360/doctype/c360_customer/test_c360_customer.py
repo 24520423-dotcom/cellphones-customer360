@@ -90,3 +90,20 @@ class TestC360Customer(FrappeTestCase):
         customers.update_customer(first["name"], {"email": self.email.upper()}, first["modified"])
         with self.assertRaises(frappe.ValidationError):
             customers.update_customer(second["name"], {"email": self.email}, second["modified"])
+
+    def test_candidate_types_and_vietnamese_phone_equivalence(self):
+        customer = self.insert_customer(
+            customer_name=f"C360 duplicate {uuid4().hex}", phone_number="+84 (28) 3999 0123",
+            email=self.email,
+        )
+        self.assertEqual(customer["phone_number"], "02839990123")
+        same_phone = customers.find_duplicates(phone_number="84.28.3999.0123", email=self.email)
+        self.assertIn(["phone_number", "email"], [item.matched_fields for item in same_phone])
+        with self.assertRaises(frappe.ValidationError):
+            self.insert_customer(phone_number="028 3999 0123")
+
+        same_name = self.insert_customer(customer_name=customer["customer_name"])
+        candidates = customers.find_duplicates(customer=same_name["name"])
+        self.assertEqual([(row.name, row.matched_fields) for row in candidates], [
+            (customer["name"], ["customer_name"]),
+        ])

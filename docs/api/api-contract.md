@@ -210,6 +210,10 @@ Nguồn dữ liệu hiện gồm đơn hàng, yêu cầu hỗ trợ và lịch s
 - Response `message.name` giữ nguyên mã hồ sơ. Gửi một phiên bản cũ trả `TimestampMismatchError`. Người dùng tải lại hồ sơ trước khi nhập lại thay đổi.
 - Frappe ghi bản ghi `Version` khi nội dung thay đổi. API cập nhật thông tin khách hàng giữ liên kết CRM, đơn hàng và Ticket hiện có.
 
+### 6.6. Đối chiếu hồ sơ khách hàng
+
+`GET /api/method/cellphones_c360.api.customers.find_duplicates` nhận `customer` để đối chiếu với hồ sơ đã lưu hoặc `customer_name`, `phone_number`, `email` để tra theo dữ liệu nhập. Trả tối đa 20 hồ sơ trong quyền đọc, với các trường người gọi được phép xem và `matched_fields` để phân biệt trùng tên, số điện thoại, email hoặc nhiều dấu hiệu. Kết quả là danh sách ứng viên để nhân viên xác minh.
+
 ## 7. Orders và After-sales
 
 DocType đã có, dữ liệu đã hiển thị trong hồ sơ Customer 360. Màn hình quản lý riêng và thao tác ghi trong giao diện native mới chưa được kiểm thử.
