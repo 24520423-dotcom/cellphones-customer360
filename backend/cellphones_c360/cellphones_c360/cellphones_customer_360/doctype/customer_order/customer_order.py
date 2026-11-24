@@ -10,6 +10,7 @@ from frappe.model.document import Document
 from frappe.utils import flt, now_datetime
 
 from cellphones_c360.api.crm_links import related_records
+from cellphones_c360.permissions import OPERATIONS, department, validate_operations_order
 
 from cellphones_c360.cellphones_customer_360.doctype.c360_customer.c360_customer import (
     check_customer_link,
@@ -41,10 +42,16 @@ class CustomerOrder(Document):
     def validate(self):
         if self.has_value_changed("customer"):
             check_customer_link(self.customer)
+        if self.meta.has_field("fulfillment_owner"):
+            validate_operations_order(self)
         if self.meta.has_field("payment_status"):
             self.validate_workflow()
             self.validate_deal()
         self.calculate_order_total()
+
+    def before_rename(self, old, new, merge=False):
+        if department() == OPERATIONS:
+            frappe.throw(_("Operations cannot rename an order."), frappe.PermissionError)
 
     def validate_workflow(self):
         previous = self.get_doc_before_save()

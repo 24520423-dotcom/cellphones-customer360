@@ -134,6 +134,22 @@ app_license = "mit"
 # -----------
 # Permissions evaluated in scripted ways
 
+before_install = "cellphones_c360.permissions.install_roles"
+before_migrate = "cellphones_c360.permissions.install_roles"
+c360_crm_roles = ["C360 Customer Service", "C360 Operations", "C360 Marketing"]
+
+permission_query_conditions = {
+    "C360 Customer": "cellphones_c360.permissions.customer_query",
+    "Customer Order": "cellphones_c360.permissions.order_query",
+    "Customer Support Ticket": "cellphones_c360.permissions.ticket_query",
+}
+
+has_permission = {
+    "C360 Customer": "cellphones_c360.permissions.document_permission",
+    "Customer Order": "cellphones_c360.permissions.document_permission",
+    "Customer Support Ticket": "cellphones_c360.permissions.document_permission",
+}
+
 # permission_query_conditions = {
 # 	"Event": "frappe.desk.doctype.event.event.get_permission_query_conditions",
 # }
@@ -215,7 +231,7 @@ scheduler_events = {"hourly": ["cellphones_c360.care.schedule_follow_ups"]}
 
 # Request Events
 # ----------------
-# before_request = ["cellphones_c360.utils.before_request"]
+before_request = ["cellphones_c360.api.access.require_enabled_api_account"]
 # after_request = ["cellphones_c360.utils.after_request"]
 
 # Job Events

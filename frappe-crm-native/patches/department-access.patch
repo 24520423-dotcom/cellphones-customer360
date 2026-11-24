@@ -1,0 +1,13 @@
+--- a/crm/api/__init__.py
++++ b/crm/api/__init__.py
+@@ -91,7 +91,9 @@
+ 		return False
+ 
+ 	roles = frappe.get_roles()
+-	if any(role in ["System Manager", "Sales User", "Sales Manager"] for role in roles):
++	allowed_roles = ["System Manager", "Sales User", "Sales Manager"]
++	allowed_roles.extend(frappe.get_hooks("c360_crm_roles", default=[]))
++	if any(role in allowed_roles for role in roles):
+ 		return True
+ 
+ 	return False

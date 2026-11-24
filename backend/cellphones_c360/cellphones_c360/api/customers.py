@@ -45,7 +45,7 @@ def form_fields(action):
     if not frappe.has_permission(DOCTYPE, action):
         return []
     meta = frappe.get_meta(DOCTYPE)
-    permitted = set(get_permitted_fields(DOCTYPE, permission_type=action))
+    permitted = set(get_permitted_fields(DOCTYPE, permission_type="write"))
     fields = []
     for fieldname in EDIT_FIELDS + (LINK_FIELDS if action == "create" else ()):
         df = meta.get_field(fieldname)

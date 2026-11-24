@@ -3,9 +3,9 @@ import frappe
 
 @frappe.whitelist(methods=["GET"])
 def get_access():
+    roles = set(frappe.get_roles())
     return {
-        "administration": bool(
-            "System Manager" in frappe.get_roles()
-            and frappe.has_permission("User", "read")
-        )
+        "administration": frappe.session.user == "Administrator" and frappe.has_permission("User", "read"),
+        "nativeSales": bool(roles & {"System Manager", "Sales Manager", "Sales User"}),
+        "customer360": bool(frappe.has_permission("C360 Customer", "read")),
     }

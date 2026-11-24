@@ -4,9 +4,10 @@ from frappe.utils import cint
 
 from cellphones_c360.api.access import require_session_csrf
 from cellphones_c360.api.registration import ROLES
+from cellphones_c360.permissions import DEPARTMENTS, MERGE_APPROVER
 
 IMPLICIT_ROLES = {"All", "Desk User", "Guest"}
-REPORT_ROLES = ("Administrator", *ROLES)
+REPORT_ROLES = ("Administrator", "System Manager", *ROLES, *DEPARTMENTS, MERGE_APPROVER)
 DOCTYPES = ("CRM Lead", "CRM Deal", "C360 Customer", "Customer Order", "Customer Support Ticket",
             "CRM Call Log", "CRM Task", "User", "C360 Registration Request")
 OPERATIONS = ("select", "read", "create", "write", "delete", "submit", "cancel",

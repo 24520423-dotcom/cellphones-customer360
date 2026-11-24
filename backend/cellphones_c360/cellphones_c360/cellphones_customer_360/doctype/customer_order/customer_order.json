@@ -18,6 +18,7 @@
   "paid_at",
   "fulfillment_section",
   "fulfillment_method",
+  "fulfillment_owner",
   "fulfillment_status",
   "completed_at",
   "care_task",
@@ -69,16 +70,66 @@
    "options": "Draft\nConfirmed\nProcessing\nCompleted\nCancelled",
    "reqd": 1
   },
-  {"fieldname": "crm_deal", "fieldtype": "Link", "label": "Deal", "options": "CRM Deal"},
-  {"fieldname": "payment_section", "fieldtype": "Section Break", "label": "Payment"},
-  {"fieldname": "payment_method", "fieldtype": "Select", "label": "Payment Method", "options": "\nDirect\nCOD\nInstallment"},
-  {"fieldname": "payment_status", "fieldtype": "Select", "label": "Payment Status", "options": "\nUnpaid\nPending\nPaid\nRefunded", "default": "Unpaid"},
-  {"fieldname": "paid_at", "fieldtype": "Datetime", "label": "Paid At", "read_only": 1},
-  {"fieldname": "fulfillment_section", "fieldtype": "Section Break", "label": "Fulfillment"},
-  {"fieldname": "fulfillment_method", "fieldtype": "Select", "label": "Fulfillment Method", "options": "\nPickup\nDelivery"},
-  {"fieldname": "fulfillment_status", "fieldtype": "Select", "label": "Fulfillment Status", "options": "\nAwaiting Fulfillment\nPreparing\nReady for Pickup\nIn Transit\nPicked Up\nDelivered\nFailed"},
-  {"fieldname": "completed_at", "fieldtype": "Datetime", "label": "Completed At", "read_only": 1},
-  {"fieldname": "care_task", "fieldtype": "Link", "label": "Care Task", "options": "CRM Task", "read_only": 1},
+  {
+   "fieldname": "crm_deal",
+   "fieldtype": "Link",
+   "label": "Deal",
+   "options": "CRM Deal"
+  },
+  {
+   "fieldname": "payment_section",
+   "fieldtype": "Section Break",
+   "label": "Payment"
+  },
+  {
+   "fieldname": "payment_method",
+   "fieldtype": "Select",
+   "label": "Payment Method",
+   "options": "\nDirect\nCOD\nInstallment"
+  },
+  {
+   "fieldname": "payment_status",
+   "fieldtype": "Select",
+   "label": "Payment Status",
+   "options": "\nUnpaid\nPending\nPaid\nRefunded",
+   "default": "Unpaid"
+  },
+  {
+   "fieldname": "paid_at",
+   "fieldtype": "Datetime",
+   "label": "Paid At",
+   "read_only": 1
+  },
+  {
+   "fieldname": "fulfillment_section",
+   "fieldtype": "Section Break",
+   "label": "Fulfillment"
+  },
+  {
+   "fieldname": "fulfillment_method",
+   "fieldtype": "Select",
+   "label": "Fulfillment Method",
+   "options": "\nPickup\nDelivery"
+  },
+  {
+   "fieldname": "fulfillment_status",
+   "fieldtype": "Select",
+   "label": "Fulfillment Status",
+   "options": "\nAwaiting Fulfillment\nPreparing\nReady for Pickup\nIn Transit\nPicked Up\nDelivered\nFailed"
+  },
+  {
+   "fieldname": "completed_at",
+   "fieldtype": "Datetime",
+   "label": "Completed At",
+   "read_only": 1
+  },
+  {
+   "fieldname": "care_task",
+   "fieldtype": "Link",
+   "label": "Care Task",
+   "options": "CRM Task",
+   "read_only": 1
+  },
   {
    "fieldname": "order_items",
    "fieldtype": "Section Break",
@@ -103,12 +154,19 @@
    "in_list_view": 1,
    "label": "Total Amount",
    "read_only": 1
+  },
+  {
+   "fieldname": "fulfillment_owner",
+   "fieldtype": "Link",
+   "label": "Fulfillment Owner",
+   "options": "User",
+   "search_index": 1
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-11-24 13:08:00.000000",
+ "modified": "2026-11-24 13:28:00.000000",
  "modified_by": "Administrator",
  "module": "CellphoneS Customer 360",
  "name": "Customer Order",
@@ -125,6 +183,29 @@
    "report": 1,
    "role": "System Manager",
    "share": 1,
+   "write": 1
+  },
+  {
+   "role": "Sales Manager",
+   "create": 1,
+   "read": 1,
+   "write": 1
+  },
+  {
+   "role": "Sales User",
+   "create": 1,
+   "read": 1,
+   "write": 1,
+   "if_owner": 1
+  },
+  {
+   "role": "C360 Customer Service",
+   "read": 1,
+   "select": 1
+  },
+  {
+   "role": "C360 Operations",
+   "read": 1,
    "write": 1
   }
  ],

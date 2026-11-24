@@ -5,6 +5,7 @@ from frappe.utils import get_datetime, now_datetime
 
 from cellphones_c360.api.customers import DOCTYPE, EDIT_FIELDS
 from cellphones_c360.api.intake import DOCTYPE as SOURCE_RECORD
+from cellphones_c360.permissions import MERGE_APPROVER
 from cellphones_c360.cellphones_customer_360.doctype.c360_customer.c360_customer import (
     customer_crm_links,
     lock_customer_identity_writes,
@@ -14,7 +15,11 @@ MERGE_DOCTYPES = ("Customer Order", "Customer Support Ticket", SOURCE_RECORD)
 
 
 def _has_merge_role():
-    return frappe.session.user == "Administrator" or "System Manager" in frappe.get_roles()
+    roles = set(frappe.get_roles())
+    return (
+        frappe.session.user == "Administrator" or "System Manager" in roles
+        or {"Sales Manager", MERGE_APPROVER}.issubset(roles)
+    )
 
 
 def _documents(source, target, for_update=False):

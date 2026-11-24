@@ -42,13 +42,15 @@
    "fieldname": "phone_number",
    "fieldtype": "Data",
    "label": "\tPhone Number",
-   "options": "Phone"
+   "options": "Phone",
+   "permlevel": 1
   },
   {
    "fieldname": "email",
    "fieldtype": "Data",
    "label": "Email",
-   "options": "Email"
+   "options": "Email",
+   "permlevel": 1
   },
   {
    "default": "Individual",
@@ -79,7 +81,12 @@
    "label": "\tSource Channel",
    "options": "Website\nApp\nFacebook\nZalo\nHotline\nStore\nOther"
   },
-  {"fieldname": "marketing_consent", "fieldtype": "Check", "label": "Marketing Consent", "default": "0"},
+  {
+   "fieldname": "marketing_consent",
+   "fieldtype": "Check",
+   "label": "Marketing Consent",
+   "default": "0"
+  },
   {
    "fieldname": "crm_references_section",
    "fieldtype": "Section Break",
@@ -89,21 +96,29 @@
    "fieldname": "crm_contact",
    "fieldtype": "Link",
    "label": "CRM Contact",
-   "options": "Contact"
+   "options": "Contact",
+   "permlevel": 1
   },
   {
    "fieldname": "crm_lead",
    "fieldtype": "Link",
    "label": "CRM Lead",
-   "options": "CRM Lead"
+   "options": "CRM Lead",
+   "permlevel": 1
   },
   {
    "fieldname": "crm_links",
    "fieldtype": "Table",
    "label": "Additional CRM Records",
-   "options": "Dynamic Link"
+   "options": "Dynamic Link",
+   "permlevel": 1
   },
-  {"fieldname": "merge_section", "fieldtype": "Section Break", "label": "Merge History", "depends_on": "merged_into"},
+  {
+   "fieldname": "merge_section",
+   "fieldtype": "Section Break",
+   "label": "Merge History",
+   "depends_on": "merged_into"
+  },
   {
    "fieldname": "merged_into",
    "fieldtype": "Link",
@@ -112,14 +127,30 @@
    "read_only": 1,
    "search_index": 1
   },
-  {"fieldname": "merged_at", "fieldtype": "Datetime", "label": "Merged At", "read_only": 1},
-  {"fieldname": "merged_by", "fieldtype": "Link", "label": "Merged By", "options": "User", "read_only": 1},
-  {"fieldname": "merge_reason", "fieldtype": "Small Text", "label": "Merge Reason", "read_only": 1}
+  {
+   "fieldname": "merged_at",
+   "fieldtype": "Datetime",
+   "label": "Merged At",
+   "read_only": 1
+  },
+  {
+   "fieldname": "merged_by",
+   "fieldtype": "Link",
+   "label": "Merged By",
+   "options": "User",
+   "read_only": 1
+  },
+  {
+   "fieldname": "merge_reason",
+   "fieldtype": "Small Text",
+   "label": "Merge Reason",
+   "read_only": 1
+  }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-11-24 13:08:00.000000",
+ "modified": "2026-11-24 13:28:00.000000",
  "modified_by": "Administrator",
  "module": "CellphoneS Customer 360",
  "name": "C360 Customer",
@@ -137,6 +168,56 @@
    "role": "System Manager",
    "share": 1,
    "write": 1
+  },
+  {
+   "role": "Sales Manager",
+   "create": 1,
+   "read": 1,
+   "write": 1
+  },
+  {
+   "role": "Sales User",
+   "create": 1,
+   "read": 1,
+   "write": 1,
+   "if_owner": 1
+  },
+  {
+   "role": "C360 Customer Service",
+   "read": 1,
+   "select": 1
+  },
+  {
+   "role": "C360 Operations",
+   "read": 1,
+   "select": 1
+  },
+  {
+   "role": "C360 Marketing",
+   "read": 1
+  },
+  {
+   "role": "System Manager",
+   "permlevel": 1,
+   "read": 1,
+   "write": 1
+  },
+  {
+   "role": "Sales Manager",
+   "permlevel": 1,
+   "read": 1,
+   "write": 1
+  },
+  {
+   "role": "Sales User",
+   "permlevel": 1,
+   "read": 1,
+   "write": 1
+  },
+  {
+   "role": "C360 Customer Service",
+   "permlevel": 1,
+   "read": 1
   }
  ],
  "row_format": "Dynamic",
