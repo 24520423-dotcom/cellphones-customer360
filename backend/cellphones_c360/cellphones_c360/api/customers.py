@@ -2,7 +2,9 @@ import frappe
 from frappe import _
 from frappe.model import get_permitted_fields
 
+from cellphones_c360.api.crm_links import can_link
 from cellphones_c360.cellphones_customer_360.doctype.c360_customer.c360_customer import (
+    CRM_DOCTYPES,
     normalize_email,
     normalize_phone,
 )
@@ -28,7 +30,15 @@ def get_access(customer=None):
         not doc.get("merged_into") and doc.has_permission("write")
         and set(EDIT_FIELDS).issubset(writable & readable)
     )
-    return {"canEdit": bool(can_edit), "fields": form_fields("write") if can_edit else []}
+    can_associate = can_link(doc)
+    return {
+        "canEdit": bool(can_edit),
+        "fields": form_fields("write") if can_edit else [],
+        "crmTypes": [doctype for doctype in CRM_DOCTYPES if frappe.has_permission(doctype, "read")]
+        if can_associate else [],
+        "canCreateLead": can_associate and frappe.has_permission("CRM Lead", "create"),
+        "canCreateDeal": can_associate and frappe.has_permission("CRM Deal", "create"),
+    }
 
 
 def form_fields(action):

@@ -1,7 +1,7 @@
 From 820f0af20e6040721470f04c535a6d84458f83d7 Mon Sep 17 00:00:00 2001
 From: 24520423-dotcom <24520423@gm.uit.edu.vn>
 Date: Tue, 24 Nov 2026 03:52:19 +0000
-Subject: [PATCH 1/6] feat: customize CellphoneS CRM theme
+Subject: [PATCH 1/7] feat: customize CellphoneS CRM theme
 
 ---
  frontend/src/cellphones-theme.css | 25 +++++++++++++++++++++++++
@@ -57,7 +57,7 @@ index 7a91fc9..9391f8d 100644
 From 5d45d3789ad7ff407fe5945dba6886f1a6553f85 Mon Sep 17 00:00:00 2001
 From: 24520423-dotcom <24520423@gm.uit.edu.vn>
 Date: Tue, 24 Nov 2026 04:06:09 +0000
-Subject: [PATCH 2/6] feat: integrate Customer 360 customer list into Frappe
+Subject: [PATCH 2/7] feat: integrate Customer 360 customer list into Frappe
  CRM
 
 ---
@@ -302,7 +302,7 @@ index fad8708..b209857 100644
 From 261dc539d1fccef78c22888464ffe7bd75df0688 Mon Sep 17 00:00:00 2001
 From: 24520423-dotcom <24520423@gm.uit.edu.vn>
 Date: Tue, 24 Nov 2026 04:15:17 +0000
-Subject: [PATCH 3/6] feat: integrate Customer 360 detailed profile into Frappe
+Subject: [PATCH 3/7] feat: integrate Customer 360 detailed profile into Frappe
  CRM
 
 ---
@@ -770,7 +770,7 @@ index b209857..073ca6e 100644
 From 8bbfc82323a3ec6a91d8695a611ccaa5b76a8f8d Mon Sep 17 00:00:00 2001
 From: 24520423-dotcom <24520423@gm.uit.edu.vn>
 Date: Tue, 24 Nov 2026 05:33:36 +0000
-Subject: [PATCH 4/6] feat: add native Customer 360 creation form
+Subject: [PATCH 4/7] feat: add native Customer 360 creation form
 
 ---
  .../components/Customer360/CustomerForm.vue   | 91 +++++++++++++++++++
@@ -957,7 +957,7 @@ index c96d028..e076461 100644
 From 1d90c4db31efc81d9f0a6408090fc415b3e12b36 Mon Sep 17 00:00:00 2001
 From: 24520423-dotcom <24520423@gm.uit.edu.vn>
 Date: Tue, 24 Nov 2026 05:37:41 +0000
-Subject: [PATCH 5/6] feat: edit Customer 360 profiles in native CRM
+Subject: [PATCH 5/7] feat: edit Customer 360 profiles in native CRM
 
 ---
  .../components/Customer360/CustomerForm.vue   | 25 ++++++----
@@ -1125,7 +1125,7 @@ index bbf875e..28da65a 100644
 From 138e5a70d71a505b3df83d51ec14a1b62118cee5 Mon Sep 17 00:00:00 2001
 From: 24520423-dotcom <24520423@gm.uit.edu.vn>
 Date: Tue, 24 Nov 2026 05:52:52 +0000
-Subject: [PATCH 6/6] feat: review and merge verified profiles in CRM
+Subject: [PATCH 6/7] feat: review and merge verified profiles in CRM
 
 ---
  .../Customer360/DuplicateReview.vue           | 170 ++++++++++++++++++
@@ -1382,6 +1382,333 @@ index 28da65a..8a112d7 100644
    access.value = null
    showEdit.value = false
 +  showDuplicateReview.value = false
+ 
+   try {
+     const result = await call(
+-- 
+2.47.3
+
+
+From a19381dc20309d8b71af4e18782e9ab588385dce Mon Sep 17 00:00:00 2001
+From: 24520423-dotcom <24520423@gm.uit.edu.vn>
+Date: Tue, 24 Nov 2026 06:02:25 +0000
+Subject: [PATCH 7/7] feat: connect Customer 360 to native CRM sales workflows
+
+---
+ .../components/Customer360/LinkCRMRecord.vue  | 65 +++++++++++++++++
+ frontend/src/components/Modals/DealModal.vue  | 17 +++--
+ frontend/src/components/Modals/LeadModal.vue  | 16 ++++-
+ frontend/src/pages/Customer360Detail.vue      | 71 ++++++++++++++++---
+ 4 files changed, 152 insertions(+), 17 deletions(-)
+ create mode 100644 frontend/src/components/Customer360/LinkCRMRecord.vue
+
+diff --git a/frontend/src/components/Customer360/LinkCRMRecord.vue b/frontend/src/components/Customer360/LinkCRMRecord.vue
+new file mode 100644
+index 0000000..acb385e
+--- /dev/null
++++ b/frontend/src/components/Customer360/LinkCRMRecord.vue
+@@ -0,0 +1,65 @@
++<template>
++  <Dialog v-model:open="open" :title="__('Link CRM Record')">
++    <form class="space-y-4" @submit.prevent="save">
++      <FormControl v-model="doctype" type="select" :options="options" :label="__('Record type')" :disabled="saving" />
++      <Link
++        v-if="doctype"
++        v-model="record"
++        :key="doctype"
++        :label="__(doctype)"
++        :doctype="doctype"
++        :disabled="saving"
++        required
++      />
++      <p v-if="error" role="alert" class="text-sm text-ink-red-5">{{ error }}</p>
++      <div class="flex justify-end">
++        <Button type="submit" variant="solid" :disabled="!record" :loading="saving">{{ __('Link Record') }}</Button>
++      </div>
++    </form>
++  </Dialog>
++</template>
++
++<script setup>
++import Link from '@/components/Controls/Link.vue'
++import { Button, Dialog, FormControl, call, toast } from 'frappe-ui'
++import { computed, ref, watch } from 'vue'
++
++const props = defineProps({
++  customer: { type: String, required: true },
++  doctypes: { type: Array, required: true },
++})
++const emit = defineEmits(['saved'])
++const open = defineModel({ type: Boolean })
++const doctype = ref('')
++const record = ref('')
++const error = ref('')
++const saving = ref(false)
++const options = computed(() => props.doctypes.map((type) => ({ value: type, label: __(type) })))
++
++watch(open, (shown) => {
++  if (shown) {
++    doctype.value = props.doctypes[0] || ''
++    record.value = ''
++    error.value = ''
++  }
++})
++watch(doctype, () => { record.value = '' })
++
++async function save() {
++  if (saving.value || !record.value) return
++  saving.value = true
++  error.value = ''
++  try {
++    await call('cellphones_c360.api.crm_links.link_record', {
++      customer: props.customer, doctype: doctype.value, record: record.value,
++    })
++    open.value = false
++    toast.success(__('CRM record linked'))
++    emit('saved')
++  } catch (err) {
++    error.value = err.messages?.[0] || __('Unable to link the CRM record.')
++  } finally {
++    saving.value = false
++  }
++}
++</script>
+diff --git a/frontend/src/components/Modals/DealModal.vue b/frontend/src/components/Modals/DealModal.vue
+index a98f4bf..d9458f6 100644
+--- a/frontend/src/components/Modals/DealModal.vue
++++ b/frontend/src/components/Modals/DealModal.vue
+@@ -93,6 +93,7 @@ import { useRouter } from 'vue-router'
+ 
+ const props = defineProps({
+   defaults: { type: Object, default: () => ({}) },
++  c360Customer: { type: String, default: '' },
+ })
+ 
+ const { getUser, isManager } = usersStore()
+@@ -139,7 +140,7 @@ const tabs = createResource({
+             if (field.fieldname == 'status') {
+               field.fieldtype = 'Select'
+               field.options = dealStatuses.value
+-              field.prefix = getDealStatus(deal.doc.status).color
++              field.prefix = dealStatuses.value.length ? getDealStatus(deal.doc.status)?.color : null
+             }
+ 
+             if (field.fieldtype === 'Table') {
+@@ -173,6 +174,12 @@ watch(
+ )
+ 
+ const dealStatuses = computed(() => statusOptions('deal'))
++watch(
++  () => dealStatuses.value[0]?.value,
++  (status) => {
++    if (props.c360Customer && status && !deal.doc.status) deal.doc.status = status
++  },
++)
+ 
+ async function createDeal() {
+   if (deal.doc.website && !deal.doc.website.startsWith('http')) {
+@@ -188,8 +195,10 @@ async function createDeal() {
+   await triggerOnBeforeCreate?.()
+ 
+   createResource({
+-    url: 'crm.fcrm.doctype.crm_deal.crm_deal.create_deal',
+-    params: { doc: deal.doc },
++    url: props.c360Customer
++      ? 'cellphones_c360.api.crm_links.create_linked_deal'
++      : 'crm.fcrm.doctype.crm_deal.crm_deal.create_deal',
++    params: { doc: deal.doc, ...(props.c360Customer && { customer: props.c360Customer }) },
+     auto: true,
+     validate() {
+       error.value = null
+@@ -250,7 +259,7 @@ onMounted(() => {
+   if (!deal.doc.deal_owner) {
+     deal.doc.deal_owner = getUser().name
+   }
+-  if (!deal.doc.status && dealStatuses.value[0].value) {
++  if (!deal.doc.status && dealStatuses.value[0]?.value) {
+     deal.doc.status = dealStatuses.value[0].value
+   }
+ })
+diff --git a/frontend/src/components/Modals/LeadModal.vue b/frontend/src/components/Modals/LeadModal.vue
+index 129a3e8..2d8a81f 100644
+--- a/frontend/src/components/Modals/LeadModal.vue
++++ b/frontend/src/components/Modals/LeadModal.vue
+@@ -62,11 +62,12 @@ import { useTelemetry } from '@framework/ui/telemetry'
+ import { useCrmOnboarding } from '@/composables/onboarding'
+ import { Dialog, createResource } from 'frappe-ui'
+ import { useDocument } from '@/data/document'
+-import { computed, onMounted, ref, nextTick } from 'vue'
++import { computed, onMounted, ref, nextTick, watch } from 'vue'
+ import { useRouter } from 'vue-router'
+ 
+ const props = defineProps({
+   defaults: { type: Object, default: () => ({}) },
++  c360Customer: { type: String, default: '' },
+ })
+ 
+ const { user } = sessionStore()
+@@ -84,6 +85,12 @@ const { document: lead, triggerOnBeforeCreate } = useDocument('CRM Lead')
+ const { capture } = useTelemetry()
+ 
+ const leadStatuses = computed(() => statusOptions('lead'))
++watch(
++  () => leadStatuses.value[0]?.value,
++  (status) => {
++    if (props.c360Customer && status && !lead.doc.status) lead.doc.status = status
++  },
++)
+ 
+ const tabs = createResource({
+   url: 'crm.fcrm.doctype.crm_fields_layout.crm_fields_layout.get_fields_layout',
+@@ -98,7 +105,7 @@ const tabs = createResource({
+             if (field.fieldname == 'status') {
+               field.fieldtype = 'Select'
+               field.options = leadStatuses.value
+-              field.prefix = getLeadStatus(lead.doc.status).color
++              field.prefix = leadStatuses.value.length ? getLeadStatus(lead.doc.status)?.color : null
+             }
+ 
+             if (field.fieldtype === 'Table') {
+@@ -112,7 +119,9 @@ const tabs = createResource({
+ })
+ 
+ const createLead = createResource({
+-  url: 'frappe.client.insert',
++  url: props.c360Customer
++    ? 'cellphones_c360.api.crm_links.create_linked_lead'
++    : 'frappe.client.insert',
+ })
+ 
+ async function createNewLead() {
+@@ -124,6 +133,7 @@ async function createNewLead() {
+ 
+   createLead.submit(
+     {
++      ...(props.c360Customer && { customer: props.c360Customer }),
+       doc: {
+         doctype: 'CRM Lead',
+         ...lead.doc,
+diff --git a/frontend/src/pages/Customer360Detail.vue b/frontend/src/pages/Customer360Detail.vue
+index 8a112d7..80852a5 100644
+--- a/frontend/src/pages/Customer360Detail.vue
++++ b/frontend/src/pages/Customer360Detail.vue
+@@ -27,14 +27,14 @@
+       v-model="showEdit"
+       :profile="data.customer"
+       :fields="access.fields"
+-      @saved="refreshAfterEdit"
++      @saved="refreshProfile"
+     />
+ 
+     <DuplicateReview
+       v-if="data?.customer && !data.customer.is_merged"
+       v-model="showDuplicateReview"
+       :customer="data.customer"
+-      @saved="refreshAfterEdit"
++      @saved="refreshProfile"
+     />
+ 
+     <div v-if="loading" class="p-8 text-center">
+@@ -165,20 +165,57 @@
+ 
+       <!-- Leads and Deals -->
+       <div v-if="activeTab === 'Leads & Deals'" class="space-y-3">
+-        <div v-if="data.lead" class="rounded-lg border p-4">
+-          <h3 class="font-semibold">Linked Lead</h3>
++        <div class="flex flex-wrap gap-2">
++          <Button v-if="access?.crmTypes?.length" @click="showLinkRecord = true">{{ __('Link CRM Record') }}</Button>
++          <Button v-if="access?.canCreateLead" @click="showCreateLead = true">{{ __('Create Lead') }}</Button>
++          <Button v-if="access?.canCreateDeal" @click="showCreateDeal = true">{{ __('Create Deal') }}</Button>
++        </div>
++
++        <LinkCRMRecord
++          v-if="access?.crmTypes?.length"
++          v-model="showLinkRecord"
++          :customer="data.customer.name"
++          :doctypes="access.crmTypes"
++          @saved="refreshProfile"
++        />
++        <LeadModal
++          v-if="showCreateLead"
++          v-model="showCreateLead"
++          :c360-customer="data.customer.name"
++          :defaults="leadDefaults"
++        />
++        <DealModal
++          v-if="showCreateDeal"
++          v-model="showCreateDeal"
++          :c360-customer="data.customer.name"
++          :defaults="{ ...leadDefaults, contact: data.contact?.name }"
++        />
++
++        <div v-if="data.contacts?.length" class="flex flex-wrap gap-2">
++          <RouterLink
++            v-for="contact in data.contacts"
++            :key="contact.name"
++            class="rounded-md border border-outline-gray-2 px-3 py-1 text-sm hover:underline"
++            :to="{ name: 'Contact', params: { contactId: contact.name } }"
++          >
++            {{ contact.full_name || contact.name }}
++          </RouterLink>
++        </div>
++
++        <h3 class="font-semibold">{{ __('Related Leads') }}</h3>
++        <div v-for="lead in data.leads" :key="lead.name" class="rounded-lg border p-4">
+ 
+           <RouterLink
+             class="mt-2 block text-[#D70018]"
+-            :to="{ name: 'Lead', params: { leadId: data.lead.name } }"
++            :to="{ name: 'Lead', params: { leadId: lead.name } }"
+           >
+-            {{ data.lead.lead_name || data.lead.name }}
++            {{ lead.lead_name || lead.name }}
+           </RouterLink>
+ 
+-          <p class="mt-1">Status: {{ data.lead.status }}</p>
++          <p class="mt-1">Status: {{ lead.status }}</p>
+         </div>
+ 
+-        <p v-else>No linked lead.</p>
++        <p v-if="!data.leads?.length">{{ __('No linked leads') }}</p>
+ 
+         <h3 class="font-semibold">Related Deals</h3>
+         <p v-if="!data.deals?.length">No deals found.</p>
+@@ -276,6 +313,9 @@ import { useRouter, RouterLink } from 'vue-router'
+ import { Button, call, frappeRequest } from 'frappe-ui'
+ import CustomerForm from '@/components/Customer360/CustomerForm.vue'
+ import DuplicateReview from '@/components/Customer360/DuplicateReview.vue'
++import LinkCRMRecord from '@/components/Customer360/LinkCRMRecord.vue'
++import LeadModal from '@/components/Modals/LeadModal.vue'
++import DealModal from '@/components/Modals/DealModal.vue'
+ 
+ const props = defineProps({
+   customerId: { type: String, required: true },
+@@ -288,8 +328,16 @@ const error = ref('')
+ const access = ref(null)
+ const showEdit = ref(false)
+ const showDuplicateReview = ref(false)
+-
+-function refreshAfterEdit() {
++const showLinkRecord = ref(false)
++const showCreateLead = ref(false)
++const showCreateDeal = ref(false)
++const leadDefaults = computed(() => ({
++  first_name: data.value?.customer.customer_name,
++  email: data.value?.customer.email,
++  mobile_no: data.value?.customer.phone_number,
++}))
++
++function refreshProfile() {
+   loadProfile()
+   if (activeTab.value === 'Timeline') loadTimeline()
+ }
+@@ -363,6 +411,9 @@ async function loadProfile() {
+   access.value = null
+   showEdit.value = false
+   showDuplicateReview.value = false
++  showLinkRecord.value = false
++  showCreateLead.value = false
++  showCreateDeal.value = false
  
    try {
      const result = await call(

@@ -226,6 +226,13 @@ Nguồn dữ liệu hiện gồm đơn hàng, yêu cầu hỗ trợ và lịch s
 - `POST /api/method/cellphones_c360.api.merge.merge_customers` nhận `source`, `target`, `source_modified`, `target_modified`, `selected` (mapping trường → `source` hoặc `target`), `reason` và `verified: true`. Yêu cầu Administrator hoặc System Manager có quyền ghi từng hồ sơ và bản ghi phụ thuộc.
 - Response có `customer` là Golden Record, `archived_customer`, `moved` theo DocType và `crm_links_added`. Hồ sơ nguồn từ API chi tiết có `is_merged` và `merged_into` nếu người dùng có quyền đọc hồ sơ hiện hành.
 
+### 6.9. Liên kết Lead, Deal và Contact
+
+- `GET /api/method/cellphones_c360.api.customers.get_access?customer=...` có thêm `crmTypes`, `canCreateLead` và `canCreateDeal`.
+- `POST /api/method/cellphones_c360.api.crm_links.link_record` nhận `customer`, `doctype`, `record`. Tạo liên kết một lần và trả `name` của thực thể CRM đã chọn.
+- `POST /api/method/cellphones_c360.api.crm_links.create_linked_lead` và `create_linked_deal` nhận `customer`, `doc` từ form CRM chuẩn. Lead trả object có `name`, Deal trả mã Deal theo quy ước của modal gốc.
+- `get_customer_360` trả thêm `leads` và `contacts`. `lead` và `contact` vẫn phục vụ các caller hiện có. `deals` gồm liên kết trực tiếp, Lead được liên kết và Contact qua child table CRM Contacts theo quyền đọc.
+
 ## 7. Orders và After-sales
 
 DocType đã có, dữ liệu đã hiển thị trong hồ sơ Customer 360. Màn hình quản lý riêng và thao tác ghi trong giao diện native mới chưa được kiểm thử.

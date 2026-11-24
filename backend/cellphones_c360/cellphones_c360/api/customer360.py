@@ -3,22 +3,8 @@ from datetime import datetime, time
 import frappe
 from frappe.model import get_permitted_fields
 
+from cellphones_c360.api.crm_links import related_records, visible_doc
 from cellphones_c360.api.leads import get_linked_history
-
-
-def _visible_doc(doctype, name):
-    if not name or not frappe.has_permission(doctype, "read"):
-        return None
-
-    try:
-        doc = frappe.get_doc(doctype, name)
-    except frappe.DoesNotExistError:
-        return None
-    if not doc.has_permission("read"):
-        return None
-
-    doc.apply_fieldlevel_read_permissions()
-    return doc
 
 
 @frappe.whitelist()
@@ -27,7 +13,9 @@ def get_customer_360(customer_id):
     customer = frappe.get_doc("C360 Customer", customer_id)
     customer.check_permission("read")
     customer.apply_fieldlevel_read_permissions()
-    merged_into = _visible_doc("C360 Customer", customer.get("merged_into"))
+    merged_into = visible_doc("C360 Customer", customer.get("merged_into"))
+    crm = related_records(customer)
+    contacts = crm["Contact"]
 
     customer_data = {
         "name": customer.name,
@@ -37,21 +25,15 @@ def get_customer_360(customer_id):
         "customer_type": customer.customer_type,
         "customer_status": customer.customer_status,
         "source_channel": customer.source_channel,
-        "crm_contact": customer.crm_contact,
-        "crm_lead": customer.crm_lead,
+        "crm_contact": next((row.name for row in contacts if row.name == customer.crm_contact), None),
+        "crm_lead": next((row.name for row in crm["CRM Lead"] if row.name == customer.crm_lead), None),
         "modified": str(customer.modified),
         "is_merged": bool(customer.get("merged_into")),
         "merged_into": merged_into.name if merged_into else None,
     }
 
-    # 2. Lấy CRM Lead được liên kết
-    lead_data = None
-    deals = []
-
-    lead = _visible_doc("CRM Lead", customer.crm_lead)
-    if lead:
-
-        lead_data = {
+    leads = [
+        {
             "name": lead.name,
             "lead_name": lead.lead_name,
             "email": lead.email,
@@ -60,17 +42,9 @@ def get_customer_360(customer_id):
             "lead_owner": lead.lead_owner,
             "converted": lead.converted,
         }
-
-        # 3. Lấy các Deal thuộc Lead này
-        if frappe.has_permission("CRM Deal", "read"):
-            deals = frappe.get_list(
-                "CRM Deal",
-                filters={"lead": customer.crm_lead},
-                fields=["name", "lead", "status", "deal_owner", "probability",
-                        "expected_deal_value", "total", "net_total", "creation"],
-                order_by="creation desc",
-                page_length=0,
-            )
+        for lead in crm["CRM Lead"]
+    ]
+    deals = crm["CRM Deal"]
 
     # 4. Lấy lịch sử đơn hàng của khách hàng
     orders = []
@@ -87,7 +61,7 @@ def get_customer_360(customer_id):
     )
 
     for order_name in order_names:
-        order = _visible_doc("Customer Order", order_name)
+        order = visible_doc("Customer Order", order_name)
         if not order:
             continue
 
@@ -128,7 +102,7 @@ def get_customer_360(customer_id):
     # 6. Lấy thông tin liên hệ CRM Contact
     contact_data = None
 
-    contact = _visible_doc("Contact", customer.crm_contact)
+    contact = contacts[0] if contacts else None
     if contact:
         contact_data = {
             "name": contact.name,
@@ -153,7 +127,9 @@ def get_customer_360(customer_id):
     return {
         "customer": customer_data,
         "contact": contact_data,
-        "lead": lead_data,
+        "contacts": [{"name": row.name, "full_name": row.full_name} for row in contacts],
+        "lead": leads[0] if leads else None,
+        "leads": leads,
         "deals": deals,
         "orders": orders,
         "tickets": tickets,
@@ -251,8 +227,6 @@ def get_customer_profile(customer_id):
     data = get_customer_360(customer_id)
 
     customer = data["customer"]
-    lead = data["lead"]
-
     return {
         "customer_id": customer["name"],
         "display_name": customer["customer_name"],
@@ -261,7 +235,7 @@ def get_customer_profile(customer_id):
         "segments": [],
         "owner": None,
         "updated_at": None,
-        "leads": [lead] if lead else [],
+        "leads": data["leads"],
         "deals": data["deals"],
         "orders": data["orders"],
         "after_sales_requests": [
@@ -363,7 +337,7 @@ def get_customer_timeline(customer_id, page=1, page_size=20):
                 "related_name": ticket.name
             })
 
-    lead = _visible_doc("CRM Lead", customer.crm_lead)
+    lead = visible_doc("CRM Lead", customer.crm_lead)
     if lead:
         deals = (
             frappe.get_list("CRM Deal", filters={"lead": lead.name}, pluck="name", page_length=0)
