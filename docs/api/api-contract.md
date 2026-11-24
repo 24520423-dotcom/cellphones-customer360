@@ -55,6 +55,20 @@ Vai trò phòng ban đã được áp dụng trên `crm.localhost`. Administrato
 
 Vận hành chỉ cập nhật `order_status` và `fulfillment_status` của đơn trong phạm vi được giao. Các trường thanh toán, bàn giao, sản phẩm và giá trị đơn do vai trò có quyền tương ứng xử lý.
 
+### Settings → Users
+
+Các phương thức dưới đây dùng `POST /api/method/cellphones_c360.api.employee_administration.{method}` và yêu cầu phiên Administrator kèm CSRF token.
+
+| Phương thức | Dữ liệu gửi và kết quả |
+|---|---|
+| `list_employees` | `search`, `page`, `role` (tùy chọn). Trả `items`, `has_more`, `roles`. Bộ lọc Role chính dùng thứ tự ưu tiên của CRM và bộ lọc Merge Approver tìm các tài khoản đã được gán quyền đó. |
+| `get_employee` | `name` của User. Trả trạng thái tài khoản, Role chính, quyền hợp nhất đã gán và có hiệu lực, `modified` và số bản ghi đang phân công theo từng DocType. |
+| `create_employee` | `full_name`, `email`, `role`, `enabled`, `merge_approver`. Tạo User native và dùng lời mời thiết lập mật khẩu của Frappe cho tài khoản được kích hoạt. |
+| `save_employee` | `name`, `role`, `enabled`, `merge_approver`, `modified`. Phiên bản cũ bị từ chối. Thu hồi phiên của tài khoản sau commit khi quyền hoặc trạng thái thay đổi. |
+| `invite_employee` | `name` của tài khoản đang hoạt động và chưa có mật khẩu. Trả `invitation: "queued"` hoặc `"failed"`. |
+
+`enabled` và `merge_approver` là boolean JSON. Chỉ Sales Manager có thể nhận quyền bổ sung C360 Merge Approver trong Settings. Tài khoản Administrator, tài khoản quản trị cuối cùng đang hoạt động và Role Profile phức tạp có bảo vệ riêng. Chuyển Role có thể làm người dùng mất quyền xử lý hồ sơ đã giao. Liên kết phân công Lead, Deal, Order và Ticket được giữ nguyên. Sales Manager tiếp tục dùng luồng mời và quản lý Sales User gốc của CRM, với API ghi chỉ dành cho `POST`.
+
 ## 4. Mô hình dữ liệu Customer 360
 
 | DocType | Vai trò / quan hệ xác định |

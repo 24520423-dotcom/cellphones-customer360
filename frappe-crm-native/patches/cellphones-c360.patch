@@ -1,7 +1,7 @@
 From 820f0af20e6040721470f04c535a6d84458f83d7 Mon Sep 17 00:00:00 2001
 From: 24520423-dotcom <24520423@gm.uit.edu.vn>
 Date: Tue, 24 Nov 2026 03:52:19 +0000
-Subject: [PATCH 01/17] feat: customize CellphoneS CRM theme
+Subject: [PATCH 01/18] feat: customize CellphoneS CRM theme
 
 ---
  frontend/src/cellphones-theme.css | 25 +++++++++++++++++++++++++
@@ -57,7 +57,7 @@ index 7a91fc9..9391f8d 100644
 From 5d45d3789ad7ff407fe5945dba6886f1a6553f85 Mon Sep 17 00:00:00 2001
 From: 24520423-dotcom <24520423@gm.uit.edu.vn>
 Date: Tue, 24 Nov 2026 04:06:09 +0000
-Subject: [PATCH 02/17] feat: integrate Customer 360 customer list into Frappe
+Subject: [PATCH 02/18] feat: integrate Customer 360 customer list into Frappe
  CRM
 
 ---
@@ -302,7 +302,7 @@ index fad8708..b209857 100644
 From 261dc539d1fccef78c22888464ffe7bd75df0688 Mon Sep 17 00:00:00 2001
 From: 24520423-dotcom <24520423@gm.uit.edu.vn>
 Date: Tue, 24 Nov 2026 04:15:17 +0000
-Subject: [PATCH 03/17] feat: integrate Customer 360 detailed profile into
+Subject: [PATCH 03/18] feat: integrate Customer 360 detailed profile into
  Frappe CRM
 
 ---
@@ -770,7 +770,7 @@ index b209857..073ca6e 100644
 From 8bbfc82323a3ec6a91d8695a611ccaa5b76a8f8d Mon Sep 17 00:00:00 2001
 From: 24520423-dotcom <24520423@gm.uit.edu.vn>
 Date: Tue, 24 Nov 2026 05:33:36 +0000
-Subject: [PATCH 04/17] feat: add native Customer 360 creation form
+Subject: [PATCH 04/18] feat: add native Customer 360 creation form
 
 ---
  .../components/Customer360/CustomerForm.vue   | 91 +++++++++++++++++++
@@ -957,7 +957,7 @@ index c96d028..e076461 100644
 From 1d90c4db31efc81d9f0a6408090fc415b3e12b36 Mon Sep 17 00:00:00 2001
 From: 24520423-dotcom <24520423@gm.uit.edu.vn>
 Date: Tue, 24 Nov 2026 05:37:41 +0000
-Subject: [PATCH 05/17] feat: edit Customer 360 profiles in native CRM
+Subject: [PATCH 05/18] feat: edit Customer 360 profiles in native CRM
 
 ---
  .../components/Customer360/CustomerForm.vue   | 25 ++++++----
@@ -1125,7 +1125,7 @@ index bbf875e..28da65a 100644
 From 138e5a70d71a505b3df83d51ec14a1b62118cee5 Mon Sep 17 00:00:00 2001
 From: 24520423-dotcom <24520423@gm.uit.edu.vn>
 Date: Tue, 24 Nov 2026 05:52:52 +0000
-Subject: [PATCH 06/17] feat: review and merge verified profiles in CRM
+Subject: [PATCH 06/18] feat: review and merge verified profiles in CRM
 
 ---
  .../Customer360/DuplicateReview.vue           | 170 ++++++++++++++++++
@@ -1392,7 +1392,7 @@ index 28da65a..8a112d7 100644
 From a19381dc20309d8b71af4e18782e9ab588385dce Mon Sep 17 00:00:00 2001
 From: 24520423-dotcom <24520423@gm.uit.edu.vn>
 Date: Tue, 24 Nov 2026 06:02:25 +0000
-Subject: [PATCH 07/17] feat: connect Customer 360 to native CRM sales
+Subject: [PATCH 07/18] feat: connect Customer 360 to native CRM sales
  workflows
 
 ---
@@ -1720,7 +1720,7 @@ index 8a112d7..80852a5 100644
 From 9755203942b9f9b65c34b4a35803ce9073794cdc Mon Sep 17 00:00:00 2001
 From: 24520423-dotcom <24520423@gm.uit.edu.vn>
 Date: Tue, 24 Nov 2026 06:06:35 +0000
-Subject: [PATCH 08/17] feat: add order worklist and native form navigation
+Subject: [PATCH 08/18] feat: add order worklist and native form navigation
 
 ---
  frontend/src/components/Customer360/format.js |  12 ++
@@ -1999,7 +1999,7 @@ index 073ca6e..1e7d339 100644
 From e81fb609909d9aab5f87f817a36616666626c2c3 Mon Sep 17 00:00:00 2001
 From: 24520423-dotcom <24520423@gm.uit.edu.vn>
 Date: Tue, 24 Nov 2026 06:13:50 +0000
-Subject: [PATCH 09/17] feat: add after-sales worklist and native ticket forms
+Subject: [PATCH 09/18] feat: add after-sales worklist and native ticket forms
 
 ---
  .../Customer360/CustomerWorklist.vue          | 164 ++++++++++++++++++
@@ -2418,7 +2418,7 @@ index 1e7d339..fbe2383 100644
 From dc56080cc5a579e46f6492d6b44355e43f89718f Mon Sep 17 00:00:00 2001
 From: 24520423-dotcom <24520423@gm.uit.edu.vn>
 Date: Tue, 24 Nov 2026 06:18:25 +0000
-Subject: [PATCH 10/17] feat: show complete Customer 360 history and confirmed
+Subject: [PATCH 10/18] feat: show complete Customer 360 history and confirmed
  spend
 
 ---
@@ -2597,7 +2597,7 @@ index 3aa26e7..7521639 100644
 From ebba2f51419036f162fade5ff56e8e23d4baeacb Mon Sep 17 00:00:00 2001
 From: 24520423-dotcom <24520423@gm.uit.edu.vn>
 Date: Tue, 24 Nov 2026 06:28:33 +0000
-Subject: [PATCH 11/17] feat: display and filter calculated customer segments
+Subject: [PATCH 11/18] feat: display and filter calculated customer segments
 
 ---
  frontend/src/pages/Customer360.vue       | 22 ++++++++++++++++++++--
@@ -2726,7 +2726,7 @@ index 7521639..39a6167 100644
 From 78ae5eb7226b3470f92a01a0a3f22baf630aa36a Mon Sep 17 00:00:00 2001
 From: 24520423-dotcom <24520423@gm.uit.edu.vn>
 Date: Tue, 24 Nov 2026 06:31:43 +0000
-Subject: [PATCH 12/17] feat: add Customer Analytics using native CRM charts
+Subject: [PATCH 12/18] feat: add Customer Analytics using native CRM charts
 
 ---
  .../src/components/Layouts/AppSidebar.vue     |  12 ++
@@ -2920,7 +2920,7 @@ index fbe2383..32d4fc0 100644
 From ed135bbfa73fe18c62e77ed375f34917aea66f01 Mon Sep 17 00:00:00 2001
 From: 24520423-dotcom <24520423@gm.uit.edu.vn>
 Date: Tue, 24 Nov 2026 06:43:32 +0000
-Subject: [PATCH 13/17] style: refine CellphoneS CRM layouts and keyboard
+Subject: [PATCH 13/18] style: refine CellphoneS CRM layouts and keyboard
  navigation
 
 ---
@@ -3300,7 +3300,7 @@ index 230dcf1..e59f690 100644
 From e4eee986aefa9bc86b86fd96a0e5f3bbd5184adc Mon Sep 17 00:00:00 2001
 From: 24520423-dotcom <24520423@gm.uit.edu.vn>
 Date: Tue, 24 Nov 2026 07:11:24 +0000
-Subject: [PATCH 14/17] feat: enable scoped Customer 360 department access
+Subject: [PATCH 14/18] feat: enable scoped Customer 360 department access
 
 ---
  crm/api/__init__.py                            | 4 +++-
@@ -3355,7 +3355,7 @@ index e49ed5b..5ed2ce0 100644
 From a22ea4a37cc2b943cfa1bcec2419ea36c60c3098 Mon Sep 17 00:00:00 2001
 From: 24520423-dotcom <24520423@gm.uit.edu.vn>
 Date: Tue, 24 Nov 2026 15:42:27 +0000
-Subject: [PATCH 15/17] fix: normalize duplicate salutations on native leads
+Subject: [PATCH 15/18] fix: normalize duplicate salutations on native leads
 
 ---
  crm/fcrm/doctype/crm_lead/crm_lead.py | 7 +++++++
@@ -3386,7 +3386,7 @@ index a5ea8fd..247a68d 100644
 From 7f09c20ca54fbda84d5e004697deee217ed30c52 Mon Sep 17 00:00:00 2001
 From: 24520423-dotcom <24520423@gm.uit.edu.vn>
 Date: Tue, 24 Nov 2026 15:42:28 +0000
-Subject: [PATCH 16/17] fix: scope native CRM navigation and settings by role
+Subject: [PATCH 16/18] fix: scope native CRM navigation and settings by role
 
 ---
  crm/api/session.py                            | 19 ++++++++
@@ -3814,7 +3814,7 @@ index 32d4fc0..e111063 100644
 From 310c1635222d05ef6646a1a4ed51cfce12c6400a Mon Sep 17 00:00:00 2001
 From: 24520423-dotcom <24520423@gm.uit.edu.vn>
 Date: Tue, 24 Nov 2026 15:42:28 +0000
-Subject: [PATCH 17/17] feat: complete customer intake and scoped profile views
+Subject: [PATCH 17/18] feat: complete customer intake and scoped profile views
 
 ---
  .../components/Customer360/CustomerForm.vue   |  27 ++++-
@@ -4440,6 +4440,754 @@ index e59f690..4a8700a 100644
      },
    ].filter(Boolean)
  })
+-- 
+2.47.3
+
+
+From 1e041b39e8ba74adff8196f70c6e7854f179ac1d Mon Sep 17 00:00:00 2001
+From: 24520423-dotcom <24520423@gm.uit.edu.vn>
+Date: Tue, 24 Nov 2026 16:30:45 +0000
+Subject: [PATCH 18/18] feat: manage CellphoneS employees in native CRM
+ Settings
+
+---
+ crm/api/user.py                               |  33 +-
+ .../doctype/crm_invitation/crm_invitation.py  |   5 +-
+ .../components/Settings/InviteUserPage.vue    | 145 ++++++++-
+ frontend/src/components/Settings/Users.vue    | 287 +++++++++++-------
+ frontend/src/stores/users.js                  |   5 +
+ 5 files changed, 353 insertions(+), 122 deletions(-)
+
+diff --git a/crm/api/user.py b/crm/api/user.py
+index 7afdcac..6b4cc0f 100644
+--- a/crm/api/user.py
++++ b/crm/api/user.py
+@@ -2,8 +2,11 @@ import frappe
+ from frappe import _
+ from frappe.auth import LoginAttemptTracker
+ from frappe.rate_limiter import rate_limit
++from frappe.sessions import clear_sessions
+ from frappe.utils.password import check_password, update_password
+ 
++from crm.api.session import C360_DEPARTMENT_ROLES
++
+ 
+ @frappe.whitelist()
+ @rate_limit(limit=5, seconds=300)  # 5 attempts per 5 minutes per user/IP
+@@ -111,7 +114,7 @@ def has_password(user: str) -> bool:
+ 	)
+ 
+ 
+-@frappe.whitelist()
++@frappe.whitelist(methods=["POST"])
+ def add_existing_users(users: str | list, role: str = "Sales User"):
+ 	"""
+ 	Add existing users to the CRM by assigning them a role (Sales User or Sales Manager).
+@@ -132,7 +135,7 @@ def add_existing_users(users: str | list, role: str = "Sales User"):
+ 		update_user_role(user, role)
+ 
+ 
+-@frappe.whitelist()
++@frappe.whitelist(methods=["POST"])
+ def update_user_role(user: str, new_role: str):
+ 	"""
+ 	Update the role of the user to Sales Manager, Sales User, or System Manager.
+@@ -146,9 +149,9 @@ def update_user_role(user: str, new_role: str):
+ 	if new_role not in ["System Manager", "Sales Manager", "Sales User"]:
+ 		frappe.throw(_("Cannot assign this role"))
+ 
+-	user_doc = frappe.get_doc("User", user)
++	user_doc = frappe.get_doc("User", user, for_update=True)
+ 	validate_no_role_profile(user_doc)
+-	target_roles = [d.role for d in user_doc.roles]
++	target_roles = validate_crm_role_target(user_doc, is_system_manager)
+ 	target_is_system_manager = "System Manager" in target_roles
+ 
+ 	if new_role == "System Manager" and not is_system_manager:
+@@ -181,9 +184,11 @@ def update_user_role(user: str, new_role: str):
+ 		update_module_in_user(user_doc, "FCRM")
+ 
+ 	user_doc.save(ignore_permissions=True)
++	if set(target_roles) != {row.role for row in user_doc.roles}:
++		frappe.db.after_commit.add(lambda: clear_sessions(user=user_doc.name, force=True))
+ 
+ 
+-@frappe.whitelist()
++@frappe.whitelist(methods=["POST"])
+ def remove_crm_roles_from_user(user: str):
+ 	"""
+ 	Remove a user means removing Sales User & Sales Manager roles from the user.
+@@ -194,10 +199,9 @@ def remove_crm_roles_from_user(user: str):
+ 	if user == frappe.session.user:
+ 		frappe.throw(_("You cannot remove yourself."), frappe.PermissionError)
+ 
+-	user_doc = frappe.get_doc("User", user)
+-	roles = [d.role for d in user_doc.roles]
+-
++	user_doc = frappe.get_doc("User", user, for_update=True)
+ 	current_user_is_system_manager = "System Manager" in frappe.get_roles()
++	roles = validate_crm_role_target(user_doc, current_user_is_system_manager)
+ 
+ 	if "System Manager" in roles and not current_user_is_system_manager:
+ 		frappe.throw(_("Only System Managers can modify other System Managers"), frappe.PermissionError)
+@@ -213,6 +217,8 @@ def remove_crm_roles_from_user(user: str):
+ 		update_module_in_user(user_doc, "FCRM")
+ 
+ 	user_doc.save(ignore_permissions=True)
++	if set(roles) != {row.role for row in user_doc.roles}:
++		frappe.db.after_commit.add(lambda: clear_sessions(user=user_doc.name, force=True))
+ 
+ 	node_name = frappe.db.get_value("CRM Sales Hierarchy", {"user": user}, "name")
+ 	if node_name:
+@@ -221,6 +227,17 @@ def remove_crm_roles_from_user(user: str):
+ 	frappe.msgprint(_("User {0} has been removed from CRM roles.").format(user))
+ 
+ 
++def validate_crm_role_target(user_doc, is_system_manager):
++	roles = {row.role for row in user_doc.roles}
++	if user_doc.name in ("Administrator", "Guest") or roles.intersection(
++		(*C360_DEPARTMENT_ROLES, "C360 Merge Approver")
++	):
++		frappe.throw(_("Manage this account through the administrator's user settings."), frappe.PermissionError)
++	if not is_system_manager and roles.difference(("All", "Guest", "Desk User", "Sales User")):
++		frappe.throw(_("Sales Managers can manage only Sales User accounts."), frappe.PermissionError)
++	return roles
++
++
+ def validate_no_role_profile(user_doc):
+ 	"""
+ 	Throw if the user's roles are governed by a Role Profile.
+diff --git a/crm/fcrm/doctype/crm_invitation/crm_invitation.py b/crm/fcrm/doctype/crm_invitation/crm_invitation.py
+index 6c17f80..3827809 100644
+--- a/crm/fcrm/doctype/crm_invitation/crm_invitation.py
++++ b/crm/fcrm/doctype/crm_invitation/crm_invitation.py
+@@ -5,7 +5,7 @@ import frappe
+ from frappe import _
+ from frappe.model.document import Document
+ 
+-from crm.api.user import validate_no_role_profile
++from crm.api.user import validate_crm_role_target, validate_no_role_profile
+ 
+ 
+ class CRMInvitation(Document):
+@@ -68,6 +68,7 @@ class CRMInvitation(Document):
+ 		user, is_new_user = self.create_user_if_not_exists()
+ 		if not is_new_user:
+ 			validate_no_role_profile(user)
++			validate_crm_role_target(user, is_system_manager=True)
+ 		user.append_roles(self.role)
+ 		if self.role == "System Manager":
+ 			user.append_roles("Sales Manager", "Sales User")
+@@ -112,7 +113,7 @@ class CRMInvitation(Document):
+ 			).insert(ignore_permissions=True)
+ 			return user, True
+ 
+-		return frappe.get_doc("User", self.email), False
++		return frappe.get_doc("User", self.email, for_update=True), False
+ 
+ 
+ def expire_invitations():
+diff --git a/frontend/src/components/Settings/InviteUserPage.vue b/frontend/src/components/Settings/InviteUserPage.vue
+index a6e03e7..df2a721 100644
+--- a/frontend/src/components/Settings/InviteUserPage.vue
++++ b/frontend/src/components/Settings/InviteUserPage.vue
+@@ -1,5 +1,66 @@
+ <template>
+-  <div class="flex h-full flex-col gap-6 py-8 px-6 text-ink-gray-8">
++  <form v-if="employeeMode" class="space-y-4" @submit.prevent="submitEmployee">
++    <FormControl
++      v-model="employeeForm.full_name"
++      :label="__('Full Name')"
++      :disabled="!!employee || saving"
++      required
++    />
++    <FormControl
++      v-model="employeeForm.email"
++      type="email"
++      :label="__('Email')"
++      :disabled="!!employee || saving"
++      required
++    />
++    <FormControl
++      v-model="employeeForm.role"
++      type="select"
++      :label="__('Role')"
++      :options="employeeRoleOptions"
++      :disabled="saving"
++    />
++    <FormControl v-model="employeeForm.enabled" type="checkbox" :label="__('Enabled')" :disabled="saving" />
++    <FormControl
++      v-if="employeeForm.role === 'Sales Manager'"
++      v-model="employeeForm.merge_approver"
++      type="checkbox"
++      :label="__('Merge Approver')"
++      :disabled="saving"
++    />
++    <p v-if="employee?.merge_approver && !employee.merge_effective" class="text-sm text-ink-gray-6">
++      {{ __('This account has Merge Approver assigned. It only takes effect with Sales Manager.') }}
++    </p>
++    <p v-if="employee?.role_profile_name && employee.role !== employeeForm.role" class="text-sm text-ink-gray-6">
++      {{ __('Changing the role replaces the account’s current Role Profile with the selected role.') }}
++    </p>
++    <div v-if="assignedRecords.length" class="rounded border border-outline-gray-2 p-3 text-sm">
++      <p class="font-medium">{{ __('Assigned records') }}</p>
++      <ul class="my-1 grid grid-cols-2 gap-1">
++        <li v-for="[doctype, count] in assignedRecords" :key="doctype">{{ __(doctype) }} · {{ count }}</li>
++      </ul>
++      <p class="text-ink-gray-6">{{ __('Assignments stay in place. Changing access can prevent this user from working on them.') }}</p>
++    </div>
++    <ErrorMessage :message="employeeError" />
++    <div class="flex flex-wrap justify-end gap-2">
++      <Button
++        v-if="employee?.can_invite"
++        type="button"
++        :label="__('Send password setup invitation')"
++        :disabled="saving || !employeeForm.enabled"
++        :loading="sendingInvitation"
++        @click="sendEmployeeInvitation"
++      />
++      <Button
++        type="submit"
++        variant="solid"
++        :label="employee ? __('Save') : __('Create User')"
++        :disabled="sendingInvitation || !employeeForm.full_name.trim() || !employeeForm.email.trim() || !employeeForm.role"
++        :loading="saving"
++      />
++    </div>
++  </form>
++  <div v-else class="flex h-full flex-col gap-6 py-8 px-6 text-ink-gray-8">
+     <div class="flex px-2 justify-between">
+       <div class="flex flex-col gap-1 w-9/12">
+         <h2 class="flex gap-2 text-2xl-semibold leading-none h-5">
+@@ -101,11 +162,89 @@ import { useTelemetry } from '@framework/ui/telemetry'
+ import { useCrmOnboarding } from '@/composables/onboarding'
+ import {
+   toast,
++  call,
+   createListResource,
+   createResource,
+   FormControl,
+ } from 'frappe-ui'
+-import { ref, computed } from 'vue'
++import { ref, computed, reactive, watch } from 'vue'
++
++const props = defineProps({
++  employeeMode: Boolean,
++  employee: Object,
++  employeeRoleOptions: { type: Array, default: () => [] },
++})
++const emit = defineEmits(['saved'])
++const employeeApi = 'cellphones_c360.api.employee_administration.'
++const employeeForm = reactive({
++  full_name: props.employee?.full_name || '',
++  email: props.employee?.email || '',
++  role: props.employee?.role || 'Sales User',
++  enabled: props.employee?.enabled ?? true,
++  merge_approver: !!props.employee?.merge_effective,
++})
++const saving = ref(false)
++const sendingInvitation = ref(false)
++const employeeError = ref('')
++const assignedRecords = computed(() => Object.entries(props.employee?.assignments || {}).filter(([, count]) => count))
++watch(() => employeeForm.role, (role) => {
++  if (role !== 'Sales Manager') employeeForm.merge_approver = false
++})
++
++async function submitEmployee() {
++  if (saving.value) return
++  saving.value = true
++  employeeError.value = ''
++  try {
++    const access = {
++      role: employeeForm.role,
++      enabled: !!employeeForm.enabled,
++      merge_approver: employeeForm.role === 'Sales Manager' && !!employeeForm.merge_approver,
++    }
++    const result = props.employee
++      ? await call(employeeApi + 'save_employee', {
++          ...access,
++          name: props.employee.name,
++          modified: props.employee.modified,
++        })
++      : await call(employeeApi + 'create_employee', {
++          ...access,
++          full_name: employeeForm.full_name.trim(),
++          email: employeeForm.email.trim(),
++        })
++    if (result.invitation === 'failed') {
++      toast.error(__('User saved. The setup invitation could not be queued. Retry from Edit User.'))
++    } else if (result.invitation === 'queued') {
++      toast.success(__('User saved and password setup invitation queued.'))
++    } else {
++      toast.success(__('User saved.'))
++    }
++    emit('saved')
++  } catch (error) {
++    employeeError.value = error?.messages?.[0] || __('Unable to save this account.')
++  } finally {
++    saving.value = false
++  }
++}
++
++async function sendEmployeeInvitation() {
++  if (sendingInvitation.value) return
++  sendingInvitation.value = true
++  employeeError.value = ''
++  try {
++    const result = await call(employeeApi + 'invite_employee', { name: props.employee.name })
++    if (result.invitation === 'queued') {
++      toast.success(__('Password setup invitation queued.'))
++      emit('saved')
++    } else {
++      employeeError.value = __('Invitation could not be queued. Check the outgoing email account.')
++    }
++  } catch (error) {
++    employeeError.value = error?.messages?.[0] || __('Unable to send the setup invitation.')
++  } finally {
++    sendingInvitation.value = false
++  }
++}
+ 
+ const { completeStep } = useCrmOnboarding()
+ const { users, isAdmin } = usersStore()
+@@ -201,7 +340,7 @@ const pendingInvitations = createListResource({
+   filters: { status: 'Pending' },
+   fields: ['name', 'email', 'role'],
+   pageLength: 999,
+-  auto: true,
++  auto: !props.employeeMode,
+ })
+ 
+ function updateInvitees(value) {
+diff --git a/frontend/src/components/Settings/Users.vue b/frontend/src/components/Settings/Users.vue
+index b0dbdd3..ba2903a 100644
+--- a/frontend/src/components/Settings/Users.vue
++++ b/frontend/src/components/Settings/Users.vue
+@@ -16,16 +16,7 @@
+       </div>
+       <div class="flex item-center space-x-2 w-3/12 justify-end">
+         <Dropdown
+-          :options="[
+-            {
+-              label: __('Add Existing User'),
+-              onClick: () => (showAddExistingModal = true),
+-            },
+-            {
+-              label: __('Invite New User'),
+-              onClick: () => (activeSettingsPage = 'Invite User'),
+-            },
+-          ]"
++          :options="newUserOptions"
+           :button="{
+             label: __('New'),
+             iconLeft: 'lucide-plus',
+@@ -36,10 +27,15 @@
+       </div>
+     </div>
+ 
++    <div v-if="isAccountAdministrator() && rosterError" class="flex items-center gap-3 px-2">
++      <p role="alert" class="text-sm text-ink-red-4">{{ rosterError }}</p>
++      <Button :label="__('Retry')" @click="loadRoster()" />
++    </div>
++
+     <!-- loading state -->
+-    <div v-if="users.loading" class="flex mt-28 justify-between w-full h-full">
++    <div v-if="listLoading" class="flex mt-28 justify-between w-full h-full">
+       <Button
+-        :loading="users.loading"
++        :loading="listLoading"
+         variant="ghost"
+         class="w-full"
+         size="2xl"
+@@ -48,7 +44,7 @@
+ 
+     <!-- Empty State -->
+     <EmptyState
+-      v-if="!users.loading && !usersList.length && !search && currentRole === 'All'"
++      v-if="!listLoading && !usersList.length && !isAccountAdministrator() && !search && currentRole === 'All'"
+       name="Users"
+       :description="__('Add one to get started.')"
+       icon="user"
+@@ -56,11 +52,11 @@
+ 
+     <!-- Users List -->
+     <div
+-      v-if="!users.loading && (usersList.length || search || currentRole !== 'All')"
++      v-if="!listLoading && (isAccountAdministrator() || usersList.length || search || currentRole !== 'All')"
+       class="flex flex-col overflow-hidden"
+     >
+       <div
+-        v-if="isAdmin() || users.data?.crmUsers?.length > 10"
++        v-if="isAccountAdministrator() || users.data?.crmUsers?.length > 10"
+         class="flex items-center gap-2 mb-4 px-2 pt-0.5"
+       >
+         <TextInput
+@@ -80,13 +76,7 @@
+         <Select
+           v-model="currentRole"
+           class="shrink-0"
+-          :options="[
+-            { label: __('All'), value: 'All' },
+-            { label: __('Admin'), value: 'System Manager' },
+-            { label: __('Manager'), value: 'Sales Manager' },
+-            { label: __('Sales User'), value: 'Sales User' },
+-            ...(isAdmin() ? departmentRoles.map((role) => ({ label: roleMap[role], value: role })) : []),
+-          ]"
++          :options="filterOptions"
+         />
+       </div>
+       <ul class="divide-y divide-outline-elevation-2 overflow-y-auto px-2">
+@@ -102,7 +92,7 @@
+                 <div
+                   class="absolute -bottom-0.5 -right-0.5 flex rounded-full bg-surface-elevation-2 p-0.5"
+                 >
+-                  <AvailabilityDot :user="user.name" class="!size-2.5" />
++                  <AvailabilityDot v-if="user.enabled" :user="user.name" class="!size-2.5" />
+                 </div>
+               </div>
+               <div class="flex flex-col ml-3">
+@@ -110,72 +100,91 @@
+                   {{ user.full_name }}
+                 </div>
+                 <div class="text-p-sm text-ink-gray-5">
+-                  {{ user.name }}
++                  {{ user.email || user.name }}
+                 </div>
+               </div>
+             </div>
+             <div class="flex gap-2 items-center flex-row-reverse">
+-              <Button
+-                v-if="isC360Managed(user) && isAdmin()"
+-                :label="__('Manage in Desk')"
+-                @click="openDeskUser(user)"
+-              />
+-              <Dropdown
+-                v-if="!isC360Managed(user)"
+-                :options="getMoreOptions(user)"
+-                :button="{
+-                  icon: 'lucide-more-horizontal',
+-                  onblur: (e) => {
+-                    e.stopPropagation()
+-                    confirmRemove = false
+-                  },
+-                }"
+-                align="end"
+-              />
+-              <div v-if="isC360Managed(user)" class="flex flex-col items-end gap-1">
+-                <span class="text-p-sm">{{ roleMap[user.role] || user.role }}</span>
+-                <span v-if="user.roles?.includes('C360 Merge Approver')" class="text-xs text-ink-gray-5">Merge Approver</span>
+-              </div>
+-              <Tooltip
+-                v-else-if="isManager() && user.role == 'System Manager'"
+-                :text="__('Cannot change role of user with Admin access')"
+-              >
+-                <Button :label="__('Admin')" icon-left="lucide-shield" />
+-              </Tooltip>
+-              <Dropdown
+-                v-else
+-                :options="getDropdownOptions(user)"
+-                :button="{
+-                  label: roleMap[user.role],
+-                  iconRight: 'lucide-chevron-down',
+-                  iconLeft:
+-                    user.role === 'System Manager'
+-                      ? 'lucide-shield'
+-                      : user.role === 'Sales Manager'
+-                        ? 'lucide-briefcase'
+-                        : 'lucide-user-check',
+-                }"
+-                align="end"
+-              />
++              <template v-if="isAccountAdministrator()">
++                <Button
++                  v-if="user.manageable"
++                  :label="__('Edit')"
++                  :loading="editingName === user.name"
++                  @click="openEditor(user)"
++                />
++                <Button
++                  v-else-if="user.name !== 'Administrator'"
++                  :label="__('Manage in Desk')"
++                  @click="openDeskUser(user)"
++                />
++                <div class="flex flex-col items-end gap-1">
++                  <span class="text-p-sm">{{ roleMap[user.role] || __('Custom roles') }}</span>
++                  <span v-if="!user.enabled" class="text-xs text-ink-gray-5">{{ __('Disabled') }}</span>
++                  <span v-if="user.merge_approver" class="text-xs text-ink-gray-5">
++                    {{ user.merge_effective ? __('Merge Approver') : __('Merge Approver inactive') }}
++                  </span>
++                </div>
++              </template>
++              <template v-else>
++                <Dropdown
++                  v-if="canManageNative(user)"
++                  :options="getMoreOptions(user)"
++                  :button="{
++                    icon: 'lucide-more-horizontal',
++                    onblur: (e) => {
++                      e.stopPropagation()
++                      confirmRemove = false
++                    },
++                  }"
++                  align="end"
++                />
++                <Tooltip
++                  v-if="!canManageNative(user)"
++                  :text="__('Cannot change role of user with Admin access')"
++                >
++                  <span class="text-p-sm">{{ roleMap[user.role] }}</span>
++                </Tooltip>
++                <Dropdown
++                  v-else
++                  :options="getDropdownOptions(user)"
++                  :button="{
++                    label: roleMap[user.role],
++                    iconRight: 'lucide-chevron-down',
++                    iconLeft:
++                      user.role === 'System Manager'
++                        ? 'lucide-shield'
++                        : user.role === 'Sales Manager'
++                          ? 'lucide-briefcase'
++                          : 'lucide-user-check',
++                  }"
++                  align="end"
++                />
++              </template>
+             </div>
+           </li>
+         </template>
+-        <!-- Load More Button -->
+-        <div
+-          v-if="!users.loading && users.hasNextPage"
+-          class="flex justify-center"
+-        >
+-          <Button
+-            class="mt-3.5 p-2"
+-            :loading="users.loading"
+-            :label="__('Load More')"
+-            icon-left="lucide-refresh-cw"
+-            @click="() => users.next()"
+-          />
+-        </div>
+       </ul>
++      <p v-if="isAccountAdministrator() && !usersList.length && !rosterError" class="px-2 py-4 text-sm">
++        {{ __('No users match your search.') }}
++      </p>
++      <div v-if="isAccountAdministrator() && (rosterPage > 1 || roster.has_more)" class="flex justify-end gap-2 p-2">
++        <Button :label="__('Previous')" :disabled="rosterPage === 1" @click="loadRoster(rosterPage - 1)" />
++        <Button :label="__('Next')" :disabled="!roster.has_more" @click="loadRoster(rosterPage + 1)" />
++      </div>
+     </div>
+   </div>
++  <Dialog
++    v-if="editorOpen"
++    v-model:open="editorOpen"
++    :title="editorEmployee ? __('Edit User') : __('New User')"
++  >
++    <InviteUserPage
++      employee-mode
++      :employee="editorEmployee"
++      :employee-role-options="employeeRoleOptions"
++      @saved="refreshAfterEdit"
++    />
++  </Dialog>
+   <AddExistingUserModal
+     v-if="showAddExistingModal"
+     v-model="showAddExistingModal"
+@@ -185,11 +194,13 @@
+ <script setup>
+ import AddExistingUserModal from '@/components/Modals/AddExistingUserModal.vue'
+ import AvailabilityDot from '@/components/AvailabilityDot.vue'
++import InviteUserPage from '@/components/Settings/InviteUserPage.vue'
+ import EmptyState from '@/components/ListViews/EmptyState.vue'
+ import { activeSettingsPage } from '@/composables/settings'
+ import { usersStore } from '@/stores/users'
+ import {
+   Dropdown,
++  Dialog,
+   Avatar,
+   TextInput,
+   toast,
+@@ -197,10 +208,10 @@ import {
+   Tooltip,
+   Select,
+ } from 'frappe-ui'
+-import { ref, computed, onMounted } from 'vue'
++import { ref, computed, watch, onMounted } from 'vue'
+ import { ConfirmDelete } from '../../utils'
+ 
+-const { users, usersFull, isAdmin, isManager } = usersStore()
++const { users, usersFull, isAdmin, isAccountAdministrator } = usersStore()
+ 
+ const showAddExistingModal = ref(false)
+ const searchRef = ref(null)
+@@ -208,49 +219,108 @@ const search = ref('')
+ const currentRole = ref('All')
+ 
+ const roleMap = {
+-  'System Manager': __('Admin'),
+-  'Sales Manager': __('Manager'),
++  'System Manager': __('System Manager'),
++  'Sales Manager': __('Sales Manager'),
+   'Sales User': __('Sales User'),
+   'C360 Customer Service': __('Customer Service'),
+   'C360 Operations': __('Operations'),
+   'C360 Marketing': __('Marketing'),
+ }
+ 
+-const departmentRoles = ['C360 Customer Service', 'C360 Operations', 'C360 Marketing']
+-function isC360Managed(user) {
+-  return (user.roles || []).some((role) => departmentRoles.includes(role) || role === 'C360 Merge Approver')
++const nativeRoles = ['System Manager', 'Sales Manager', 'Sales User']
++const mergeApprover = 'C360 Merge Approver'
++const roster = ref({ items: [], roles: [], has_more: false })
++const rosterPage = ref(1)
++const rosterLoading = ref(false)
++const rosterError = ref('')
++const editorOpen = ref(false)
++const editorEmployee = ref(null)
++const editingName = ref('')
++const employeeApi = 'cellphones_c360.api.employee_administration.'
++let rosterRequest = 0
++
++const listLoading = computed(() => isAccountAdministrator() ? rosterLoading.value : users.loading)
++const employeeRoleOptions = computed(() => roster.value.roles.map(role => ({ value: role, label: roleMap[role] })))
++const filterOptions = computed(() => [
++  { value: 'All', label: __('All') },
++  ...(isAccountAdministrator()
++    ? [...employeeRoleOptions.value, { value: mergeApprover, label: __('Merge Approver') }]
++    : nativeRoles.map(role => ({ value: role, label: roleMap[role] }))),
++])
++const newUserOptions = computed(() => [
++  ...(isAccountAdministrator() ? [{ label: __('New User'), onClick: () => openEditor() }] : []),
++  { label: __('Add Existing User'), onClick: () => (showAddExistingModal.value = true) },
++  { label: __('Invite New User'), onClick: () => (activeSettingsPage.value = 'Invite User') },
++])
++
++function canManageNative(user) {
++  if (user.roles?.some(role => role === mergeApprover || role.startsWith('C360 '))) return false
++  return isAdmin() || user.role === 'Sales User'
+ }
++
+ function openDeskUser(user) {
+   window.open('/app/user/' + encodeURIComponent(user.name), '_blank', 'noopener,noreferrer')
+ }
+ 
+-const usersList = computed(() => {
+-  let filteredUsers =
+-    users.data?.crmUsers?.filter((user) => user.name !== 'Administrator') || []
++async function loadRoster(page = rosterPage.value) {
++  const request = ++rosterRequest
++  rosterLoading.value = true
++  rosterError.value = ''
++  try {
++    const result = await call(employeeApi + 'list_employees', {
++      search: search.value,
++      role: currentRole.value === 'All' ? null : currentRole.value,
++      page,
++    })
++    if (request !== rosterRequest) return
++    roster.value = result
++    rosterPage.value = page
++  } catch (error) {
++    if (request === rosterRequest) rosterError.value = error?.messages?.[0] || __('Unable to load users.')
++  } finally {
++    if (request === rosterRequest) rosterLoading.value = false
++  }
++}
+ 
+-  // Use the admin-only full user list; do not add departments to sales assignment lists.
+-  if (isAdmin()) {
+-    const byName = new Map(filteredUsers.map((user) => [user.name, user]))
+-    for (const user of usersFull.data?.allUsers || []) {
+-      if (user.name === 'Administrator' || !isC360Managed(user)) continue
+-      const roles = user.roles || []
+-      const role = ['System Manager', 'Sales Manager', 'Sales User', ...departmentRoles].find((r) => roles.includes(r))
+-      if (role) byName.set(user.name, { ...user, role })
++async function openEditor(user) {
++  if (editingName.value) return
++  if (user) {
++    editingName.value = user.name
++    try {
++      editorEmployee.value = await call(employeeApi + 'get_employee', { name: user.name })
++    } catch (error) {
++      toast.error(error?.messages?.[0] || __('Unable to load this account.'))
++      return
++    } finally {
++      editingName.value = ''
+     }
+-    filteredUsers = [...byName.values()].sort((a, b) => a.full_name.localeCompare(b.full_name))
++  } else {
++    editorEmployee.value = null
+   }
+-  return filteredUsers
+-    .filter(
+-      (user) =>
+-        user.name?.includes(search.value) ||
+-        user.full_name?.includes(search.value),
+-    )
+-    .filter((user) => {
+-      if (currentRole.value === 'All') return true
+-      return user.role === currentRole.value
+-    })
++  editorOpen.value = true
++}
++
++function refreshAfterEdit() {
++  editorOpen.value = false
++  loadRoster()
++  users.reload().catch(() => {})
++  usersFull.reload().catch(() => {})
++}
++
++const usersList = computed(() => {
++  if (isAccountAdministrator()) return roster.value.items
++  const query = search.value.trim().toLowerCase()
++  return (users.data?.crmUsers || []).filter(user =>
++    user.name !== 'Administrator' &&
++    (user.email?.toLowerCase().includes(query) || user.full_name?.toLowerCase().includes(query)) &&
++    (currentRole.value === 'All' || currentRole.value === user.role),
++  )
+ })
+ 
++watch([search, currentRole], () => {
++  if (isAccountAdministrator()) loadRoster(1)
++}, { immediate: true })
++
+ const confirmRemove = ref(false)
+ 
+ function getMoreOptions(user) {
+@@ -325,7 +395,6 @@ function removeUser(user) {
+ }
+ 
+ onMounted(() => {
+-  if (isAdmin()) usersFull.fetch().catch(() => {})
+   if (searchRef.value) {
+     searchRef.value.focus()
+   }
+diff --git a/frontend/src/stores/users.js b/frontend/src/stores/users.js
+index f2a0bd0..6d5e7b9 100644
+--- a/frontend/src/stores/users.js
++++ b/frontend/src/stores/users.js
+@@ -131,6 +131,10 @@ export const usersStore = defineStore('crm-users', () => {
+     return usersByName[email]
+   }
+ 
++  function isAccountAdministrator() {
++    return session.user === 'Administrator'
++  }
++
+   function isAdmin(email) {
+     return getUser(email).role === 'System Manager'
+   }
+@@ -171,6 +175,7 @@ export const usersStore = defineStore('crm-users', () => {
+     crmUsers: computed(() => users.data?.crmUsers),
+     getUser,
+     isAdmin,
++    isAccountAdministrator,
+     isManager,
+     isSalesUser,
+     isTelephonyAgent,
 -- 
 2.47.3
 
