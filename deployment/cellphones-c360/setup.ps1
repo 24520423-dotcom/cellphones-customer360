@@ -56,7 +56,7 @@ $required = @(
     "frappe-bench-backup.tar.gz",
     "Dockerfile",
     "docker-compose.yml",
-    "backend/cellphones_c360"
+    "../../backend/cellphones_c360"
 )
 foreach ($item in $required) {
     if (-not (Test-Path $item)) {

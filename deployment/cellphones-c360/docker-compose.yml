@@ -33,7 +33,7 @@ services:
       SHELL: /bin/bash
     volumes:
       - snapshot-bench-data:/home/frappe/frappe-bench
-      - ./backend/cellphones_c360:/home/frappe/frappe-bench/apps/cellphones_c360
+      - ../../backend/cellphones_c360:/home/frappe/frappe-bench/apps/cellphones_c360
     ports:
       - "8001:8000"
       - "9001:9000"
