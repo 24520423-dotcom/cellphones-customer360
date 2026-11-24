@@ -1,10 +1,13 @@
 from collections import Counter
-from datetime import timedelta
+from datetime import date, datetime, time, timedelta
 from decimal import Decimal
 
 import frappe
 from frappe.model import get_permitted_fields
 from frappe.utils import cint, get_datetime, now_datetime
+
+from cellphones_c360.api.orders import is_confirmed_purchase
+from cellphones_c360.api.segments import ONLINE, ORDER_FIELDS, SEGMENTS, summarize_many
 
 PERIODS = {"all": None, "7d": 7, "30d": 30, "90d": 90}
 VALID_ORDERS = {"Confirmed", "Processing", "Completed"}
@@ -72,9 +75,23 @@ def _orders(start, end):
             value += amount
             amounts += 1
 
+    income = None
+    payment_fields = ["order_status", "payment_status", "total_amount", "paid_at"]
+    if _readable("Customer Order", payment_fields):
+        income = sum((
+            _amount(row.total_amount) or Decimal(0)
+            for row in _rows(
+                "Customer Order", payment_fields,
+                _window("paid_at", start, end) + [("order_status", "=", "Completed"), ("payment_status", "=", "Paid")],
+            )
+            if is_confirmed_purchase(row)
+        ), Decimal(0))
     return {
         "total": sum(statuses.values()),
+        "completed": statuses["Completed"],
+        "cancelled": statuses["Cancelled"],
         "validValue": value if valid == amounts else None,
+        "confirmedReceipts": income,
         "averageValue": value / valid if valid and valid == amounts else None,
         "repeatCustomers": sum(count >= 2 for count in customers.values()),
         "byStatus": _counts(statuses),
@@ -87,26 +104,53 @@ def _customers(start, end, order_counts):
     if not _readable("C360 Customer", fields):
         return None
 
-    sources, types = Counter(), Counter()
-    total = new = buyers = repeat = 0
-    for row in _rows("C360 Customer", fields, _window("creation", None, end)):
-        total += 1
-        if order_counts is not None:
-            count = order_counts[row.name]
-            buyers += count >= 1
-            repeat += count >= 2
-        if not start or get_datetime(row.creation) >= start:
-            new += 1
-            _group(sources, row.source_channel)
-            _group(types, row.customer_type)
+    sources, types, channels, segment_counts = Counter(), Counter(), Counter(), Counter()
+    total = new = buyers = 0
+    identity_fields = ["phone_number", "email"]
+    can_review_identities = _readable("C360 Customer", identity_fields)
+    filters = _window("creation", None, end) + [("merged_into", "is", "not set")]
+    rows = list(_rows("C360 Customer", fields + (identity_fields if can_review_identities else []), filters))
+    for offset in range(0, len(rows), 500):
+        batch = rows[offset:offset + 500]
+        classifications = summarize_many(batch, as_of=(end - timedelta(days=1)).date())
+        for row in batch:
+            total += 1
+            segment_counts.update(classifications[row.name]["segments"])
+            if order_counts is not None:
+                count = order_counts[row.name]
+                buyers += count >= 1
+            if not start or get_datetime(row.creation) >= start:
+                new += 1
+                _group(sources, row.source_channel)
+                _group(types, row.customer_type)
+                channels["Online" if row.source_channel in ONLINE else "Offline" if row.source_channel == "Store" else "Unspecified"] += 1
+
+    needs_review = None
+    if _readable("C360 Source Record", ["processing_status", "received_at"]):
+        needs_review = sum(1 for _ in _rows("C360 Source Record", ["name"],
+            _window("received_at", start, end) + [("processing_status", "=", "Needs Review")]))
+    duplicate_customers = None
+    if can_review_identities:
+        usage = {
+            field: Counter(row[field].casefold() for row in rows if row.get(field))
+            for field in identity_fields
+        }
+        duplicate_customers = sum(
+            any(row.get(field) and usage[field][row[field].casefold()] > 1 for field in identity_fields)
+            for row in rows
+        )
 
     return {
         "total": total,
         "new": new,
         "withOrders": buyers if order_counts is not None else None,
-        "repeat": repeat if order_counts is not None else None,
+        "repeat": segment_counts["returning"] if _readable("Customer Order", ORDER_FIELDS) else None,
         "bySource": _counts(sources),
+        "byChannel": _counts(channels),
         "byType": _counts(types),
+        "segments": _counts(Counter({SEGMENTS[key]: value for key, value in segment_counts.items()})),
+        "pendingIdentityReviews": needs_review,
+        "duplicateCustomers": duplicate_customers,
     }
 
 
@@ -140,18 +184,18 @@ def _deals(start, end, lead_names):
         else {}
     )
     stages = Counter()
-    won_leads = set()
+    converted_leads = set()
     won = lost = 0
     pipeline_value = Decimal(0)
     complete = bool(types)
     known_outcomes = bool(types)
     for row in _rows("CRM Deal", fields, _window("creation", start, end)):
         _group(stages, row.status)
+        if lead_names is not None and row.lead in lead_names:
+            converted_leads.add(row.lead)
         category = types.get(row.status)
         if category == "Won":
             won += 1
-            if lead_names is not None and row.lead in lead_names:
-                won_leads.add(row.lead)
         elif category == "Lost":
             lost += 1
         elif category in {"Open", "Ongoing", "On Hold"}:
@@ -170,7 +214,7 @@ def _deals(start, end, lead_names):
         "lost": lost if known_outcomes else None,
         "pipelineValue": pipeline_value if complete else None,
         "winRate": won / (won + lost) if known_outcomes and won + lost else None,
-        "conversionRate": len(won_leads) / len(lead_names) if known_outcomes and lead_names else None,
+        "conversionRate": len(converted_leads) / len(lead_names) if lead_names else None,
         "byStage": _counts(stages),
     }
 
@@ -196,6 +240,8 @@ def _tickets(start, end):
     total = sum(statuses.values())
     return {
         "total": total,
+        "backlog": statuses["Open"] + statuses["Pending"] + statuses["In Progress"],
+        "resolved": statuses["Resolved"] + statuses["Closed"],
         "resolutionRate": (statuses["Resolved"] + statuses["Closed"]) / total if total else None,
         "averageResolutionHours": hours / durations if durations else None,
         "byStatus": _counts(statuses),
@@ -236,13 +282,19 @@ def _activities(start, end):
 
 
 @frappe.whitelist(methods=["GET"])
-def get_analytics_overview(period="all", activities=0):
-    if period not in PERIODS:
-        frappe.throw("Khoảng thời gian không hợp lệ.", frappe.ValidationError)
-    today = now_datetime().replace(hour=0, minute=0, second=0, microsecond=0)
-    end = today + timedelta(days=1)
-    days = PERIODS[period]
-    start = end - timedelta(days=days) if days else None
+def get_analytics_overview(period="all", activities=0, from_date=None, to_date=None):
+    if from_date or to_date:
+        try:
+            first = date.fromisoformat(from_date or "")
+            last = date.fromisoformat(to_date or "")
+            if first > last:
+                raise ValueError
+            start = datetime.combine(first, time.min)
+            end = datetime.combine(last + timedelta(days=1), time.min)
+        except (TypeError, ValueError, OverflowError):
+            frappe.throw("Khoảng ngày không hợp lệ.", frappe.ValidationError)
+    else:
+        start, end = _preset_window(period)
     orders, customers_with_orders = _orders(start, end)
     leads, lead_names = _leads(start, end)
     result = {
@@ -255,3 +307,21 @@ def get_analytics_overview(period="all", activities=0):
     if cint(activities):
         result["activities"] = _activities(start, end)
     return result
+
+
+@frappe.whitelist(methods=["GET"])
+def get_access():
+    return {"canRead": any(
+        frappe.has_permission(doctype, "read")
+        for doctype in ("C360 Customer", "Customer Order", "Customer Support Ticket", "CRM Lead", "CRM Deal")
+    )}
+
+
+def _preset_window(period):
+    if period not in PERIODS:
+        frappe.throw("Khoảng thời gian không hợp lệ.", frappe.ValidationError)
+    today = now_datetime().replace(hour=0, minute=0, second=0, microsecond=0)
+    end = today + timedelta(days=1)
+    days = PERIODS[period]
+    start = end - timedelta(days=days) if days else None
+    return start, end

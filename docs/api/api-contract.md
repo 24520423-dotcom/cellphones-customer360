@@ -262,6 +262,8 @@ Quy tắc mục tiêu: đơn hàng phải thuộc đúng khách; sản phẩm l�
 
 ## 8. Dashboard và Analytics
 
+`GET /api/method/cellphones_c360.api.analytics.get_access` cho biết quyền đọc nhóm KPI. `GET /api/method/cellphones_c360.api.analytics.get_analytics_overview` nhận `period` (`all`, `7d`, `30d`, `90d`) hoặc cặp `from_date`, `to_date` định dạng YYYY-MM-DD. `activities=1` yêu cầu danh sách hoạt động gần đây trong quyền đọc. Xem [công thức và kỳ đo KPI](../design/kpi-definition.md).
+
 Ưu tiên Dashboard có sẵn của Frappe CRM. Module `api/analytics.py` đã có nhưng tên endpoint, tham số, phạm vi dữ liệu và kết quả cần đối chiếu trước khi tích hợp native. Không coi `api/dashboard.py` hoặc các API đề xuất trong v1.0 là đã triển khai.
 
 Các KPI mục tiêu: tổng Lead, tổng Deal, Won Deal, tỷ lệ Won Deal, pipeline theo trạng thái, hoạt động gần đây, phân khúc khách hàng. Quy ước đề xuất: `deal_win_rate = won_deals / total_deals * 100`; `conversion_rate = converted_leads / total_leads * 100`; xử lý mẫu số 0; phải thống nhất kỳ lọc và phạm vi quyền. Giá trị Deal dự kiến không phải doanh thu. CLV/ABC cần nguồn giao dịch và định nghĩa riêng trước khi triển khai.

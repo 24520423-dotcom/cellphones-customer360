@@ -1,7 +1,7 @@
 From 820f0af20e6040721470f04c535a6d84458f83d7 Mon Sep 17 00:00:00 2001
 From: 24520423-dotcom <24520423@gm.uit.edu.vn>
 Date: Tue, 24 Nov 2026 03:52:19 +0000
-Subject: [PATCH 01/11] feat: customize CellphoneS CRM theme
+Subject: [PATCH 01/12] feat: customize CellphoneS CRM theme
 
 ---
  frontend/src/cellphones-theme.css | 25 +++++++++++++++++++++++++
@@ -57,7 +57,7 @@ index 7a91fc9..9391f8d 100644
 From 5d45d3789ad7ff407fe5945dba6886f1a6553f85 Mon Sep 17 00:00:00 2001
 From: 24520423-dotcom <24520423@gm.uit.edu.vn>
 Date: Tue, 24 Nov 2026 04:06:09 +0000
-Subject: [PATCH 02/11] feat: integrate Customer 360 customer list into Frappe
+Subject: [PATCH 02/12] feat: integrate Customer 360 customer list into Frappe
  CRM
 
 ---
@@ -302,7 +302,7 @@ index fad8708..b209857 100644
 From 261dc539d1fccef78c22888464ffe7bd75df0688 Mon Sep 17 00:00:00 2001
 From: 24520423-dotcom <24520423@gm.uit.edu.vn>
 Date: Tue, 24 Nov 2026 04:15:17 +0000
-Subject: [PATCH 03/11] feat: integrate Customer 360 detailed profile into
+Subject: [PATCH 03/12] feat: integrate Customer 360 detailed profile into
  Frappe CRM
 
 ---
@@ -770,7 +770,7 @@ index b209857..073ca6e 100644
 From 8bbfc82323a3ec6a91d8695a611ccaa5b76a8f8d Mon Sep 17 00:00:00 2001
 From: 24520423-dotcom <24520423@gm.uit.edu.vn>
 Date: Tue, 24 Nov 2026 05:33:36 +0000
-Subject: [PATCH 04/11] feat: add native Customer 360 creation form
+Subject: [PATCH 04/12] feat: add native Customer 360 creation form
 
 ---
  .../components/Customer360/CustomerForm.vue   | 91 +++++++++++++++++++
@@ -957,7 +957,7 @@ index c96d028..e076461 100644
 From 1d90c4db31efc81d9f0a6408090fc415b3e12b36 Mon Sep 17 00:00:00 2001
 From: 24520423-dotcom <24520423@gm.uit.edu.vn>
 Date: Tue, 24 Nov 2026 05:37:41 +0000
-Subject: [PATCH 05/11] feat: edit Customer 360 profiles in native CRM
+Subject: [PATCH 05/12] feat: edit Customer 360 profiles in native CRM
 
 ---
  .../components/Customer360/CustomerForm.vue   | 25 ++++++----
@@ -1125,7 +1125,7 @@ index bbf875e..28da65a 100644
 From 138e5a70d71a505b3df83d51ec14a1b62118cee5 Mon Sep 17 00:00:00 2001
 From: 24520423-dotcom <24520423@gm.uit.edu.vn>
 Date: Tue, 24 Nov 2026 05:52:52 +0000
-Subject: [PATCH 06/11] feat: review and merge verified profiles in CRM
+Subject: [PATCH 06/12] feat: review and merge verified profiles in CRM
 
 ---
  .../Customer360/DuplicateReview.vue           | 170 ++++++++++++++++++
@@ -1392,7 +1392,7 @@ index 28da65a..8a112d7 100644
 From a19381dc20309d8b71af4e18782e9ab588385dce Mon Sep 17 00:00:00 2001
 From: 24520423-dotcom <24520423@gm.uit.edu.vn>
 Date: Tue, 24 Nov 2026 06:02:25 +0000
-Subject: [PATCH 07/11] feat: connect Customer 360 to native CRM sales
+Subject: [PATCH 07/12] feat: connect Customer 360 to native CRM sales
  workflows
 
 ---
@@ -1720,7 +1720,7 @@ index 8a112d7..80852a5 100644
 From 9755203942b9f9b65c34b4a35803ce9073794cdc Mon Sep 17 00:00:00 2001
 From: 24520423-dotcom <24520423@gm.uit.edu.vn>
 Date: Tue, 24 Nov 2026 06:06:35 +0000
-Subject: [PATCH 08/11] feat: add order worklist and native form navigation
+Subject: [PATCH 08/12] feat: add order worklist and native form navigation
 
 ---
  frontend/src/components/Customer360/format.js |  12 ++
@@ -1999,7 +1999,7 @@ index 073ca6e..1e7d339 100644
 From e81fb609909d9aab5f87f817a36616666626c2c3 Mon Sep 17 00:00:00 2001
 From: 24520423-dotcom <24520423@gm.uit.edu.vn>
 Date: Tue, 24 Nov 2026 06:13:50 +0000
-Subject: [PATCH 09/11] feat: add after-sales worklist and native ticket forms
+Subject: [PATCH 09/12] feat: add after-sales worklist and native ticket forms
 
 ---
  .../Customer360/CustomerWorklist.vue          | 164 ++++++++++++++++++
@@ -2418,7 +2418,7 @@ index 1e7d339..fbe2383 100644
 From dc56080cc5a579e46f6492d6b44355e43f89718f Mon Sep 17 00:00:00 2001
 From: 24520423-dotcom <24520423@gm.uit.edu.vn>
 Date: Tue, 24 Nov 2026 06:18:25 +0000
-Subject: [PATCH 10/11] feat: show complete Customer 360 history and confirmed
+Subject: [PATCH 10/12] feat: show complete Customer 360 history and confirmed
  spend
 
 ---
@@ -2597,7 +2597,7 @@ index 3aa26e7..7521639 100644
 From ebba2f51419036f162fade5ff56e8e23d4baeacb Mon Sep 17 00:00:00 2001
 From: 24520423-dotcom <24520423@gm.uit.edu.vn>
 Date: Tue, 24 Nov 2026 06:28:33 +0000
-Subject: [PATCH 11/11] feat: display and filter calculated customer segments
+Subject: [PATCH 11/12] feat: display and filter calculated customer segments
 
 ---
  frontend/src/pages/Customer360.vue       | 22 ++++++++++++++++++++--
@@ -2719,6 +2719,200 @@ index 7521639..39a6167 100644
        <!-- Overview -->
        <div
          v-if="activeTab === 'Overview'"
+-- 
+2.47.3
+
+
+From 78ae5eb7226b3470f92a01a0a3f22baf630aa36a Mon Sep 17 00:00:00 2001
+From: 24520423-dotcom <24520423@gm.uit.edu.vn>
+Date: Tue, 24 Nov 2026 06:31:43 +0000
+Subject: [PATCH 12/12] feat: add Customer Analytics using native CRM charts
+
+---
+ .../src/components/Layouts/AppSidebar.vue     |  12 ++
+ frontend/src/pages/CustomerAnalytics.vue      | 126 ++++++++++++++++++
+ frontend/src/router.js                        |   5 +
+ 3 files changed, 143 insertions(+)
+ create mode 100644 frontend/src/pages/CustomerAnalytics.vue
+
+diff --git a/frontend/src/components/Layouts/AppSidebar.vue b/frontend/src/components/Layouts/AppSidebar.vue
+index b1a970e..e49ed5b 100644
+--- a/frontend/src/components/Layouts/AppSidebar.vue
++++ b/frontend/src/components/Layouts/AppSidebar.vue
+@@ -272,6 +272,12 @@ const isDemoSite = ref(window.is_demo_site)
+ 
+ const links = getNavigationItems({ mobile: props.mobile })
+ 
++const analyticsAccess = createC360Resource({
++  url: 'cellphones_c360.api.analytics.get_access',
++  method: 'GET',
++  auto: true,
++})
++
+ const afterSalesAccess = createC360Resource({
+   url: 'cellphones_c360.api.after_sales.get_capabilities',
+   method: 'GET',
+@@ -320,6 +326,12 @@ const allViews = computed(() => {
+         key: 'CustomerAfterSales',
+         to: { name: 'CustomerAfterSales' },
+       }] : []),
++      ...(analyticsAccess.data?.canRead ? [{
++        label: 'Customer Analytics',
++        icon: 'lucide-chart-no-axes-combined',
++        key: 'CustomerAnalytics',
++        to: { name: 'CustomerAnalytics' },
++      }] : []),
+     ],
+   })
+ 
+diff --git a/frontend/src/pages/CustomerAnalytics.vue b/frontend/src/pages/CustomerAnalytics.vue
+new file mode 100644
+index 0000000..230dcf1
+--- /dev/null
++++ b/frontend/src/pages/CustomerAnalytics.vue
+@@ -0,0 +1,126 @@
++<template>
++  <main class="flex h-full min-h-0 flex-col overflow-auto bg-surface-base">
++    <header class="border-b border-outline-gray-2 px-5 py-4">
++      <h1 class="text-xl font-semibold text-ink-gray-9">{{ __('Customer Analytics') }}</h1>
++    </header>
++    <div class="space-y-6 p-5">
++      <form class="flex flex-wrap items-end gap-3" @submit.prevent="applyPeriod">
++        <FormControl v-model="period" :label="__('Period')" type="select" :options="periods" />
++        <template v-if="period === 'custom'">
++          <FormControl v-model="start" :label="__('From date')" type="date" />
++          <FormControl v-model="end" :label="__('To date')" type="date" />
++        </template>
++        <Button type="submit" variant="solid" :loading="kpis.loading" :disabled="period === 'custom' && (!start || !end)">
++          {{ __('Apply') }}
++        </Button>
++      </form>
++
++      <p v-if="kpis.loading" role="status">{{ __('Loading analytics') }}</p>
++      <p v-else-if="kpis.error" role="alert" class="text-sm text-ink-red-5">
++        {{ kpis.error.messages?.[0] || __('Unable to load analytics.') }}
++        <Button @click="kpis.reload()">{{ __('Retry') }}</Button>
++      </p>
++      <p v-else-if="!groups.length" class="text-sm text-ink-gray-6">{{ __('No analytics are available for this account.') }}</p>
++      <template v-else>
++        <section v-for="group in groups" :key="group.title" class="space-y-3">
++          <h2 class="text-lg font-semibold">{{ __(group.title) }}</h2>
++          <dl class="grid grid-cols-2 gap-3 md:grid-cols-3 xl:grid-cols-5">
++            <div v-for="[label, value, format] in group.cards" :key="label" class="rounded-lg border border-outline-gray-2 p-4">
++              <dt class="text-sm text-ink-gray-6">{{ __(label) }}</dt>
++              <dd class="mt-2 text-lg font-semibold tabular-nums">{{ formatValue(value, format) }}</dd>
++            </div>
++          </dl>
++          <div v-if="group.charts.length" class="grid gap-4 xl:grid-cols-2">
++            <ChartCard v-for="[title, data] in group.charts" :key="title" class="min-h-64">
++              <BarChart
++                v-if="data?.length"
++                :title="__(title)"
++                :data="data.map(row => ({ label: __(row.label), count: row.count }))"
++                x="label"
++                :y="['count']"
++                :series-config="{ count: { color: '#D70018', showDataLabels: true } }"
++              />
++              <p v-else class="p-4 text-sm text-ink-gray-6">{{ __(title) }} · {{ __('No data for this period') }}</p>
++            </ChartCard>
++          </div>
++        </section>
++      </template>
++    </div>
++  </main>
++</template>
++
++<script setup>
++import { Button, FormControl, createResource } from 'frappe-ui'
++import { BarChart, ChartCard } from 'frappe-ui/charts'
++import { computed, ref } from 'vue'
++import { formatVND } from '@/components/Customer360/format'
++
++const period = ref('30d')
++const start = ref('')
++const end = ref('')
++const periods = [
++  { value: '7d', label: __('Last 7 days') },
++  { value: '30d', label: __('Last 30 days') },
++  { value: '90d', label: __('Last 90 days') },
++  { value: 'all', label: __('All dates') },
++  { value: 'custom', label: __('Custom period') },
++]
++const kpis = createResource({
++  url: 'cellphones_c360.api.analytics.get_analytics_overview',
++  method: 'GET',
++  params: { period: period.value },
++  auto: true,
++})
++const percent = new Intl.NumberFormat('vi-VN', { style: 'percent', maximumFractionDigits: 1 })
++const number = new Intl.NumberFormat('vi-VN', { maximumFractionDigits: 1 })
++
++function applyPeriod() {
++  kpis.fetch(period.value === 'custom'
++    ? { from_date: start.value, to_date: end.value }
++    : { period: period.value })
++}
++
++function formatValue(value, format) {
++  if (value == null) return '—'
++  if (format === 'money') return formatVND(value)
++  return (format === 'percent' ? percent : number).format(value)
++}
++
++const groups = computed(() => {
++  const { customers, leads, deals, orders, tickets } = kpis.data || {}
++  return [
++    customers && {
++      title: 'Customers',
++      cards: [
++        ['Total customers', customers.total], ['New customers', customers.new], ['Returning customers', customers.repeat],
++        ['Possible duplicate profiles', customers.duplicateCustomers], ['Pending identity reviews', customers.pendingIdentityReviews],
++      ],
++      charts: [['Online and offline', customers.byChannel], ['Customer segments', customers.segments]],
++    },
++    (leads || deals) && {
++      title: 'Sales pipeline',
++      cards: [
++        ['Leads', leads?.total], ['Deals', deals?.total], ['Lead conversion rate', deals?.conversionRate, 'percent'],
++        ['Deal win rate', deals?.winRate, 'percent'], ['Open pipeline value', deals?.pipelineValue, 'money'],
++      ],
++      charts: [['Lead status', leads?.byStatus], ['Deal stages', deals?.byStage]],
++    },
++    orders && {
++      title: 'Orders',
++      cards: [
++        ['Orders', orders.total], ['Completed', orders.completed], ['Cancelled', orders.cancelled],
++        ['Valid order value', orders.validValue, 'money'], ['Confirmed receipts', orders.confirmedReceipts, 'money'],
++      ],
++      charts: [['Orders by status', orders.byStatus]],
++    },
++    tickets && {
++      title: 'After-sales',
++      cards: [
++        ['Tickets', tickets.total], ['Backlog', tickets.backlog], ['Resolved', tickets.resolved],
++        ['Resolution rate', tickets.resolutionRate, 'percent'], ['Average handling time (hours)', tickets.averageResolutionHours],
++      ],
++      charts: [['Tickets by status', tickets.byStatus]],
++    },
++  ].filter(Boolean)
++})
++</script>
+diff --git a/frontend/src/router.js b/frontend/src/router.js
+index fbe2383..32d4fc0 100644
+--- a/frontend/src/router.js
++++ b/frontend/src/router.js
+@@ -144,6 +144,11 @@ const routes = [
+     name: 'Customer360',
+     component: () => import('@/pages/Customer360.vue'),
+   },
++  {
++    path: '/customer-analytics',
++    name: 'CustomerAnalytics',
++    component: () => import('@/pages/CustomerAnalytics.vue'),
++  },
+   {
+     path: '/after-sales',
+     name: 'CustomerAfterSales',
 -- 
 2.47.3
 
