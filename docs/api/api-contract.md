@@ -49,7 +49,7 @@ Mọi API truy cập hồ sơ khách hàng phải kiểm tra phiên, quyền Doc
 
 ### Ma trận quyền
 
-Kiểm tra [quyền hiện hành và cấu hình chuẩn bị](../design/permission-matrix.md). Guest và Sales User ngoài quyền hiện hành đã được kiểm tra. Migration vai trò phòng ban đang chờ phê duyệt trên site phát triển.
+Vai trò phòng ban đã được áp dụng trên `crm.localhost`. Administrator và System Manager giữ quyền quản trị tương ứng. Sales User truy cập hồ sơ mình sở hữu. CSKH và Vận hành theo phạm vi được giao. Marketing chỉ đọc hồ sơ có đồng ý tiếp thị. Hồ sơ trả `null` cho trường liên hệ bị giới hạn và các trường đó không tham gia tìm kiếm. Sales Manager cần thêm C360 Merge Approver để được hợp nhất hồ sơ. [Ma trận quyền](../design/permission-matrix.md)
 
 ## 4. Mô hình dữ liệu Customer 360
 
@@ -280,7 +280,7 @@ const result = await call(
 - [x] Kiểm thử tạo và sửa hồ sơ, trùng định danh, hợp nhất và rollback.
 - [x] Kiểm thử nhiều Lead/Deal, Orders, After-sales, Timeline, phân khúc và KPI.
 - [x] Kiểm thử quyền Guest và Sales User ngoài quyền hiện hành.
-- [ ] Cấu hình quyền phòng ban và kiểm thử phạm vi mới sau khi migration được duyệt.
+- [x] Áp dụng quyền phòng ban trên site phát triển và kiểm thử quyền truy cập, dữ liệu theo phạm vi và quyền hợp nhất.
 - [ ] Kiểm thử cài nguồn trên môi trường triển khai được duyệt.
 
 [Test Report](../testing/test-report.md) · [Known Issues](../known-issues.md)

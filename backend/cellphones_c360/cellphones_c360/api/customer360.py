@@ -21,15 +21,15 @@ def get_customer_360(customer_id):
 
     customer_data = {
         "name": customer.name,
-        "customer_name": customer.customer_name,
-        "phone_number": customer.phone_number,
-        "email": customer.email,
-        "customer_type": customer.customer_type,
-        "customer_status": customer.customer_status,
-        "source_channel": customer.source_channel,
+        "customer_name": customer.get("customer_name"),
+        "phone_number": customer.get("phone_number"),
+        "email": customer.get("email"),
+        "customer_type": customer.get("customer_type"),
+        "customer_status": customer.get("customer_status"),
+        "source_channel": customer.get("source_channel"),
         "marketing_consent": customer.get("marketing_consent"),
-        "crm_contact": next((row.name for row in contacts if row.name == customer.crm_contact), None),
-        "crm_lead": next((row.name for row in crm["CRM Lead"] if row.name == customer.crm_lead), None),
+        "crm_contact": next((row.name for row in contacts if row.name == customer.get("crm_contact")), None),
+        "crm_lead": next((row.name for row in crm["CRM Lead"] if row.name == customer.get("crm_lead")), None),
         "modified": str(customer.modified),
         "created_at": iso_timestamp(customer.creation),
         "modified_at": iso_timestamp(customer.modified),
@@ -201,7 +201,8 @@ def list_customers(search="", page=1, page_size=20, segment=""):
 
     # 5. Lấy danh sách theo quyền của người đăng nhập
     criteria = {"filters": conditions, "or_filters": search_filters}
-    fields = ["name", "customer_name", "phone_number", "modified", "creation", "source_channel"]
+    fields = [field for field in ("name", "customer_name", "phone_number", "modified", "creation", "source_channel")
+              if field in readable]
     if segment:
         customers = []
         total = 0

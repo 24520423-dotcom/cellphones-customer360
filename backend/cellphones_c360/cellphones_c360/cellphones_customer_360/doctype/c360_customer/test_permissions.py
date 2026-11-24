@@ -2,12 +2,15 @@ from uuid import uuid4
 
 import frappe
 from frappe.tests.utils import FrappeTestCase
+from crm.api import check_app_permission
 
+from cellphones_c360.api.administration import get_access as get_administration_access
 from cellphones_c360.api.after_sales import list_tickets, record_demo_proposal
 from cellphones_c360.api.customer360 import get_customer_360, list_customers
 from cellphones_c360.api.customers import get_access
+from cellphones_c360.api.merge import preview
 from cellphones_c360.api.orders import list_orders
-from cellphones_c360.permissions import MARKETING, OPERATIONS, SERVICE
+from cellphones_c360.permissions import MARKETING, MERGE_APPROVER, OPERATIONS, SERVICE
 
 
 class TestC360Permissions(FrappeTestCase):
@@ -16,11 +19,11 @@ class TestC360Permissions(FrappeTestCase):
         frappe.set_user("Administrator")
         self.email = f"c360-permission-{uuid4().hex}@example.test"
 
-    def user(self, role):
+    def user(self, *roles):
         return frappe.get_doc({
             "doctype": "User", "email": f"c360-role-{uuid4().hex}@example.test",
             "first_name": "C360 Role Test", "user_type": "System User", "send_welcome_email": 0,
-            "roles": [{"role": role}],
+            "roles": [{"role": role} for role in roles],
         }).insert().name
 
     def customer(self, **values):
@@ -31,6 +34,7 @@ class TestC360Permissions(FrappeTestCase):
     def test_owner_scope_for_sales_user_and_manager(self):
         seller, other, manager = self.user("Sales User"), self.user("Sales User"), self.user("Sales Manager")
         frappe.set_user(seller)
+        self.assertTrue(check_app_permission())
         self.assertTrue(get_access()["canCreate"])
         self.assertIn("email", {field["fieldname"] for field in get_access()["fields"]})
         customer = self.customer(email=self.email)
@@ -40,6 +44,7 @@ class TestC360Permissions(FrappeTestCase):
         with self.assertRaises(frappe.PermissionError):
             get_customer_360(customer.name)
         frappe.set_user(manager)
+        self.assertTrue(check_app_permission())
         self.assertEqual(get_customer_360(customer.name)["customer"]["name"], customer.name)
 
     def test_department_assignment_and_field_permissions(self):
@@ -60,8 +65,11 @@ class TestC360Permissions(FrappeTestCase):
             "related_order": order.name,
         }).insert()
         frappe.set_user(ops)
+        self.assertTrue(check_app_permission())
         self.assertEqual({row.name for row in list_orders()["items"]}, {order.name})
         self.assertIsNone(get_customer_360(assigned.name)["customer"]["email"])
+        self.assertIsNone(list_customers(search=assigned.name)["items"][0]["phone_masked"])
+        self.assertEqual(list_customers(search=self.email)["total"], 0)
         with self.assertRaises(frappe.PermissionError):
             get_customer_360(outside.name)
         order.reload().update({"fulfillment_status": "Preparing"}).save()
@@ -69,12 +77,14 @@ class TestC360Permissions(FrappeTestCase):
             order.update({"payment_status": "Paid"}).save()
 
         frappe.set_user(service)
+        self.assertTrue(check_app_permission())
         self.assertEqual({row.name for row in list_tickets()["items"]}, {ticket.name})
         self.assertEqual(get_customer_360(assigned.name)["customer"]["email"], self.email)
         with self.assertRaises(frappe.PermissionError):
             get_customer_360(outside.name)
 
         frappe.set_user(marketing)
+        self.assertTrue(check_app_permission())
         self.assertIsNone(get_customer_360(assigned.name)["customer"]["email"])
         self.assertTrue(record_demo_proposal(assigned.name, "Synthetic approved proposal")["comment"])
         with self.assertRaises(frappe.PermissionError):
@@ -96,3 +106,24 @@ class TestC360Permissions(FrappeTestCase):
             "subject": "First demo support request", "description": "Synthetic service intake",
         }).insert()
         self.assertIn(ticket.name, {row.name for row in list_tickets(customer=customer.name)["items"]})
+
+    def test_administrator_and_merge_approval(self):
+        source = self.customer(email=self.email)
+        target = self.customer()
+        self.assertTrue(check_app_permission())
+        self.assertTrue(get_administration_access()["administration"])
+        self.assertTrue(get_access(source.name)["canEdit"])
+        self.assertTrue(preview(source.name, target.name)["can_merge"])
+        self.assertIn(source.name, {row["customer_id"] for row in list_customers(search=source.name)["items"]})
+
+        ordinary = self.user("Sales Manager")
+        approved = self.user("Sales Manager", MERGE_APPROVER)
+        administrator = self.user("System Manager")
+        frappe.set_user(ordinary)
+        self.assertFalse(preview(source.name, target.name)["can_merge"])
+        frappe.set_user(approved)
+        self.assertTrue(preview(source.name, target.name)["can_merge"])
+        frappe.set_user(administrator)
+        self.assertTrue(check_app_permission())
+        self.assertTrue(get_access(source.name)["canEdit"])
+        self.assertTrue(preview(source.name, target.name)["can_merge"])

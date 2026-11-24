@@ -69,9 +69,9 @@ Thư mục `backend/cellphones_c360` là nguồn chính cho Custom App. Không d
 | Orders và After-sales | Danh sách CRM, form chuẩn Frappe, thanh toán/giao nhận, Ticket và lịch CRM Task |
 | Customer Analytics | KPI và biểu đồ theo kỳ, tách giá trị đơn khỏi khoản thu xác nhận |
 | Thương hiệu | Logo, favicon, CSS CellphoneS, hỗ trợ điều hướng tab bàn phím và màn hình nhỏ |
-| Phân quyền | Đã kiểm tra quyền hiện hành. Ma trận mới, Role Profile và kiểm thử phòng ban chờ migration được duyệt |
+| Phân quyền | Đã áp dụng trên `crm.localhost` và kiểm thử Administrator, System Manager, Sales Manager, Sales User, CSKH, Vận hành, Marketing và quyền phê duyệt hợp nhất |
 | Triển khai nguồn | Đã kiểm tra scripts, Git Patch, Verify và demo trial trên site hiện có. Cài New/Snapshot cần môi trường được duyệt |
-| GitHub | Các commit cục bộ đã được lưu. Push chờ xác nhận quyền gửi ra remote |
+| GitHub | Nhánh bàn giao là `feature/frappe-crm-native` |
 
 ### DocType tùy chỉnh
 
@@ -105,7 +105,7 @@ Dừng môi trường bằng `docker compose stop` tại thư mục Compose. Kh�
 - Repository nguồn CRM trong container: `/home/frappe/frappe-bench/apps/crm`.
 - Commit nền: `638bf3db23e7142870819a213368e028866b79b1`.
 - Nhánh tùy chỉnh trong CRM: `feature/cellphones-c360`.
-- Commit CRM tại mốc bàn giao: `ed135bb`. Patch lưu toàn bộ thay đổi từ base.
+- Git Patch lưu toàn bộ thay đổi từ base, gồm cả quyền truy cập CRM của các vai trò Customer 360.
 - Nhánh repository đồ án: `feature/frappe-crm-native`.
 
 Các file tùy chỉnh chính trong CRM: `frontend/src/cellphones-theme.css`, `frontend/src/index.css`, `frontend/src/router.js`, `frontend/src/components/Layouts/AppSidebar.vue`, `frontend/src/pages/Customer360.vue`, `frontend/src/pages/Customer360Detail.vue`.
