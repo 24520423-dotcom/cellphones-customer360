@@ -1,0 +1,58 @@
+Create Customer,Tạo khách hàng
+Edit Customer,Sửa thông tin khách hàng
+Customer created,Đã tạo khách hàng
+Customer updated,Đã cập nhật khách hàng
+Customer Profile,Hồ sơ khách hàng
+Customer ID,Mã khách hàng
+Customer Name,Tên khách hàng
+Phone Number,Số điện thoại
+Email,Email
+Customer Type,Loại khách hàng
+Customer Status,Trạng thái khách hàng
+Source Channel,Kênh tiếp nhận
+Overview,Tổng quan
+Orders,Đơn hàng
+Leads & Deals,Lead và Deal
+After-sales,Hậu mãi
+Timeline,Dòng thời gian
+Customer Analytics,Phân tích khách hàng
+"Search by name, phone or email","Tìm theo tên, số điện thoại hoặc email"
+Search,Tìm kiếm
+Reset,Đặt lại
+Previous,Trước
+Next,Sau
+Retry,Thử lại
+Updated At,Cập nhật lúc
+Created,Tạo lúc
+No customers found,Không tìm thấy khách hàng
+Loading customers...,Đang tải khách hàng...
+New Order,Tạo đơn hàng
+New Ticket,Tạo yêu cầu hỗ trợ
+View Orders,Xem đơn hàng
+View Tickets,Xem yêu cầu hỗ trợ
+Open record,Mở bản ghi
+Review Duplicate,Đối chiếu hồ sơ trùng
+Merge Customer,Hợp nhất khách hàng
+Link CRM Record,Liên kết hồ sơ CRM
+Segment,Phân khúc
+Segments,Phân khúc
+All segments,Tất cả phân khúc
+Calculated Segments,Phân khúc tính tự động
+Confirmed Spend,Chi tiêu xác nhận
+Recorded Order Value,Giá trị đơn ghi nhận
+Confirmed receipts,Tiền thu xác nhận
+Order value,Giá trị đơn
+Order status,Trạng thái đơn
+Fulfillment,Giao nhận
+Payment,Thanh toán
+Marketing Consent,Đồng ý nhận tiếp thị
+Order ID,Mã đơn hàng
+Ticket ID,Mã yêu cầu hỗ trợ
+Backlog,Yêu cầu tồn đọng
+Pending identity reviews,Chờ xác minh định danh
+Customer profile created,Đã tạo hồ sơ khách hàng
+Source record received,Đã tiếp nhận bản ghi nguồn
+No orders found,Không có đơn hàng
+No tickets found,Không có yêu cầu hỗ trợ
+No linked leads,Chưa liên kết Lead
+No support tickets found,Không có yêu cầu hỗ trợ

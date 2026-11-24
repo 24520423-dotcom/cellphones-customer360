@@ -1,7 +1,7 @@
 From 820f0af20e6040721470f04c535a6d84458f83d7 Mon Sep 17 00:00:00 2001
 From: 24520423-dotcom <24520423@gm.uit.edu.vn>
 Date: Tue, 24 Nov 2026 03:52:19 +0000
-Subject: [PATCH 01/12] feat: customize CellphoneS CRM theme
+Subject: [PATCH 01/13] feat: customize CellphoneS CRM theme
 
 ---
  frontend/src/cellphones-theme.css | 25 +++++++++++++++++++++++++
@@ -57,7 +57,7 @@ index 7a91fc9..9391f8d 100644
 From 5d45d3789ad7ff407fe5945dba6886f1a6553f85 Mon Sep 17 00:00:00 2001
 From: 24520423-dotcom <24520423@gm.uit.edu.vn>
 Date: Tue, 24 Nov 2026 04:06:09 +0000
-Subject: [PATCH 02/12] feat: integrate Customer 360 customer list into Frappe
+Subject: [PATCH 02/13] feat: integrate Customer 360 customer list into Frappe
  CRM
 
 ---
@@ -302,7 +302,7 @@ index fad8708..b209857 100644
 From 261dc539d1fccef78c22888464ffe7bd75df0688 Mon Sep 17 00:00:00 2001
 From: 24520423-dotcom <24520423@gm.uit.edu.vn>
 Date: Tue, 24 Nov 2026 04:15:17 +0000
-Subject: [PATCH 03/12] feat: integrate Customer 360 detailed profile into
+Subject: [PATCH 03/13] feat: integrate Customer 360 detailed profile into
  Frappe CRM
 
 ---
@@ -770,7 +770,7 @@ index b209857..073ca6e 100644
 From 8bbfc82323a3ec6a91d8695a611ccaa5b76a8f8d Mon Sep 17 00:00:00 2001
 From: 24520423-dotcom <24520423@gm.uit.edu.vn>
 Date: Tue, 24 Nov 2026 05:33:36 +0000
-Subject: [PATCH 04/12] feat: add native Customer 360 creation form
+Subject: [PATCH 04/13] feat: add native Customer 360 creation form
 
 ---
  .../components/Customer360/CustomerForm.vue   | 91 +++++++++++++++++++
@@ -957,7 +957,7 @@ index c96d028..e076461 100644
 From 1d90c4db31efc81d9f0a6408090fc415b3e12b36 Mon Sep 17 00:00:00 2001
 From: 24520423-dotcom <24520423@gm.uit.edu.vn>
 Date: Tue, 24 Nov 2026 05:37:41 +0000
-Subject: [PATCH 05/12] feat: edit Customer 360 profiles in native CRM
+Subject: [PATCH 05/13] feat: edit Customer 360 profiles in native CRM
 
 ---
  .../components/Customer360/CustomerForm.vue   | 25 ++++++----
@@ -1125,7 +1125,7 @@ index bbf875e..28da65a 100644
 From 138e5a70d71a505b3df83d51ec14a1b62118cee5 Mon Sep 17 00:00:00 2001
 From: 24520423-dotcom <24520423@gm.uit.edu.vn>
 Date: Tue, 24 Nov 2026 05:52:52 +0000
-Subject: [PATCH 06/12] feat: review and merge verified profiles in CRM
+Subject: [PATCH 06/13] feat: review and merge verified profiles in CRM
 
 ---
  .../Customer360/DuplicateReview.vue           | 170 ++++++++++++++++++
@@ -1392,7 +1392,7 @@ index 28da65a..8a112d7 100644
 From a19381dc20309d8b71af4e18782e9ab588385dce Mon Sep 17 00:00:00 2001
 From: 24520423-dotcom <24520423@gm.uit.edu.vn>
 Date: Tue, 24 Nov 2026 06:02:25 +0000
-Subject: [PATCH 07/12] feat: connect Customer 360 to native CRM sales
+Subject: [PATCH 07/13] feat: connect Customer 360 to native CRM sales
  workflows
 
 ---
@@ -1720,7 +1720,7 @@ index 8a112d7..80852a5 100644
 From 9755203942b9f9b65c34b4a35803ce9073794cdc Mon Sep 17 00:00:00 2001
 From: 24520423-dotcom <24520423@gm.uit.edu.vn>
 Date: Tue, 24 Nov 2026 06:06:35 +0000
-Subject: [PATCH 08/12] feat: add order worklist and native form navigation
+Subject: [PATCH 08/13] feat: add order worklist and native form navigation
 
 ---
  frontend/src/components/Customer360/format.js |  12 ++
@@ -1999,7 +1999,7 @@ index 073ca6e..1e7d339 100644
 From e81fb609909d9aab5f87f817a36616666626c2c3 Mon Sep 17 00:00:00 2001
 From: 24520423-dotcom <24520423@gm.uit.edu.vn>
 Date: Tue, 24 Nov 2026 06:13:50 +0000
-Subject: [PATCH 09/12] feat: add after-sales worklist and native ticket forms
+Subject: [PATCH 09/13] feat: add after-sales worklist and native ticket forms
 
 ---
  .../Customer360/CustomerWorklist.vue          | 164 ++++++++++++++++++
@@ -2418,7 +2418,7 @@ index 1e7d339..fbe2383 100644
 From dc56080cc5a579e46f6492d6b44355e43f89718f Mon Sep 17 00:00:00 2001
 From: 24520423-dotcom <24520423@gm.uit.edu.vn>
 Date: Tue, 24 Nov 2026 06:18:25 +0000
-Subject: [PATCH 10/12] feat: show complete Customer 360 history and confirmed
+Subject: [PATCH 10/13] feat: show complete Customer 360 history and confirmed
  spend
 
 ---
@@ -2597,7 +2597,7 @@ index 3aa26e7..7521639 100644
 From ebba2f51419036f162fade5ff56e8e23d4baeacb Mon Sep 17 00:00:00 2001
 From: 24520423-dotcom <24520423@gm.uit.edu.vn>
 Date: Tue, 24 Nov 2026 06:28:33 +0000
-Subject: [PATCH 11/12] feat: display and filter calculated customer segments
+Subject: [PATCH 11/13] feat: display and filter calculated customer segments
 
 ---
  frontend/src/pages/Customer360.vue       | 22 ++++++++++++++++++++--
@@ -2726,7 +2726,7 @@ index 7521639..39a6167 100644
 From 78ae5eb7226b3470f92a01a0a3f22baf630aa36a Mon Sep 17 00:00:00 2001
 From: 24520423-dotcom <24520423@gm.uit.edu.vn>
 Date: Tue, 24 Nov 2026 06:31:43 +0000
-Subject: [PATCH 12/12] feat: add Customer Analytics using native CRM charts
+Subject: [PATCH 12/13] feat: add Customer Analytics using native CRM charts
 
 ---
  .../src/components/Layouts/AppSidebar.vue     |  12 ++
@@ -2913,6 +2913,386 @@ index fbe2383..32d4fc0 100644
    {
      path: '/after-sales',
      name: 'CustomerAfterSales',
+-- 
+2.47.3
+
+
+From ed135bbfa73fe18c62e77ed375f34917aea66f01 Mon Sep 17 00:00:00 2001
+From: 24520423-dotcom <24520423@gm.uit.edu.vn>
+Date: Tue, 24 Nov 2026 06:43:32 +0000
+Subject: [PATCH 13/13] style: refine CellphoneS CRM layouts and keyboard
+ navigation
+
+---
+ frontend/src/cellphones-theme.css             | 30 +++++++++++
+ .../Customer360/CustomerWorklist.vue          | 10 ++--
+ frontend/src/components/Customer360/format.js |  7 +++
+ frontend/src/pages/Customer360.vue            | 36 +++++++------
+ frontend/src/pages/Customer360Detail.vue      | 50 ++++++++++++-------
+ frontend/src/pages/CustomerAnalytics.vue      |  2 +-
+ 6 files changed, 92 insertions(+), 43 deletions(-)
+
+diff --git a/frontend/src/cellphones-theme.css b/frontend/src/cellphones-theme.css
+index b289ee7..88bbbe9 100644
+--- a/frontend/src/cellphones-theme.css
++++ b/frontend/src/cellphones-theme.css
+@@ -23,3 +23,33 @@ button.bg-surface-gray-10.text-ink-base:not(:disabled):active,
+ a.bg-surface-gray-10.text-ink-base:not([aria-disabled="true"]):active {
+     background-color: var(--cellphones-active);
+ }
++
++/* Customer 360 views use the CRM surface and text tokens. */
++.c360-page {
++  --c360-accent: #d70018;
++  --c360-link: #a60012;
++}
++
++.dark .c360-page {
++  --c360-link: #ff8391;
++}
++
++.c360-page :where(a, button, input, select, textarea):focus-visible {
++  outline: 2px solid var(--c360-link);
++  outline-offset: 2px;
++}
++
++.c360-page .c360-link {
++  color: var(--c360-link);
++}
++
++.c360-page .c360-primary {
++  background: var(--c360-accent);
++  color: white;
++}
++
++.c360-page .c360-tab[aria-selected="true"] {
++  border-color: var(--c360-link);
++  color: var(--c360-link);
++  font-weight: 600;
++}
+diff --git a/frontend/src/components/Customer360/CustomerWorklist.vue b/frontend/src/components/Customer360/CustomerWorklist.vue
+index 4ba0102..f401fdb 100644
+--- a/frontend/src/components/Customer360/CustomerWorklist.vue
++++ b/frontend/src/components/Customer360/CustomerWorklist.vue
+@@ -1,10 +1,10 @@
+ <template>
+-  <main class="flex h-full min-h-0 flex-col overflow-auto bg-surface-base">
++  <main class="c360-page flex h-full min-h-0 flex-col overflow-auto bg-surface-base">
+     <header class="flex flex-wrap items-center justify-between gap-3 border-b border-outline-gray-2 px-5 py-4">
+       <h1 class="text-xl font-semibold text-ink-gray-9">{{ __(config.title) }}</h1>
+       <a
+         v-if="access.data?.canCreate"
+-        class="rounded-md bg-surface-gray-7 px-3 py-2 text-sm font-medium text-white hover:underline"
++        class="rounded-md c360-primary px-3 py-2 text-sm font-medium hover:underline"
+         :href="deskRecord('new-' + config.desk + '-1')"
+       >
+         {{ __(config.createLabel) }}
+@@ -46,7 +46,7 @@
+               <tr v-for="row in items.data.items" :key="row.name" class="border-t border-outline-gray-2">
+                 <template v-for="[key, , format] in config.columns" :key="key">
+                   <th v-if="key === 'name'" scope="row" class="whitespace-nowrap p-3 font-medium">
+-                    <a class="text-[#D70018] hover:underline" :href="deskRecord(row.name)">{{ row.name }}</a>
++                    <a class="c360-link hover:underline" :href="deskRecord(row.name)">{{ row.name }}</a>
+                   </th>
+                   <td v-else class="p-3">
+                     <RouterLink
+@@ -54,7 +54,7 @@
+                       class="whitespace-nowrap hover:underline"
+                       :to="{ name: 'Customer360Detail', params: { customerId: row.customer } }"
+                     >{{ row.customer }}</RouterLink>
+-                    <Badge v-else-if="format === 'badge'" :label="row[key] ? __(row[key]) : '—'" />
++                    <Badge v-else-if="format === 'badge'" :theme="statusTheme(row[key])" :label="row[key] ? __(row[key]) : '—'" />
+                     <span v-else-if="format === 'date'" class="whitespace-nowrap">{{ formatDate(row[key]) }}</span>
+                     <span v-else-if="format === 'money'" class="whitespace-nowrap tabular-nums">{{ formatVND(row[key]) }}</span>
+                     <span v-else-if="format === 'translate'">{{ row[key] ? __(row[key]) : '—' }}</span>
+@@ -79,7 +79,7 @@
+ import { Badge, Button, FormControl, createResource } from 'frappe-ui'
+ import { reactive, ref } from 'vue'
+ import { RouterLink, useRoute } from 'vue-router'
+-import { formatDate, formatVND } from '@/components/Customer360/format'
++import { formatDate, formatVND, statusTheme } from '@/components/Customer360/format'
+ 
+ const props = defineProps({ kind: { type: String, required: true } })
+ const route = useRoute()
+diff --git a/frontend/src/components/Customer360/format.js b/frontend/src/components/Customer360/format.js
+index 2f90433..b5fd801 100644
+--- a/frontend/src/components/Customer360/format.js
++++ b/frontend/src/components/Customer360/format.js
+@@ -20,3 +20,10 @@ export function formatDateTime(value) {
+   const parsed = new Date(value)
+   return Number.isNaN(parsed.getTime()) ? '—' : dateTime.format(parsed)
+ }
++
++export function statusTheme(status) {
++  if (['Active', 'Completed', 'Paid', 'Picked Up', 'Delivered', 'Resolved', 'Closed'].includes(status)) return 'green'
++  if (['Cancelled', 'Failed', 'Refunded'].includes(status)) return 'red'
++  if (['Confirmed', 'Processing', 'Pending', 'In Progress', 'Ready for Pickup', 'In Transit'].includes(status)) return 'orange'
++  return 'gray'
++}
+diff --git a/frontend/src/pages/Customer360.vue b/frontend/src/pages/Customer360.vue
+index 9395759..3237666 100644
+--- a/frontend/src/pages/Customer360.vue
++++ b/frontend/src/pages/Customer360.vue
+@@ -1,5 +1,5 @@
+ <template>
+-  <div class="flex h-full min-h-0 flex-col overflow-auto bg-surface-base">
++  <div class="c360-page flex h-full min-h-0 flex-col overflow-auto bg-surface-base">
+     <div class="flex items-center justify-between gap-3 border-b border-outline-gray-2 px-5 py-4">
+       <h1 class="text-xl font-semibold text-ink-gray-9">
+         Customer 360
+@@ -21,18 +21,15 @@
+         {{ accessError }}
+         <Button @click="loadAccess">{{ __('Retry') }}</Button>
+       </div>
+-      <p class="text-sm text-ink-gray-6">
+-        Unified customer profiles
+-      </p>
+-
+       <form
+         class="flex flex-wrap items-center gap-2"
+         @submit.prevent="searchCustomers"
+       >
+-        <input
++        <FormControl
+           v-model="search"
+-          class="w-full max-w-sm rounded-md border border-outline-gray-2 bg-surface-base px-3 py-2 text-sm"
+-          placeholder="Search by name, phone or email"
++          class="w-full max-w-sm"
++          :aria-label="__('Search by name, phone or email')"
++          :placeholder="__('Search by name, phone or email')"
+         />
+ 
+         <FormControl v-model="segment" type="select" :aria-label="__('Segment')" :options="segmentOptions" />
+@@ -41,19 +38,19 @@
+           type="submit"
+           :disabled="loading"
+         >
+-          Search
++          {{ __('Search') }}
+         </Button>
+ 
+         <Button
+           :disabled="loading"
+           @click="resetSearch"
+         >
+-          Reset
++          {{ __('Reset') }}
+         </Button>
+       </form>
+ 
+-      <div v-if="loading" class="p-8 text-center">
+-        Loading customers...
++      <div v-if="loading" role="status" class="p-8 text-center">
++        {{ __('Loading customers...') }}
+       </div>
+ 
+       <div v-else-if="error" class="rounded-md border p-4 text-red-600">
+@@ -67,11 +64,11 @@
+         <table class="w-full text-left text-sm">
+           <thead class="bg-surface-gray-2">
+             <tr>
+-              <th class="p-3">Customer ID</th>
+-              <th class="p-3">Customer Name</th>
+-              <th class="p-3">Phone</th>
++              <th class="p-3">{{ __('Customer ID') }}</th>
++              <th class="p-3">{{ __('Customer Name') }}</th>
++              <th class="p-3">{{ __('Phone') }}</th>
+               <th class="p-3">{{ __('Segments') }}</th>
+-              <th class="p-3">Updated At</th>
++              <th class="p-3">{{ __('Updated At') }}</th>
+             </tr>
+           </thead>
+ 
+@@ -90,7 +87,7 @@
+                     name: 'Customer360Detail',
+                     params: { customerId: customer.customer_id },
+                   }"
+-                  class="text-[#D70018] hover:underline"
++                  class="c360-link hover:underline"
+                 >
+                   {{ customer.display_name }}
+                 </RouterLink>
+@@ -104,13 +101,13 @@
+                 </div>
+               </td>
+               <td class="p-3">
+-                {{ customer.updated_at || '-' }}
++                {{ formatDateTime(customer.updated_at_iso) }}
+               </td>
+             </tr>
+ 
+             <tr v-if="!customers.length">
+               <td colspan="5" class="p-8 text-center text-ink-gray-5">
+-                No customers found
++                {{ __('No customers found') }}
+               </td>
+             </tr>
+           </tbody>
+@@ -150,6 +147,7 @@
+ import { ref, computed, onMounted } from 'vue'
+ import { Badge, Button, FormControl, call, frappeRequest } from 'frappe-ui'
+ import CustomerForm from '@/components/Customer360/CustomerForm.vue'
++import { formatDateTime } from '@/components/Customer360/format'
+ import { RouterLink, useRouter } from 'vue-router'
+ 
+ const router = useRouter()
+diff --git a/frontend/src/pages/Customer360Detail.vue b/frontend/src/pages/Customer360Detail.vue
+index 39a6167..de7e076 100644
+--- a/frontend/src/pages/Customer360Detail.vue
++++ b/frontend/src/pages/Customer360Detail.vue
+@@ -1,5 +1,5 @@
+ <template>
+-  <div class="flex h-full min-h-0 flex-col overflow-auto bg-surface-base">
++  <div class="c360-page flex h-full min-h-0 flex-col overflow-auto bg-surface-base">
+ 
+     <div class="flex items-center gap-3 border-b border-outline-gray-2 p-4">
+       <Button @click="router.push({ name: 'Customer360' })">
+@@ -59,7 +59,7 @@
+         </RouterLink>
+       </div>
+ 
+-      <!-- Customer header -->
++      <!-- Customer identity -->
+       <div class="rounded-lg border border-outline-gray-2 p-5">
+         <h2 class="text-2xl font-semibold text-ink-gray-9">
+           {{ data.customer.customer_name }}
+@@ -86,22 +86,25 @@
+         </div>
+       </div>
+ 
+-      <!-- Tabs -->
+-      <div class="flex flex-wrap gap-4 border-b border-outline-gray-2">
++      <div ref="tablist" role="tablist" :aria-label="__('Customer Profile')" class="flex gap-4 overflow-x-auto border-b border-outline-gray-2">
+         <button
+-          v-for="tab in tabs"
++          v-for="(tab, index) in tabs"
++          :id="'c360-tab-' + index"
+           :key="tab"
+           type="button"
+-          class="border-b-2 px-2 py-3 text-sm"
+-          :class="activeTab === tab
+-            ? 'border-[#D70018] font-semibold text-[#D70018]'
+-            : 'border-transparent text-ink-gray-6'"
++          role="tab"
++          :aria-selected="activeTab === tab"
++          aria-controls="c360-panel"
++          :tabindex="activeTab === tab ? 0 : -1"
++          class="c360-tab shrink-0 whitespace-nowrap border-b-2 border-transparent px-2 py-3 text-sm text-ink-gray-6"
+           @click="selectTab(tab)"
++          @keydown="handleTabKey($event, index)"
+         >
+-          {{ tab }}
++          {{ __(tab) }}
+         </button>
+       </div>
+ 
++      <div id="c360-panel" role="tabpanel" :aria-labelledby="'c360-tab-' + tabs.indexOf(activeTab)" class="space-y-4">
+       <section v-if="activeTab === 'Overview' && data.segments?.length" class="space-y-3 rounded-lg border border-outline-gray-2 p-4">
+         <h3 class="font-semibold">{{ __('Calculated Segments') }}</h3>
+         <div class="flex flex-wrap gap-1">
+@@ -150,7 +153,7 @@
+           </h3>
+           <p class="mt-2 text-sm">{{ formatDate(order.order_date) }}</p>
+           <p class="mt-1 text-sm">Channel: {{ order.sales_channel || '-' }}</p>
+-          <p class="mt-1 text-sm">Status: {{ order.order_status }}</p>
++          <Badge class="mt-2" :theme="statusTheme(order.order_status)" :label="__(order.order_status)" />
+           <p v-if="order.payment_status" class="mt-1 text-sm">{{ __('Payment') }} · {{ __(order.payment_status) }}</p>
+           <p v-if="order.fulfillment_status" class="mt-1 text-sm">{{ __('Fulfillment') }} · {{ __(order.fulfillment_status) }}</p>
+           <p class="mt-2 font-semibold">
+@@ -227,7 +230,7 @@
+         <div v-for="lead in data.leads" :key="lead.name" class="rounded-lg border p-4">
+ 
+           <RouterLink
+-            class="mt-2 block text-[#D70018]"
++            class="mt-2 block c360-link"
+             :to="{ name: 'Lead', params: { leadId: lead.name } }"
+           >
+             {{ lead.lead_name || lead.name }}
+@@ -247,7 +250,7 @@
+           class="rounded-lg border border-outline-gray-2 p-4"
+         >
+           <RouterLink
+-            class="font-medium text-[#D70018]"
++            class="font-medium c360-link"
+             :to="{ name: 'Deal', params: { dealId: deal.name } }"
+           >
+             {{ deal.name }}
+@@ -279,7 +282,7 @@
+           <p class="mt-2 text-sm">{{ ticket.name }}</p>
+           <p>Type: {{ ticket.ticket_type || '-' }}</p>
+           <p>Priority: {{ ticket.priority || '-' }}</p>
+-          <p>Status: {{ ticket.ticket_status || '-' }}</p>
++          <Badge v-if="ticket.ticket_status" :theme="statusTheme(ticket.ticket_status)" :label="__(ticket.ticket_status)" />
+           <p>Assigned to: {{ ticket.assigned_to || '-' }}</p>
+           <p>Related order: {{ ticket.related_order || '-' }}</p>
+           <p class="mt-2 whitespace-pre-wrap">
+@@ -313,10 +316,10 @@
+               <p class="font-medium">{{ event.summary }}</p>
+               <div class="flex flex-wrap items-center gap-3 text-sm text-ink-gray-6">
+                 <span>{{ __(event.source) }}</span>
+-                <RouterLink v-if="eventRoute(event)" :to="eventRoute(event)" class="text-[#D70018] hover:underline">
++                <RouterLink v-if="eventRoute(event)" :to="eventRoute(event)" class="c360-link hover:underline">
+                   {{ __('Open record') }}
+                 </RouterLink>
+-                <a v-else-if="eventHref(event)" :href="eventHref(event)" class="text-[#D70018] hover:underline">
++                <a v-else-if="eventHref(event)" :href="eventHref(event)" class="c360-link hover:underline">
+                   {{ __('Open record') }}
+                 </a>
+               </div>
+@@ -344,15 +347,16 @@
+         </template>
+       </div>
+ 
++      </div>
+     </div>
+   </div>
+ </template>
+ 
+ <script setup>
+-import { ref, computed, watch } from 'vue'
++import { ref, computed, nextTick, watch } from 'vue'
+ import { useRouter, RouterLink } from 'vue-router'
+ import { Badge, Button, call, frappeRequest } from 'frappe-ui'
+-import { formatDate, formatDateTime, formatVND as money } from '@/components/Customer360/format'
++import { formatDate, formatDateTime, formatVND as money, statusTheme } from '@/components/Customer360/format'
+ import CustomerForm from '@/components/Customer360/CustomerForm.vue'
+ import DuplicateReview from '@/components/Customer360/DuplicateReview.vue'
+ import LinkCRMRecord from '@/components/Customer360/LinkCRMRecord.vue'
+@@ -399,6 +403,7 @@ const tabs = [
+ ]
+ 
+ const activeTab = ref('Overview')
++const tablist = ref(null)
+ 
+ const eventLabels = {
+   customer: 'Customer', intake: 'Source Record', merge: 'Merge', change: 'Update',
+@@ -537,6 +542,15 @@ async function loadTimeline() {
+   }
+ }
+ 
++function handleTabKey(event, index) {
++  const steps = { ArrowLeft: -1, ArrowRight: 1 }
++  if (!(event.key in steps) && event.key !== 'Home' && event.key !== 'End') return
++  event.preventDefault()
++  const target = event.key === 'Home' ? 0 : event.key === 'End' ? tabs.length - 1 : (index + steps[event.key] + tabs.length) % tabs.length
++  selectTab(tabs[target])
++  nextTick(() => tablist.value?.querySelectorAll('[role=tab]')[target]?.focus())
++}
++
+ function selectTab(tab) {
+   activeTab.value = tab
+ 
+diff --git a/frontend/src/pages/CustomerAnalytics.vue b/frontend/src/pages/CustomerAnalytics.vue
+index 230dcf1..e59f690 100644
+--- a/frontend/src/pages/CustomerAnalytics.vue
++++ b/frontend/src/pages/CustomerAnalytics.vue
+@@ -1,5 +1,5 @@
+ <template>
+-  <main class="flex h-full min-h-0 flex-col overflow-auto bg-surface-base">
++  <main class="c360-page flex h-full min-h-0 flex-col overflow-auto bg-surface-base">
+     <header class="border-b border-outline-gray-2 px-5 py-4">
+       <h1 class="text-xl font-semibold text-ink-gray-9">{{ __('Customer Analytics') }}</h1>
+     </header>
 -- 
 2.47.3
 

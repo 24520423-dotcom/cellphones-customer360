@@ -242,6 +242,7 @@ def list_customers(search="", page=1, page_size=20, segment=""):
             "lead_count": None,
             "deal_count": None,
             "updated_at": str(customer.modified),
+            "updated_at_iso": iso_timestamp(customer.modified),
             "segments": classification[customer.name]["segments"],
         })
 
