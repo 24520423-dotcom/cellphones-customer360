@@ -108,10 +108,12 @@ class TestC360Permissions(FrappeTestCase):
         with self.assertRaises(frappe.DoesNotExistError):
             get_customer_360(outside.name)
         order.reload()
-        updated = set_value(order.doctype, order.name, {
+        form_data = frappe.parse_json(frappe.as_json(order.as_dict()))
+        form_data.update({
             "order_status": "Processing",
             "fulfillment_status": "Preparing",
         })
+        updated = frappe.get_doc(form_data).save()
         self.assertEqual((updated.order_status, updated.fulfillment_status), ("Processing", "Preparing"))
         with self.assertRaises(InvalidTransition):
             set_value(order.doctype, order.name, {"order_status": "Draft"})
@@ -131,6 +133,8 @@ class TestC360Permissions(FrappeTestCase):
         for field, value in prohibited.items():
             with self.subTest(field=field), self.assertRaises(frappe.PermissionError):
                 set_value(order.doctype, order.name, {field: value})
+        with self.assertRaises(frappe.PermissionError):
+            set_value(order.doctype, order.name, {"items": [{**item, "creation": "2000-01-01 00:00:00"}]})
         with self.assertRaises(frappe.PermissionError):
             set_value(outside_order.doctype, outside_order.name, {"order_status": "Cancelled"})
         self.assertFalse(frappe.has_permission(outside_order.doctype, "read", doc=outside_order))

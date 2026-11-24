@@ -221,7 +221,7 @@ Timeline tổng hợp dữ liệu thực từ hồ sơ và các tài liệu liê
 ### 6.8. Hợp nhất khách hàng
 
 - `GET /api/method/cellphones_c360.api.merge.preview` nhận `source` và `target`, trả dữ liệu đối chiếu được phép đọc, mốc phiên bản và `can_merge`.
-- `POST /api/method/cellphones_c360.api.merge.merge_customers` nhận `source`, `target`, `source_modified`, `target_modified`, `selected` (mapping trường → `source` hoặc `target`), `reason` và `verified: true`. Yêu cầu Administrator hoặc System Manager có quyền ghi từng hồ sơ và bản ghi phụ thuộc.
+- `POST /api/method/cellphones_c360.api.merge.merge_customers` nhận `source`, `target`, `source_modified`, `target_modified`, `selected` (mapping trường → `source` hoặc `target`), `reason` và `verified: true`. Người gọi phải là Administrator, System Manager hoặc có đồng thời Sales Manager và C360 Merge Approver. Người gọi cần quyền ghi từng hồ sơ và bản ghi phụ thuộc.
 - Response có `customer` là Golden Record, `archived_customer`, `moved` theo DocType và `crm_links_added`. Hồ sơ nguồn từ API chi tiết có `is_merged` và `merged_into` nếu người dùng có quyền đọc hồ sơ hiện hành.
 
 ### 6.9. Liên kết Lead, Deal và Contact

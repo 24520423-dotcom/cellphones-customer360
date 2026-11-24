@@ -125,7 +125,12 @@ def validate_operations_order(doc):
 
 
 def _order_items(doc):
-    return [
-        {field: value for field, value in item.get_valid_dict().items() if field not in {"modified", "modified_by"}}
-        for item in doc.get("items")
-    ]
+    items = []
+    for item in doc.get("items"):
+        values = item.get_valid_dict()
+        values.pop("modified", None)
+        values.pop("modified_by", None)
+        # Desk serializes creation as text, while the stored row uses a datetime.
+        values["creation"] = str(values.get("creation") or "")
+        items.append(values)
+    return items

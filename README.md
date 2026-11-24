@@ -124,7 +124,9 @@ Tải lại trình duyệt bằng Ctrl+F5. Commit trong repository CRM, xuất l
 
 `deployment/cellphones-c360/` hỗ trợ Verify, New và Update từ mã nguồn. Trên site đang chạy, dùng `./deployment/cellphones-c360/setup-source.ps1 -Mode Verify -Site crm.localhost` để kiểm tra gói ứng dụng. Patch chính đã bao gồm quyền các phòng ban. Quy trình cài từ đầu trên máy sạch chưa được kiểm thử.
 
-Bộ demo có thể chạy thử và hoàn tác bằng `./deployment/cellphones-c360/import-demo.ps1`. [Snapshot CSV demo-v2](data/snapshots/demo-v2) kèm manifest là bộ dữ liệu riêng. Preflight trên site hiện có phát hiện dữ liệu trùng và 11 ticket không đáp ứng quy tắc đơn hàng đã hoàn tất. Chế độ Snapshot của script setup dành cho bộ sao lưu ngày 22/11/2026.
+Bộ demo có thể chạy thử và hoàn tác bằng `./deployment/cellphones-c360/import-demo.ps1`. [Snapshot CSV demo-v2](data/snapshots/demo-v2) kèm manifest là bộ dữ liệu riêng. Trong 11 ticket cần đơn hàng đã hoàn tất, 4 thiếu đơn liên kết, 4 liên kết đơn Confirmed và 3 liên kết đơn Processing. Giữ nguyên CSV và manifest. Trên môi trường có preflight đạt các điều kiện khác, chế độ nhập một phần `skip_incompatible_tickets=True` loại riêng 11 dòng này khỏi lượt nhập. Bộ KPI sau nhập sẽ dựa trên 34 ticket. Dữ liệu snapshot trùng với site hiện tại nên không nhập lại vào `crm.localhost`.
+
+Chế độ Snapshot của script setup dành cho bộ sao lưu ngày 22/11/2026.
 
 Logo public có URL `/assets/cellphones_c360/branding/cellphones-brand.png`. Backup và cấu hình từng site được quản lý ngoài Git.
 
