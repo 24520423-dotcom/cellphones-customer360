@@ -9,6 +9,7 @@ from frappe import _
 from frappe.model.document import Document
 from frappe.utils import flt, now_datetime
 
+from cellphones_c360.api.access import InvalidTransition
 from cellphones_c360.api.crm_links import related_records
 from cellphones_c360.permissions import is_operations_order_editor, validate_operations_order
 
@@ -59,12 +60,12 @@ class CustomerOrder(Document):
             frappe.throw(_("Create an order in Draft before confirming it."))
         if previous:
             if self.order_status != previous.order_status and self.order_status not in ORDER_TRANSITIONS.get(previous.order_status, ()):
-                frappe.throw(_("This order status transition is not allowed."))
+                frappe.throw(_("This order status transition is not allowed."), InvalidTransition)
             if (
                 previous.payment_status and self.payment_status != previous.payment_status
                 and self.payment_status not in PAYMENT_TRANSITIONS.get(previous.payment_status, ())
             ):
-                frappe.throw(_("This payment status transition is not allowed."))
+                frappe.throw(_("This payment status transition is not allowed."), InvalidTransition)
             if previous.order_status != "Draft" and self.item_values() != previous.item_values():
                 frappe.throw(_("Products and prices are fixed after order confirmation."))
             if not self.flags.merging_customer and self.has_value_changed("customer") and (

@@ -38,6 +38,18 @@ class TestCustomerCRMLinks(FrappeTestCase):
         self.assertEqual({lead["name"] for lead in profile["leads"]}, {first, second})
         self.assertEqual({deal.name for deal in profile["deals"]}, {converted, standalone})
 
+    def test_native_linked_lead_normalizes_repeated_salutation(self):
+        name = crm_links.create_linked_lead(self.customer.name, {
+            "salutation": "Miss", "first_name": "miss  Miss Sample",
+            "last_name": "Miss", "status": self.lead_status,
+        })["name"]
+        lead = frappe.get_doc("CRM Lead", name)
+        self.assertEqual(lead.first_name, "Sample")
+        self.assertEqual(lead.lead_name, "Miss Sample Miss")
+        lead.save()
+        self.assertEqual(lead.reload().lead_name, "Miss Sample Miss")
+        self.assertEqual(crm_links.related_records(self.customer.reload())["CRM Lead"][0].name, name)
+
     def test_native_contact_table_resolves_deal(self):
         contact = frappe.get_doc({"doctype": "Contact", "first_name": "Shared Contact Demo"}).insert()
         crm_links.link_record(self.customer.name, contact.doctype, contact.name)

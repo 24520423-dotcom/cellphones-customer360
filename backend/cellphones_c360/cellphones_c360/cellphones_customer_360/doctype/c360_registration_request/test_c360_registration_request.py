@@ -8,6 +8,7 @@ from frappe.utils.password import check_password, update_password
 
 from cellphones_c360.api import registration
 from cellphones_c360.api.access import require_enabled_api_account
+from cellphones_c360.api.employee_administration import list_employees, set_employee_enabled, set_employee_role
 
 
 class TestC360RegistrationRequest(FrappeTestCase):
@@ -90,6 +91,19 @@ class TestC360RegistrationRequest(FrappeTestCase):
         self.assertFalse(frappe.db.get_value("User", user.name, "enabled"))
         self.assertEqual(frappe.db.get_value(registration.DOCTYPE, name, "status"), "Pending")
 
+    def test_administrator_changes_native_employee_role_and_enabled_state(self):
+        user = frappe.get_doc({
+            "doctype": "User", "email": self.email, "first_name": "Synthetic employee",
+            "user_type": "System User", "send_welcome_email": 0, "roles": [{"role": "Sales User"}],
+        }).insert()
+        employee = list_employees(search=self.email)["items"][0]
+        self.assertTrue(employee.manageable)
+        self.assertIn("Sales Manager", set_employee_role(user.name, "Sales Manager")["roles"])
+        self.assertNotIn("Sales User", frappe.get_roles(user.name))
+        self.assertFalse(set_employee_enabled(user.name, False)["enabled"])
+        self.assertFalse(user.reload().enabled)
+        with self.assertRaises(frappe.PermissionError):
+            set_employee_enabled("Administrator", False)
 
     def test_password_setup_and_email_retry(self):
         name = self._submit()

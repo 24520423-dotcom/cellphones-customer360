@@ -4,8 +4,9 @@ from uuid import uuid4
 import frappe
 from frappe.tests.utils import FrappeTestCase
 
-from cellphones_c360.api import intake, merge
-from cellphones_c360.api.customer360 import get_customer_360
+from cellphones_c360.api import crm_links, intake, merge
+from cellphones_c360.api.customer360 import get_customer_360, get_customer_timeline
+from cellphones_c360.permissions import MERGE_APPROVER
 
 
 class TestCustomerMerge(FrappeTestCase):
@@ -86,3 +87,40 @@ class TestCustomerMerge(FrappeTestCase):
         frappe.set_user("Guest")
         with self.assertRaises(frappe.PermissionError):
             self.merge()
+
+    def test_sales_manager_requires_approver_and_preserves_consent(self):
+        manager = frappe.get_doc({
+            "doctype": "User", "first_name": "Merge permission demo",
+            "email": f"c360-approval-{uuid4().hex}@example.test", "send_welcome_email": 0,
+            "roles": [{"role": "Sales Manager"}],
+        }).insert()
+        lead = crm_links.create_linked_lead(self.source.name, {"first_name": "Merge Demo"})["name"]
+        deal = crm_links.create_linked_deal(self.source.name, {
+            "status": frappe.get_list("CRM Deal Status", order_by="position", pluck="name")[0],
+        })
+        self.source.reload()
+        self.source.marketing_consent = 1
+        self.source.save()
+        frappe.set_user(manager.name)
+        with self.assertRaises(frappe.PermissionError):
+            self.merge()
+        frappe.set_user("Administrator")
+        manager.add_roles(MERGE_APPROVER)
+        frappe.set_user(manager.name)
+        self.assertTrue(merge.preview(self.source.name, self.target.name)["can_merge"])
+        with self.assertRaises(frappe.ValidationError):
+            self.merge(selected={"marketing_consent": "source"})
+        self.merge()
+        self.target.reload()
+        self.assertFalse(self.target.marketing_consent)
+        self.assertEqual(self.source.reload().customer_status, "Inactive")
+        self.assertEqual(self.source.merged_into, self.target.name)
+        records = crm_links.related_records(self.target)
+        self.assertEqual({doc.name for doc in records["CRM Lead"]}, {lead})
+        self.assertEqual({doc.name for doc in records["CRM Deal"]}, {deal})
+        self.assertEqual(self.order.reload().customer, self.target.name)
+        self.assertEqual(self.ticket.reload().customer, self.target.name)
+        self.assertEqual(frappe.db.get_value(
+            intake.DOCTYPE, self.source_data["source_document"], "customer",
+        ), self.target.name)
+        self.assertTrue(any(item["type"] == "merge" for item in get_customer_timeline(self.target.name)["items"]))

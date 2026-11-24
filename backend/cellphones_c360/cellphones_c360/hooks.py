@@ -232,7 +232,7 @@ scheduler_events = {"hourly": ["cellphones_c360.care.schedule_follow_ups"]}
 # Request Events
 # ----------------
 before_request = ["cellphones_c360.api.access.require_enabled_api_account"]
-# after_request = ["cellphones_c360.utils.after_request"]
+after_request = ["cellphones_c360.api.access.sanitize_api_error"]
 
 # Job Events
 # ----------

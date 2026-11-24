@@ -5,13 +5,14 @@ from frappe import _
 from frappe.model import get_permitted_fields
 from frappe.utils import cint
 
+from cellphones_c360.api.access import get_scoped_document
+
 DOCTYPE = "Customer Support Ticket"
 
 @frappe.whitelist(methods=["GET"])
 def get_capabilities(ticket=None):
     if ticket:
-        doc = frappe.get_doc(DOCTYPE, ticket)
-        doc.check_permission("read")
+        doc = get_scoped_document(DOCTYPE, ticket)
         writable_fields = set(get_permitted_fields(DOCTYPE, permission_type="write"))
         return {
             "canEdit": bool(
@@ -44,7 +45,7 @@ def list_tickets(search="", status="", ticket_type="", priority="", customer="",
                 frappe.throw(_("Invalid ticket filter."))
             filters.append([field, "=", value])
     if customer and "customer" in readable:
-        frappe.get_doc("C360 Customer", customer).check_permission("read")
+        get_scoped_document("C360 Customer", customer)
         filters.append(["customer", "=", customer])
     keyword = f"%{search.strip()[:140]}%" if search and search.strip() else None
     search_by = [[field, "like", keyword] for field in ("name", "subject") if field in readable] if keyword else []
@@ -63,8 +64,7 @@ def list_tickets(search="", status="", ticket_type="", priority="", customer="",
 
 @frappe.whitelist(methods=["POST"])
 def record_demo_proposal(customer, proposal: str):
-    record = frappe.get_doc("C360 Customer", customer, for_update=True)
-    record.check_permission("read")
+    record = get_scoped_document("C360 Customer", customer, for_update=True)
     if "C360 Marketing" not in frappe.get_roles():
         record.check_permission("write")
     record.apply_fieldlevel_read_permissions()

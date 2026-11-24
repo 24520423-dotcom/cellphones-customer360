@@ -2,6 +2,7 @@ import frappe
 from frappe import _
 from frappe.model import get_permitted_fields
 
+from cellphones_c360.api.access import get_scoped_document
 from cellphones_c360.cellphones_customer_360.doctype.c360_customer.c360_customer import (
     CRM_DOCTYPES,
     customer_crm_links,
@@ -69,8 +70,7 @@ def can_link(customer):
 
 def _editable_customer(customer):
     lock_customer_identity_writes()
-    doc = frappe.get_doc(CUSTOMER, customer, for_update=True)
-    doc.check_permission("read")
+    doc = get_scoped_document(CUSTOMER, customer, for_update=True)
     if not can_link(doc):
         frappe.throw(_("You cannot link CRM records to this customer."), frappe.PermissionError)
     return doc

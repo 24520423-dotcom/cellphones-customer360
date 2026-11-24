@@ -1,6 +1,8 @@
 import frappe
 from frappe.utils import get_datetime
 
+from cellphones_c360.api.access import get_scoped_document
+
 DOCTYPE = "CRM Lead"
 
 
@@ -16,8 +18,7 @@ def get_options(lead=None):
             ),
         }
 
-    doc = frappe.get_doc(DOCTYPE, lead)
-    doc.check_permission("read")
+    doc = get_scoped_document(DOCTYPE, lead)
     return {
         "canEdit": bool(doc.has_permission("write")),
         "history": get_linked_history({"CRM Lead": [lead]}, limit=20),

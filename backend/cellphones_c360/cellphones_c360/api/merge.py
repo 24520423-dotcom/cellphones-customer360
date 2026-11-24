@@ -3,6 +3,7 @@ from frappe import _
 from frappe.model import get_permitted_fields
 from frappe.utils import get_datetime, now_datetime
 
+from cellphones_c360.api.access import get_scoped_document
 from cellphones_c360.api.customers import DOCTYPE, EDIT_FIELDS
 from cellphones_c360.api.intake import DOCTYPE as SOURCE_RECORD
 from cellphones_c360.permissions import MERGE_APPROVER
@@ -26,11 +27,10 @@ def _documents(source, target, for_update=False):
     if not source or not target or source == target:
         frappe.throw(_("Choose two different customer records."))
     docs = [
-        frappe.get_doc(DOCTYPE, name, for_update=for_update)
+        get_scoped_document(DOCTYPE, name, for_update=for_update)
         for name in (source, target)
     ]
     for doc in docs:
-        doc.check_permission("read")
         if doc.get("merged_into"):
             frappe.throw(_("Choose two active customer records."))
     return docs

@@ -7,6 +7,7 @@ from frappe import _
 from frappe.model.document import Document
 from frappe.utils import get_datetime, now_datetime
 
+from cellphones_c360.api.access import InvalidTransition
 from cellphones_c360.cellphones_customer_360.doctype.c360_customer.c360_customer import (
     check_customer_link,
     lock_customer_identity_writes,
@@ -74,7 +75,7 @@ class CustomerSupportTicket(Document):
         if self.ticket_status == previous.ticket_status:
             return
         if self.ticket_status not in TRANSITIONS.get(previous.ticket_status, ()):
-            frappe.throw(_("This ticket status transition is not allowed."))
+            frappe.throw(_("This ticket status transition is not allowed."), InvalidTransition)
         if self.ticket_status in {"In Progress", "Resolved", "Closed"} and not self.assigned_to:
             frappe.throw(_("Assign the ticket before progressing it."))
 
