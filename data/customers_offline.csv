@@ -1,0 +1,4 @@
+source_channel,source_record_id,received_at,customer_name,phone_number,email,customer_type,purchase_interest
+Store,POS-DEMO-001,2026-11-20T12:00:00+07:00,Khách Demo Tại Quầy F,,customer-store-f@example.test,Individual,1
+Store,POS-DEMO-002,2026-11-20T14:30:00+07:00,Đơn Vị Demo G,,business-store-g@example.test,Business,1
+Store,MANUAL-DEMO-001,2026-11-21T09:00:00+07:00,Khách Demo Trực Tuyến A,+84 28 0000 0123,customer-online-a@example.test,Individual,1

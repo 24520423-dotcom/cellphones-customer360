@@ -1,0 +1,230 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "CUST-.#####",
+ "creation": "2026-11-21 19:47:57.843534",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "customer_information",
+  "customer_name",
+  "phone_number",
+  "email",
+  "customer_type",
+  "customer_status",
+  "customer_source_section",
+  "source_channel",
+  "marketing_consent",
+  "crm_references_section",
+  "crm_contact",
+  "crm_lead",
+  "crm_links",
+  "merge_section",
+  "merged_into",
+  "merged_at",
+  "merged_by",
+  "merge_reason"
+ ],
+ "fields": [
+  {
+   "fieldname": "customer_information",
+   "fieldtype": "Section Break",
+   "label": "Customer Information"
+  },
+  {
+   "fieldname": "customer_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Customer Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "phone_number",
+   "fieldtype": "Data",
+   "label": "\tPhone Number",
+   "options": "Phone",
+   "permlevel": 1
+  },
+  {
+   "fieldname": "email",
+   "fieldtype": "Data",
+   "label": "Email",
+   "options": "Email",
+   "permlevel": 1
+  },
+  {
+   "default": "Individual",
+   "fieldname": "customer_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Customer Type",
+   "options": "Individual\nBusiness",
+   "reqd": 1
+  },
+  {
+   "default": "Active",
+   "fieldname": "customer_status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Customer Status",
+   "options": "Active\nInactive",
+   "reqd": 1
+  },
+  {
+   "fieldname": "customer_source_section",
+   "fieldtype": "Section Break",
+   "label": "Customer Source"
+  },
+  {
+   "fieldname": "source_channel",
+   "fieldtype": "Select",
+   "label": "\tSource Channel",
+   "options": "Website\nApp\nFacebook\nZalo\nHotline\nStore\nOther"
+  },
+  {
+   "fieldname": "marketing_consent",
+   "fieldtype": "Check",
+   "label": "Marketing Consent",
+   "default": "0"
+  },
+  {
+   "fieldname": "crm_references_section",
+   "fieldtype": "Section Break",
+   "label": "CRM References"
+  },
+  {
+   "fieldname": "crm_contact",
+   "fieldtype": "Link",
+   "label": "CRM Contact",
+   "options": "Contact",
+   "permlevel": 1
+  },
+  {
+   "fieldname": "crm_lead",
+   "fieldtype": "Link",
+   "label": "CRM Lead",
+   "options": "CRM Lead",
+   "permlevel": 1
+  },
+  {
+   "fieldname": "crm_links",
+   "fieldtype": "Table",
+   "label": "Additional CRM Records",
+   "options": "Dynamic Link",
+   "permlevel": 1
+  },
+  {
+   "fieldname": "merge_section",
+   "fieldtype": "Section Break",
+   "label": "Merge History",
+   "depends_on": "merged_into"
+  },
+  {
+   "fieldname": "merged_into",
+   "fieldtype": "Link",
+   "label": "Merged Into",
+   "options": "C360 Customer",
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "merged_at",
+   "fieldtype": "Datetime",
+   "label": "Merged At",
+   "read_only": 1
+  },
+  {
+   "fieldname": "merged_by",
+   "fieldtype": "Link",
+   "label": "Merged By",
+   "options": "User",
+   "read_only": 1
+  },
+  {
+   "fieldname": "merge_reason",
+   "fieldtype": "Small Text",
+   "label": "Merge Reason",
+   "read_only": 1
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-11-24 13:28:00.000000",
+ "modified_by": "Administrator",
+ "module": "CellphoneS Customer 360",
+ "name": "C360 Customer",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "role": "Sales Manager",
+   "create": 1,
+   "read": 1,
+   "write": 1
+  },
+  {
+   "role": "Sales User",
+   "create": 1,
+   "read": 1,
+   "write": 1,
+   "if_owner": 1
+  },
+  {
+   "role": "C360 Customer Service",
+   "read": 1,
+   "select": 1
+  },
+  {
+   "role": "C360 Operations",
+   "read": 1,
+   "select": 1
+  },
+  {
+   "role": "C360 Marketing",
+   "read": 1
+  },
+  {
+   "role": "System Manager",
+   "permlevel": 1,
+   "read": 1,
+   "write": 1
+  },
+  {
+   "role": "Sales Manager",
+   "permlevel": 1,
+   "read": 1,
+   "write": 1
+  },
+  {
+   "role": "Sales User",
+   "permlevel": 1,
+   "read": 1,
+   "write": 1
+  },
+  {
+   "role": "C360 Customer Service",
+   "permlevel": 1,
+   "read": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "customer_name",
+ "track_changes": 1
+}

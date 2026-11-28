@@ -1,0 +1,63 @@
+﻿snapshot_id,customer_snapshot_id,order_date,sales_channel,order_status,total_amount,scenario
+V2-ORD-001,V2-CUS-014,2026-09-19,Store,Draft,350000,Đơn hàng đầu tiên
+V2-ORD-002,V2-CUS-027,2026-09-26,Website,Confirmed,19990000,Đơn hàng đầu tiên
+V2-ORD-003,V2-CUS-040,2026-10-03,Store,Completed,1180000,Đơn hàng đầu tiên
+V2-ORD-004,V2-CUS-009,2026-10-10,Website,Cancelled,31680000,Đơn hàng đầu tiên
+V2-ORD-005,V2-CUS-022,2026-10-17,Store,Processing,3490000,Đơn hàng đầu tiên
+V2-ORD-006,V2-CUS-035,2026-10-24,Website,Completed,12760000,Đơn hàng đầu tiên
+V2-ORD-007,V2-CUS-004,2026-10-31,Store,Completed,16990000,Đơn hàng đầu tiên
+V2-ORD-008,V2-CUS-017,2026-11-07,Website,Draft,10240000,Đơn hàng đầu tiên
+V2-ORD-009,V2-CUS-030,2026-11-14,Store,Confirmed,8080000,Đơn hàng đầu tiên
+V2-ORD-010,V2-CUS-043,2026-11-21,Website,Completed,28670000,Đơn hàng đầu tiên
+V2-ORD-011,V2-CUS-012,2026-09-18,Store,Cancelled,9990000,Đơn hàng đầu tiên
+V2-ORD-012,V2-CUS-025,2026-09-25,Website,Processing,14760000,Đơn hàng đầu tiên
+V2-ORD-013,V2-CUS-038,2026-10-02,Store,Completed,17990000,Đơn hàng đầu tiên
+V2-ORD-014,V2-CUS-007,2026-10-09,Website,Completed,26990000,Đơn hàng đầu tiên
+V2-ORD-015,V2-CUS-020,2026-10-16,Store,Draft,24880000,Đơn hàng đầu tiên
+V2-ORD-016,V2-CUS-033,2026-10-23,Website,Confirmed,10880000,Đơn hàng đầu tiên
+V2-ORD-017,V2-CUS-002,2026-10-30,Store,Completed,350000,Đơn hàng đầu tiên
+V2-ORD-018,V2-CUS-015,2026-11-06,Website,Cancelled,46960000,Đơn hàng đầu tiên
+V2-ORD-019,V2-CUS-028,2026-11-13,Store,Processing,390000,Đơn hàng đầu tiên
+V2-ORD-020,V2-CUS-041,2026-11-20,Website,Completed,31870000,Đơn hàng đầu tiên
+V2-ORD-021,V2-CUS-010,2026-09-17,Store,Completed,3740000,Đơn hàng đầu tiên
+V2-ORD-022,V2-CUS-023,2026-09-24,Website,Draft,790000,Đơn hàng đầu tiên
+V2-ORD-023,V2-CUS-036,2026-10-01,Store,Confirmed,16990000,Đơn hàng đầu tiên
+V2-ORD-024,V2-CUS-005,2026-10-08,Website,Completed,20480000,Đơn hàng đầu tiên
+V2-ORD-025,V2-CUS-018,2026-10-15,Store,Cancelled,5590000,Đơn hàng đầu tiên
+V2-ORD-026,V2-CUS-031,2026-10-22,Website,Processing,190000,Đơn hàng đầu tiên
+V2-ORD-027,V2-CUS-044,2026-10-29,Store,Completed,36980000,Đơn hàng đầu tiên
+V2-ORD-028,V2-CUS-013,2026-11-05,Website,Completed,7380000,Đơn hàng đầu tiên
+V2-ORD-029,V2-CUS-026,2026-11-12,Store,Draft,17990000,Đơn hàng đầu tiên
+V2-ORD-030,V2-CUS-039,2026-11-19,Website,Confirmed,84060000,Đơn hàng đầu tiên
+V2-ORD-031,V2-CUS-008,2026-09-16,Store,Completed,4890000,Đơn hàng đầu tiên
+V2-ORD-032,V2-CUS-021,2026-09-23,Website,Cancelled,10880000,Đơn hàng đầu tiên
+V2-ORD-033,V2-CUS-034,2026-09-30,Store,Processing,15040000,Đơn hàng đầu tiên
+V2-ORD-034,V2-CUS-003,2026-10-07,Website,Completed,19990000,Đơn hàng đầu tiên
+V2-ORD-035,V2-CUS-016,2026-10-14,Store,Completed,390000,Đơn hàng đầu tiên
+V2-ORD-036,V2-CUS-029,2026-10-21,Website,Draft,63360000,Đơn hàng đầu tiên
+V2-ORD-037,V2-CUS-042,2026-10-28,Store,Confirmed,3490000,Đơn hàng đầu tiên
+V2-ORD-038,V2-CUS-011,2026-11-04,Website,Completed,790000,Đơn hàng đầu tiên
+V2-ORD-039,V2-CUS-024,2026-11-11,Store,Cancelled,17180000,Đơn hàng đầu tiên
+V2-ORD-040,V2-CUS-037,2026-11-18,Website,Processing,37230000,Đơn hàng đầu tiên
+V2-ORD-041,V2-CUS-006,2026-09-15,Store,Completed,5590000,Đơn hàng đầu tiên
+V2-ORD-042,V2-CUS-019,2026-09-22,Website,Completed,36360000,Đơn hàng đầu tiên
+V2-ORD-043,V2-CUS-032,2026-09-29,Store,Draft,9990000,Đơn hàng đầu tiên
+V2-ORD-044,V2-CUS-001,2026-10-06,Website,Confirmed,7380000,Đơn hàng đầu tiên
+V2-ORD-045,V2-CUS-014,2026-10-13,Store,Completed,28480000,Mua lặp
+V2-ORD-046,V2-CUS-027,2026-10-20,Website,Cancelled,26990000,Mua lặp
+V2-ORD-047,V2-CUS-040,2026-10-27,Store,Processing,4890000,Mua lặp
+V2-ORD-048,V2-CUS-009,2026-11-03,Website,Completed,21760000,Mua lặp
+V2-ORD-049,V2-CUS-022,2026-11-10,Store,Completed,350000,Mua lặp
+V2-ORD-050,V2-CUS-035,2026-11-17,Website,Draft,23730000,Mua lặp
+V2-ORD-051,V2-CUS-004,2026-09-14,Store,Confirmed,1180000,Mua lặp
+V2-ORD-052,V2-CUS-017,2026-09-21,Website,Completed,31680000,Mua lặp
+V2-ORD-053,V2-CUS-030,2026-09-28,Store,Cancelled,3490000,Mua lặp
+V2-ORD-054,V2-CUS-043,2026-10-05,Website,Processing,12760000,Mua lặp
+V2-ORD-055,V2-CUS-012,2026-10-12,Store,Completed,16990000,Mua lặp
+V2-ORD-056,V2-CUS-025,2026-10-19,Website,Completed,10240000,Mua lặp
+V2-ORD-057,V2-CUS-038,2026-10-26,Store,Draft,8080000,Mua lặp
+V2-ORD-058,V2-CUS-007,2026-11-02,Website,Confirmed,190000,Mua lặp
+V2-ORD-059,V2-CUS-020,2026-11-09,Store,Completed,9990000,Mua lặp
+V2-ORD-060,V2-CUS-033,2026-11-16,Website,Cancelled,54740000,Mua lặp
+V2-ORD-061,V2-CUS-002,2026-09-13,Store,Processing,17990000,Mua lặp
+V2-ORD-062,V2-CUS-015,2026-09-20,Website,Completed,26990000,Mua lặp

@@ -1,0 +1,55 @@
+﻿snapshot_id,customer_name,phone_number,email,customer_type,customer_status,source_channel,scenario
+V2-CUS-001,Đỗ Ngọc Mai,0898000001,demo.cv2v2.001@example.test,Individual,Active,Hotline,Khách hàng đa kênh
+V2-CUS-002,Trần Thanh Thư,0898000002,demo.cv2v2.002@example.test,Individual,Active,App,Khách hàng đa kênh
+V2-CUS-003,Đặng Minh Hạnh,0898000003,demo.cv2v2.003@example.test,Individual,Active,Store,Khách hàng đa kênh
+V2-CUS-004,Lý Thị Như,0898000004,demo.cv2v2.004@example.test,Individual,Active,Zalo,Khách hàng đa kênh
+V2-CUS-005,Phan Văn Vy,0898000005,demo.cv2v2.005@example.test,Individual,Active,Facebook,Khách hàng đa kênh
+V2-CUS-006,Dương Bảo Lan,0898000006,demo.cv2v2.006@example.test,Individual,Active,Website,Khách hàng đa kênh
+V2-CUS-007,Huỳnh Thiên Sơn,0898000007,demo.cv2v2.007@example.test,Individual,Active,Hotline,Khách hàng đa kênh
+V2-CUS-008,Vũ Trọng Giang,0898000008,demo.cv2v2.008@example.test,Individual,Active,App,Khách hàng đa kênh
+V2-CUS-009,Lê Hữu My,0898000009,demo.cv2v2.009@example.test,Individual,Active,Store,Khách thân thiết mua nhiều lần
+V2-CUS-010,Bùi Quốc Trinh,0898000010,demo.cv2v2.010@example.test,Individual,Active,Zalo,Khách hàng đa kênh
+V2-CUS-011,Công ty TNHH Minh Phúc,0898000011,demo.cv2v2.011@example.test,Business,Active,Facebook,Khách hàng đa kênh
+V2-CUS-012,Võ Đức Phúc,0898000012,demo.cv2v2.012@example.test,Individual,Active,Website,Khách hàng đa kênh
+V2-CUS-013,Đinh Ngọc Bình,0898000013,demo.cv2v2.013@example.test,Individual,Active,Hotline,Khách hàng đa kênh
+V2-CUS-014,Hoàng Thanh Long,0898000014,demo.cv2v2.014@example.test,Individual,Active,App,Khách hàng đa kênh
+V2-CUS-015,Hồ Minh Thiện,0898000015,demo.cv2v2.015@example.test,Individual,Active,Store,Khách hàng đa kênh
+V2-CUS-016,Phạm Thị Hải,0898000016,demo.cv2v2.016@example.test,Individual,Active,Zalo,Khách hàng đa kênh
+V2-CUS-017,Đỗ Văn Ngân,0898000017,demo.cv2v2.017@example.test,Individual,Active,Facebook,Khách hàng đa kênh
+V2-CUS-018,Trần Bảo Uyên,0898000018,demo.cv2v2.018@example.test,Individual,Active,Website,Khách thân thiết mua nhiều lần
+V2-CUS-019,Đặng Thiên Khánh,0898000019,demo.cv2v2.019@example.test,Individual,Active,Hotline,Khách hàng đa kênh
+V2-CUS-020,Lý Trọng Quỳnh,0898000020,demo.cv2v2.020@example.test,Individual,Inactive,App,Khách hàng đa kênh
+V2-CUS-021,Phan Hữu Duy,0898000021,demo.cv2v2.021@example.test,Individual,Active,Store,Khách hàng đa kênh
+V2-CUS-022,Dương Quốc Minh,0898000022,demo.cv2v2.022@example.test,Individual,Active,Zalo,Khách hàng đa kênh
+V2-CUS-023,Huỳnh Gia Trang,0898000023,demo.cv2v2.023@example.test,Individual,Active,Facebook,Khách hàng đa kênh
+V2-CUS-024,Vũ Đức Hiền,0898000024,demo.cv2v2.024@example.test,Individual,Active,Website,Khách hàng đa kênh
+V2-CUS-025,Lê Ngọc Phát,0898000025,demo.cv2v2.025@example.test,Individual,Active,Hotline,Khách hàng đa kênh
+V2-CUS-026,Bùi Thanh An,0898000026,demo.cv2v2.026@example.test,Individual,Active,App,Khách hàng đa kênh
+V2-CUS-027,Nguyễn Minh Linh,0898000027,demo.cv2v2.027@example.test,Individual,Active,Store,Khách thân thiết mua nhiều lần
+V2-CUS-028,Võ Thị Thảo,0898000028,demo.cv2v2.028@example.test,Individual,Active,Zalo,Khách hàng đa kênh
+V2-CUS-029,Hộ kinh doanh Điện máy An Lộc,0898000029,demo.cv2v2.029@example.test,Business,Active,Facebook,Khách hàng đa kênh
+V2-CUS-030,Hoàng Bảo Nam,0898000030,demo.cv2v2.030@example.test,Individual,Active,Website,Khách hàng đa kênh
+V2-CUS-031,Hồ Thiên Tuấn,0898000031,demo.cv2v2.031@example.test,Individual,Active,Hotline,Khách hàng đa kênh
+V2-CUS-032,Phạm Trọng Hùng,0898000032,demo.cv2v2.032@example.test,Individual,Active,App,Khách hàng đa kênh
+V2-CUS-033,Đỗ Hữu Quân,0898000033,demo.cv2v2.033@example.test,Individual,Inactive,Store,Khách hàng đa kênh
+V2-CUS-034,Trần Quốc Châu,0898000034,demo.cv2v2.034@example.test,Individual,Active,Zalo,Khách hàng đa kênh
+V2-CUS-035,Đặng Gia Mai,0898000035,demo.cv2v2.035@example.test,Individual,Active,Facebook,Khách hàng đa kênh
+V2-CUS-036,Lý Đức Thư,0898000036,demo.cv2v2.036@example.test,Individual,Active,Website,Khách thân thiết mua nhiều lần
+V2-CUS-037,Phan Ngọc Hạnh,0898000037,demo.cv2v2.037@example.test,Individual,Active,Hotline,Khách hàng đa kênh
+V2-CUS-038,Dương Thanh Như,0898000038,demo.cv2v2.038@example.test,Individual,Active,App,Khách hàng đa kênh
+V2-CUS-039,Huỳnh Minh Vy,0898000039,demo.cv2v2.039@example.test,Individual,Active,Store,Khách hàng đa kênh
+V2-CUS-040,Vũ Thị Lan,0898000040,demo.cv2v2.040@example.test,Individual,Active,Zalo,Khách hàng đa kênh
+V2-CUS-041,Lê Văn Sơn,0898000041,demo.cv2v2.041@example.test,Individual,Active,Facebook,Khách hàng đa kênh
+V2-CUS-042,Bùi Bảo Giang,0898000042,demo.cv2v2.042@example.test,Individual,Active,Website,Khách hàng đa kênh
+V2-CUS-043,Nguyễn Thiên My,0898000043,demo.cv2v2.043@example.test,Individual,Active,Hotline,Khách hàng đa kênh
+V2-CUS-044,Võ Trọng Trinh,0898000044,demo.cv2v2.044@example.test,Individual,Active,App,Khách hàng đa kênh
+V2-CUS-045,Đinh Hữu Hòa,0898000045,demo.cv2v2.045@example.test,Individual,Active,Store,Khách thân thiết mua nhiều lần
+V2-CUS-046,Công ty Giải pháp Số Thành Tín,0898000046,demo.cv2v2.046@example.test,Business,Active,Zalo,Khách hàng đa kênh
+V2-CUS-047,Hồ Gia Bình,0898000047,demo.cv2v2.047@example.test,Individual,Active,Facebook,Khách hàng đa kênh
+V2-CUS-048,Phạm Đức Long,0898000048,demo.cv2v2.048@example.test,Individual,Inactive,Website,Khách hàng đa kênh
+V2-CUS-049,Đỗ Ngọc Thiện,0898000049,demo.cv2v2.049@example.test,Individual,Active,Hotline,Khách hàng đa kênh
+V2-CUS-050,Trần Thanh Hải,0898000050,demo.cv2v2.050@example.test,Individual,Active,App,Khách hàng đa kênh
+V2-CUS-051,Đặng Minh Ngân,0898000051,demo.cv2v2.051@example.test,Individual,Active,Store,Khách không có giao dịch
+V2-CUS-052,Lý Thị Uyên,0898000052,demo.cv2v2.052@example.test,Individual,Active,Zalo,Khách không có giao dịch
+V2-CUS-053,Phan Văn Khánh,0898000053,demo.cv2v2.053@example.test,Individual,Active,Facebook,Khách không có giao dịch
+V2-CUS-054,Dương Bảo Quỳnh,0898000054,demo.cv2v2.054@example.test,Individual,Active,Website,Khách không có giao dịch

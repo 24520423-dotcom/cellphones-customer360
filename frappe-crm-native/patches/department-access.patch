@@ -1,0 +1,37 @@
+--- a/crm/api/__init__.py
++++ b/crm/api/__init__.py
+@@ -91,7 +91,9 @@
+ 		return False
+ 
+ 	roles = frappe.get_roles()
+-	if any(role in ["System Manager", "Sales User", "Sales Manager"] for role in roles):
++	allowed_roles = ["System Manager", "Sales User", "Sales Manager"]
++	allowed_roles.extend(frappe.get_hooks("c360_crm_roles", default=[]))
++	if any(role in allowed_roles for role in roles):
+ 		return True
+ 
+ 	return False
+--- a/frontend/src/components/Layouts/AppSidebar.vue
++++ b/frontend/src/components/Layouts/AppSidebar.vue
+@@ -272,6 +272,12 @@
+ 
+ const links = getNavigationItems({ mobile: props.mobile })
+ 
++const staffAccess = createC360Resource({
++  url: 'cellphones_c360.api.administration.get_access',
++  method: 'GET',
++  auto: true,
++})
++
+ const analyticsAccess = createC360Resource({
+   url: 'cellphones_c360.api.analytics.get_access',
+   method: 'GET',
+@@ -296,7 +302,7 @@
+       name: 'All Views',
+       hideLabel: true,
+       opened: true,
+-      views: links.map((link) => ({
++      views: (staffAccess.data?.nativeSales === false ? [] : links).map((link) => ({
+         label: link.label,
+         icon: link.icon,
+         key: link.route,

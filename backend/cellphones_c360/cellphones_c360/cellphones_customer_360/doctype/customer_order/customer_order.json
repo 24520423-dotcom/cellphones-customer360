@@ -1,0 +1,220 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "ORD-.#####",
+ "creation": "2026-11-21 21:37:35.917951",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "order_information",
+  "customer",
+  "order_date",
+  "sales_channel",
+  "order_status",
+  "crm_deal",
+  "payment_section",
+  "payment_method",
+  "payment_status",
+  "paid_at",
+  "fulfillment_section",
+  "fulfillment_method",
+  "fulfillment_owner",
+  "fulfillment_status",
+  "completed_at",
+  "care_task",
+  "order_items",
+  "items",
+  "order_summary",
+  "total_amount"
+ ],
+ "fields": [
+  {
+   "fieldname": "order_information",
+   "fieldtype": "Section Break",
+   "label": "Order Information"
+  },
+  {
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "in_standard_filter": 1,
+   "in_list_view": 1,
+   "label": "Customer",
+   "options": "C360 Customer",
+   "reqd": 1
+  },
+  {
+   "default": "Today",
+   "fieldname": "order_date",
+   "fieldtype": "Date",
+   "in_standard_filter": 1,
+   "in_list_view": 1,
+   "label": "Order Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "sales_channel",
+   "fieldtype": "Select",
+   "in_standard_filter": 1,
+   "in_list_view": 1,
+   "label": "Sales Channel",
+   "options": "Website\nApp\nFacebook\nZalo\nHotline\nStore\nOther",
+   "reqd": 1
+  },
+  {
+   "default": "Draft",
+   "fieldname": "order_status",
+   "fieldtype": "Select",
+   "in_standard_filter": 1,
+   "in_list_view": 1,
+   "label": "Order Status",
+   "options": "Draft\nConfirmed\nProcessing\nCompleted\nCancelled",
+   "reqd": 1
+  },
+  {
+   "fieldname": "crm_deal",
+   "fieldtype": "Link",
+   "label": "Deal",
+   "options": "CRM Deal"
+  },
+  {
+   "fieldname": "payment_section",
+   "fieldtype": "Section Break",
+   "label": "Payment"
+  },
+  {
+   "fieldname": "payment_method",
+   "fieldtype": "Select",
+   "label": "Payment Method",
+   "options": "\nDirect\nCOD\nInstallment"
+  },
+  {
+   "fieldname": "payment_status",
+   "fieldtype": "Select",
+   "label": "Payment Status",
+   "options": "\nUnpaid\nPending\nPaid\nRefunded",
+   "default": "Unpaid"
+  },
+  {
+   "fieldname": "paid_at",
+   "fieldtype": "Datetime",
+   "label": "Paid At",
+   "read_only": 1
+  },
+  {
+   "fieldname": "fulfillment_section",
+   "fieldtype": "Section Break",
+   "label": "Fulfillment"
+  },
+  {
+   "fieldname": "fulfillment_method",
+   "fieldtype": "Select",
+   "label": "Fulfillment Method",
+   "options": "\nPickup\nDelivery"
+  },
+  {
+   "fieldname": "fulfillment_status",
+   "fieldtype": "Select",
+   "label": "Fulfillment Status",
+   "options": "\nAwaiting Fulfillment\nPreparing\nReady for Pickup\nIn Transit\nPicked Up\nDelivered\nFailed"
+  },
+  {
+   "fieldname": "completed_at",
+   "fieldtype": "Datetime",
+   "label": "Completed At",
+   "read_only": 1
+  },
+  {
+   "fieldname": "care_task",
+   "fieldtype": "Link",
+   "label": "Care Task",
+   "options": "CRM Task",
+   "read_only": 1
+  },
+  {
+   "fieldname": "order_items",
+   "fieldtype": "Section Break",
+   "label": "Order Items"
+  },
+  {
+   "fieldname": "items",
+   "fieldtype": "Table",
+   "label": "Items",
+   "options": "Customer Order Item",
+   "reqd": 1
+  },
+  {
+   "fieldname": "order_summary",
+   "fieldtype": "Section Break",
+   "label": "Order Summary"
+  },
+  {
+   "default": "0",
+   "fieldname": "total_amount",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Total Amount",
+   "read_only": 1
+  },
+  {
+   "fieldname": "fulfillment_owner",
+   "fieldtype": "Link",
+   "label": "Fulfillment Owner",
+   "options": "User",
+   "search_index": 1
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-11-24 13:28:00.000000",
+ "modified_by": "Administrator",
+ "module": "CellphoneS Customer 360",
+ "name": "Customer Order",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "role": "Sales Manager",
+   "create": 1,
+   "read": 1,
+   "write": 1
+  },
+  {
+   "role": "Sales User",
+   "create": 1,
+   "read": 1,
+   "write": 1,
+   "if_owner": 1
+  },
+  {
+   "role": "C360 Customer Service",
+   "read": 1,
+   "select": 1
+  },
+  {
+   "role": "C360 Operations",
+   "read": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "search_fields": "customer,sales_channel,order_status",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "customer",
+ "track_changes": 1
+}

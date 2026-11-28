@@ -10,6 +10,7 @@ services:
       - --skip-innodb-read-only-compressed
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:?Set MYSQL_ROOT_PASSWORD in .env}
+      MARIADB_ROOT_HOST: "%"
     volumes:
       - snapshot-mariadb-data:/var/lib/mysql
 
@@ -33,10 +34,10 @@ services:
       SHELL: /bin/bash
     volumes:
       - snapshot-bench-data:/home/frappe/frappe-bench
-      - ./backend/cellphones_c360:/home/frappe/frappe-bench/apps/cellphones_c360
+      - ../../backend/cellphones_c360:/home/frappe/frappe-bench/apps/cellphones_c360
     ports:
-      - "8001:8000"
-      - "9001:9000"
+      - "${C360_WEB_PORT:-8001}:8000"
+      - "${C360_SOCKETIO_PORT:-9001}:9000"
     depends_on:
       - mariadb
       - redis

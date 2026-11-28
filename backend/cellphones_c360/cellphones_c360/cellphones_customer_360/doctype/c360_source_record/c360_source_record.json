@@ -1,0 +1,118 @@
+{
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "source_channel",
+  "source_record_id",
+  "received_at",
+  "processing_status",
+  "customer",
+  "purchase_interest",
+  "customer_name",
+  "phone_number",
+  "email",
+  "result_reason",
+  "reviewed_by",
+  "reviewed_at",
+  "review_reason"
+ ],
+ "fields": [
+  {
+   "fieldname": "source_channel",
+   "fieldtype": "Data",
+   "label": "Source Channel",
+   "in_list_view": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "source_record_id",
+   "fieldtype": "Data",
+   "label": "Source Record ID",
+   "in_list_view": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "received_at",
+   "fieldtype": "Datetime",
+   "label": "Received At",
+   "reqd": 1
+  },
+  {
+   "fieldname": "processing_status",
+   "fieldtype": "Select",
+   "label": "Processing Status",
+   "options": "Created\nLinked\nNeeds Review\nInvalid",
+   "in_list_view": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "label": "Customer",
+   "options": "C360 Customer",
+   "search_index": 1
+  },
+  {
+   "fieldname": "purchase_interest",
+   "fieldtype": "Check",
+   "label": "Purchase Interest"
+  },
+  {
+   "fieldname": "customer_name",
+   "fieldtype": "Data",
+   "label": "Submitted Customer Name"
+  },
+  {
+   "fieldname": "phone_number",
+   "fieldtype": "Data",
+   "label": "Submitted Phone Number"
+  },
+  {
+   "fieldname": "email",
+   "fieldtype": "Data",
+   "label": "Submitted Email"
+  },
+  {
+   "fieldname": "result_reason",
+   "fieldtype": "Small Text",
+   "label": "Processing Result"
+  },
+  {
+   "fieldname": "reviewed_by",
+   "fieldtype": "Link",
+   "label": "Reviewed By",
+   "options": "User"
+  },
+  {
+   "fieldname": "reviewed_at",
+   "fieldtype": "Datetime",
+   "label": "Reviewed At"
+  },
+  {
+   "fieldname": "review_reason",
+   "fieldtype": "Small Text",
+   "label": "Review Reason"
+  }
+ ],
+ "modified": "2026-11-24 13:28:00.000000",
+ "module": "CellphoneS Customer 360",
+ "name": "C360 Source Record",
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "create": 1,
+   "write": 1,
+   "report": 1
+  },
+  {
+   "role": "C360 Merge Approver",
+   "read": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "title_field": "source_record_id",
+ "track_changes": 1
+}

@@ -1,0 +1,145 @@
+﻿snapshot_id,customer_snapshot_id,candidate_customer_snapshot_id,expected_action,source_channel,source_reference,customer_name,phone_number,email,received_at,scenario
+V2-IN-0001,V2-CUS-001,,new,Hotline,DEMO-V2-V2-CUS-001-FIRST,Đỗ Ngọc Mai,0898000001,demo.cv2v2.001@example.test,2026-09-08 08:07:00,Tiếp nhận đầu tiên: tạo Customer
+V2-IN-0002,V2-CUS-002,,new,App,DEMO-V2-V2-CUS-002-FIRST,Trần Thanh Thư,0898000002,demo.cv2v2.002@example.test,2026-09-11 08:14:00,Tiếp nhận đầu tiên: tạo Customer
+V2-IN-0003,V2-CUS-003,,new,Store,DEMO-V2-V2-CUS-003-FIRST,Đặng Minh Hạnh,0898000003,demo.cv2v2.003@example.test,2026-09-14 08:21:00,Tiếp nhận đầu tiên: tạo Customer
+V2-IN-0004,V2-CUS-004,,new,Zalo,DEMO-V2-V2-CUS-004-FIRST,Lý Thị Như,0898000004,demo.cv2v2.004@example.test,2026-09-17 08:28:00,Tiếp nhận đầu tiên: tạo Customer
+V2-IN-0005,V2-CUS-005,,new,Facebook,DEMO-V2-V2-CUS-005-FIRST,Phan Văn Vy,0898000005,demo.cv2v2.005@example.test,2026-09-20 08:35:00,Tiếp nhận đầu tiên: tạo Customer
+V2-IN-0006,V2-CUS-006,,new,Website,DEMO-V2-V2-CUS-006-FIRST,Dương Bảo Lan,0898000006,demo.cv2v2.006@example.test,2026-09-23 08:42:00,Tiếp nhận đầu tiên: tạo Customer
+V2-IN-0007,V2-CUS-007,,new,Hotline,DEMO-V2-V2-CUS-007-FIRST,Huỳnh Thiên Sơn,0898000007,demo.cv2v2.007@example.test,2026-09-26 08:49:00,Tiếp nhận đầu tiên: tạo Customer
+V2-IN-0008,V2-CUS-008,,new,App,DEMO-V2-V2-CUS-008-FIRST,Vũ Trọng Giang,0898000008,demo.cv2v2.008@example.test,2026-09-29 08:56:00,Tiếp nhận đầu tiên: tạo Customer
+V2-IN-0009,V2-CUS-009,,new,Store,DEMO-V2-V2-CUS-009-FIRST,Lê Hữu My,0898000009,demo.cv2v2.009@example.test,2026-10-02 08:03:00,Tiếp nhận đầu tiên: tạo Customer
+V2-IN-0010,V2-CUS-010,,new,Zalo,DEMO-V2-V2-CUS-010-FIRST,Bùi Quốc Trinh,0898000010,demo.cv2v2.010@example.test,2026-10-05 08:10:00,Tiếp nhận đầu tiên: tạo Customer
+V2-IN-0011,V2-CUS-011,,new,Facebook,DEMO-V2-V2-CUS-011-FIRST,Công ty TNHH Minh Phúc,0898000011,demo.cv2v2.011@example.test,2026-10-08 08:17:00,Tiếp nhận đầu tiên: tạo Customer
+V2-IN-0012,V2-CUS-012,,new,Website,DEMO-V2-V2-CUS-012-FIRST,Võ Đức Phúc,0898000012,demo.cv2v2.012@example.test,2026-10-11 08:24:00,Tiếp nhận đầu tiên: tạo Customer
+V2-IN-0013,V2-CUS-013,,new,Hotline,DEMO-V2-V2-CUS-013-FIRST,Đinh Ngọc Bình,0898000013,demo.cv2v2.013@example.test,2026-10-14 08:31:00,Tiếp nhận đầu tiên: tạo Customer
+V2-IN-0014,V2-CUS-014,,new,App,DEMO-V2-V2-CUS-014-FIRST,Hoàng Thanh Long,0898000014,demo.cv2v2.014@example.test,2026-10-17 08:38:00,Tiếp nhận đầu tiên: tạo Customer
+V2-IN-0015,V2-CUS-015,,new,Store,DEMO-V2-V2-CUS-015-FIRST,Hồ Minh Thiện,0898000015,demo.cv2v2.015@example.test,2026-10-20 08:45:00,Tiếp nhận đầu tiên: tạo Customer
+V2-IN-0016,V2-CUS-016,,new,Zalo,DEMO-V2-V2-CUS-016-FIRST,Phạm Thị Hải,0898000016,demo.cv2v2.016@example.test,2026-10-23 08:52:00,Tiếp nhận đầu tiên: tạo Customer
+V2-IN-0017,V2-CUS-017,,new,Facebook,DEMO-V2-V2-CUS-017-FIRST,Đỗ Văn Ngân,0898000017,demo.cv2v2.017@example.test,2026-10-26 08:59:00,Tiếp nhận đầu tiên: tạo Customer
+V2-IN-0018,V2-CUS-018,,new,Website,DEMO-V2-V2-CUS-018-FIRST,Trần Bảo Uyên,0898000018,demo.cv2v2.018@example.test,2026-10-29 08:06:00,Tiếp nhận đầu tiên: tạo Customer
+V2-IN-0019,V2-CUS-019,,new,Hotline,DEMO-V2-V2-CUS-019-FIRST,Đặng Thiên Khánh,0898000019,demo.cv2v2.019@example.test,2026-11-01 08:13:00,Tiếp nhận đầu tiên: tạo Customer
+V2-IN-0020,V2-CUS-020,,new,App,DEMO-V2-V2-CUS-020-FIRST,Lý Trọng Quỳnh,0898000020,demo.cv2v2.020@example.test,2026-11-04 08:20:00,Tiếp nhận đầu tiên: tạo Customer
+V2-IN-0021,V2-CUS-021,,new,Store,DEMO-V2-V2-CUS-021-FIRST,Phan Hữu Duy,0898000021,demo.cv2v2.021@example.test,2026-11-07 08:27:00,Tiếp nhận đầu tiên: tạo Customer
+V2-IN-0022,V2-CUS-022,,new,Zalo,DEMO-V2-V2-CUS-022-FIRST,Dương Quốc Minh,0898000022,demo.cv2v2.022@example.test,2026-11-10 08:34:00,Tiếp nhận đầu tiên: tạo Customer
+V2-IN-0023,V2-CUS-023,,new,Facebook,DEMO-V2-V2-CUS-023-FIRST,Huỳnh Gia Trang,0898000023,demo.cv2v2.023@example.test,2026-11-13 08:41:00,Tiếp nhận đầu tiên: tạo Customer
+V2-IN-0024,V2-CUS-024,,new,Website,DEMO-V2-V2-CUS-024-FIRST,Vũ Đức Hiền,0898000024,demo.cv2v2.024@example.test,2026-11-16 08:48:00,Tiếp nhận đầu tiên: tạo Customer
+V2-IN-0025,V2-CUS-025,,new,Hotline,DEMO-V2-V2-CUS-025-FIRST,Lê Ngọc Phát,0898000025,demo.cv2v2.025@example.test,2026-11-19 08:55:00,Tiếp nhận đầu tiên: tạo Customer
+V2-IN-0026,V2-CUS-026,,new,App,DEMO-V2-V2-CUS-026-FIRST,Bùi Thanh An,0898000026,demo.cv2v2.026@example.test,2026-09-05 08:02:00,Tiếp nhận đầu tiên: tạo Customer
+V2-IN-0027,V2-CUS-027,,new,Store,DEMO-V2-V2-CUS-027-FIRST,Nguyễn Minh Linh,0898000027,demo.cv2v2.027@example.test,2026-09-08 08:09:00,Tiếp nhận đầu tiên: tạo Customer
+V2-IN-0028,V2-CUS-028,,new,Zalo,DEMO-V2-V2-CUS-028-FIRST,Võ Thị Thảo,0898000028,demo.cv2v2.028@example.test,2026-09-11 08:16:00,Tiếp nhận đầu tiên: tạo Customer
+V2-IN-0029,V2-CUS-029,,new,Facebook,DEMO-V2-V2-CUS-029-FIRST,Hộ kinh doanh Điện máy An Lộc,0898000029,demo.cv2v2.029@example.test,2026-09-14 08:23:00,Tiếp nhận đầu tiên: tạo Customer
+V2-IN-0030,V2-CUS-030,,new,Website,DEMO-V2-V2-CUS-030-FIRST,Hoàng Bảo Nam,0898000030,demo.cv2v2.030@example.test,2026-09-17 08:30:00,Tiếp nhận đầu tiên: tạo Customer
+V2-IN-0031,V2-CUS-031,,new,Hotline,DEMO-V2-V2-CUS-031-FIRST,Hồ Thiên Tuấn,0898000031,demo.cv2v2.031@example.test,2026-09-20 08:37:00,Tiếp nhận đầu tiên: tạo Customer
+V2-IN-0032,V2-CUS-032,,new,App,DEMO-V2-V2-CUS-032-FIRST,Phạm Trọng Hùng,0898000032,demo.cv2v2.032@example.test,2026-09-23 08:44:00,Tiếp nhận đầu tiên: tạo Customer
+V2-IN-0033,V2-CUS-033,,new,Store,DEMO-V2-V2-CUS-033-FIRST,Đỗ Hữu Quân,0898000033,demo.cv2v2.033@example.test,2026-09-26 08:51:00,Tiếp nhận đầu tiên: tạo Customer
+V2-IN-0034,V2-CUS-034,,new,Zalo,DEMO-V2-V2-CUS-034-FIRST,Trần Quốc Châu,0898000034,demo.cv2v2.034@example.test,2026-09-29 08:58:00,Tiếp nhận đầu tiên: tạo Customer
+V2-IN-0035,V2-CUS-035,,new,Facebook,DEMO-V2-V2-CUS-035-FIRST,Đặng Gia Mai,0898000035,demo.cv2v2.035@example.test,2026-10-02 08:05:00,Tiếp nhận đầu tiên: tạo Customer
+V2-IN-0036,V2-CUS-036,,new,Website,DEMO-V2-V2-CUS-036-FIRST,Lý Đức Thư,0898000036,demo.cv2v2.036@example.test,2026-10-05 08:12:00,Tiếp nhận đầu tiên: tạo Customer
+V2-IN-0037,V2-CUS-037,,new,Hotline,DEMO-V2-V2-CUS-037-FIRST,Phan Ngọc Hạnh,0898000037,demo.cv2v2.037@example.test,2026-10-08 08:19:00,Tiếp nhận đầu tiên: tạo Customer
+V2-IN-0038,V2-CUS-038,,new,App,DEMO-V2-V2-CUS-038-FIRST,Dương Thanh Như,0898000038,demo.cv2v2.038@example.test,2026-10-11 08:26:00,Tiếp nhận đầu tiên: tạo Customer
+V2-IN-0039,V2-CUS-039,,new,Store,DEMO-V2-V2-CUS-039-FIRST,Huỳnh Minh Vy,0898000039,demo.cv2v2.039@example.test,2026-10-14 08:33:00,Tiếp nhận đầu tiên: tạo Customer
+V2-IN-0040,V2-CUS-040,,new,Zalo,DEMO-V2-V2-CUS-040-FIRST,Vũ Thị Lan,0898000040,demo.cv2v2.040@example.test,2026-10-17 08:40:00,Tiếp nhận đầu tiên: tạo Customer
+V2-IN-0041,V2-CUS-041,,new,Facebook,DEMO-V2-V2-CUS-041-FIRST,Lê Văn Sơn,0898000041,demo.cv2v2.041@example.test,2026-10-20 08:47:00,Tiếp nhận đầu tiên: tạo Customer
+V2-IN-0042,V2-CUS-042,,new,Website,DEMO-V2-V2-CUS-042-FIRST,Bùi Bảo Giang,0898000042,demo.cv2v2.042@example.test,2026-10-23 08:54:00,Tiếp nhận đầu tiên: tạo Customer
+V2-IN-0043,V2-CUS-043,,new,Hotline,DEMO-V2-V2-CUS-043-FIRST,Nguyễn Thiên My,0898000043,demo.cv2v2.043@example.test,2026-10-26 08:01:00,Tiếp nhận đầu tiên: tạo Customer
+V2-IN-0044,V2-CUS-044,,new,App,DEMO-V2-V2-CUS-044-FIRST,Võ Trọng Trinh,0898000044,demo.cv2v2.044@example.test,2026-10-29 08:08:00,Tiếp nhận đầu tiên: tạo Customer
+V2-IN-0045,V2-CUS-045,,new,Store,DEMO-V2-V2-CUS-045-FIRST,Đinh Hữu Hòa,0898000045,demo.cv2v2.045@example.test,2026-11-01 08:15:00,Tiếp nhận đầu tiên: tạo Customer
+V2-IN-0046,V2-CUS-046,,new,Zalo,DEMO-V2-V2-CUS-046-FIRST,Công ty Giải pháp Số Thành Tín,0898000046,demo.cv2v2.046@example.test,2026-11-04 08:22:00,Tiếp nhận đầu tiên: tạo Customer
+V2-IN-0047,V2-CUS-047,,new,Facebook,DEMO-V2-V2-CUS-047-FIRST,Hồ Gia Bình,0898000047,demo.cv2v2.047@example.test,2026-11-07 08:29:00,Tiếp nhận đầu tiên: tạo Customer
+V2-IN-0048,V2-CUS-048,,new,Website,DEMO-V2-V2-CUS-048-FIRST,Phạm Đức Long,0898000048,demo.cv2v2.048@example.test,2026-11-10 08:36:00,Tiếp nhận đầu tiên: tạo Customer
+V2-IN-0049,V2-CUS-049,,new,Hotline,DEMO-V2-V2-CUS-049-FIRST,Đỗ Ngọc Thiện,0898000049,demo.cv2v2.049@example.test,2026-11-13 08:43:00,Tiếp nhận đầu tiên: tạo Customer
+V2-IN-0050,V2-CUS-050,,new,App,DEMO-V2-V2-CUS-050-FIRST,Trần Thanh Hải,0898000050,demo.cv2v2.050@example.test,2026-11-16 08:50:00,Tiếp nhận đầu tiên: tạo Customer
+V2-IN-0051,V2-CUS-051,,new,Store,DEMO-V2-V2-CUS-051-FIRST,Đặng Minh Ngân,0898000051,demo.cv2v2.051@example.test,2026-11-19 08:57:00,Tiếp nhận đầu tiên: tạo Customer
+V2-IN-0052,V2-CUS-052,,new,Zalo,DEMO-V2-V2-CUS-052-FIRST,Lý Thị Uyên,0898000052,demo.cv2v2.052@example.test,2026-09-05 08:04:00,Tiếp nhận đầu tiên: tạo Customer
+V2-IN-0053,V2-CUS-053,,new,Facebook,DEMO-V2-V2-CUS-053-FIRST,Phan Văn Khánh,0898000053,demo.cv2v2.053@example.test,2026-09-08 08:11:00,Tiếp nhận đầu tiên: tạo Customer
+V2-IN-0054,V2-CUS-054,,new,Website,DEMO-V2-V2-CUS-054-FIRST,Dương Bảo Quỳnh,0898000054,demo.cv2v2.054@example.test,2026-09-11 08:18:00,Tiếp nhận đầu tiên: tạo Customer
+V2-IN-0055,V2-CUS-001,,linked,Facebook,DEMO-V2-V2-CUS-001-REPEAT1,Đỗ Ngọc Mai,0898000001,demo.cv2v2.001@example.test,2026-09-08 22:07:00,Định danh trùng rõ ràng: liên kết Customer
+V2-IN-0056,V2-CUS-002,,linked,Facebook,DEMO-V2-V2-CUS-002-REPEAT1,Trần Thanh Thư,0898000002,demo.cv2v2.002@example.test,2026-09-11 22:14:00,Định danh trùng rõ ràng: liên kết Customer
+V2-IN-0057,V2-CUS-003,,linked,App,DEMO-V2-V2-CUS-003-REPEAT1,Đặng Minh Hạnh,0898000003,demo.cv2v2.003@example.test,2026-09-14 22:21:00,Định danh trùng rõ ràng: liên kết Customer
+V2-IN-0058,V2-CUS-004,,linked,App,DEMO-V2-V2-CUS-004-REPEAT1,Lý Thị Như,+84898000004,demo.cv2v2.004@example.test,2026-09-17 22:28:00,Định danh trùng rõ ràng: liên kết Customer
+V2-IN-0059,V2-CUS-005,,linked,App,DEMO-V2-V2-CUS-005-REPEAT1,Phan Văn Vy,0898000005,demo.cv2v2.005@example.test,2026-09-20 22:35:00,Định danh trùng rõ ràng: liên kết Customer
+V2-IN-0060,V2-CUS-006,,linked,Facebook,DEMO-V2-V2-CUS-006-REPEAT1,Dương Bảo Lan,0898000006,DEMO.CV2V2.006@EXAMPLE.TEST,2026-09-23 22:42:00,Định danh trùng rõ ràng: liên kết Customer
+V2-IN-0061,V2-CUS-007,,linked,Facebook,DEMO-V2-V2-CUS-007-REPEAT1,Huỳnh Thiên Sơn,0898000007,demo.cv2v2.007@example.test,2026-09-26 22:49:00,Định danh trùng rõ ràng: liên kết Customer
+V2-IN-0062,V2-CUS-008,,linked,Facebook,DEMO-V2-V2-CUS-008-REPEAT1,Vũ Trọng Giang,+84898000008,demo.cv2v2.008@example.test,2026-09-29 22:56:00,Định danh trùng rõ ràng: liên kết Customer
+V2-IN-0063,V2-CUS-009,,linked,App,DEMO-V2-V2-CUS-009-REPEAT1,Lê Hữu My,0898000009,demo.cv2v2.009@example.test,2026-10-02 22:03:00,Định danh trùng rõ ràng: liên kết Customer
+V2-IN-0064,V2-CUS-010,,linked,App,DEMO-V2-V2-CUS-010-REPEAT1,Bùi Quốc Trinh,0898000010,demo.cv2v2.010@example.test,2026-10-05 22:10:00,Định danh trùng rõ ràng: liên kết Customer
+V2-IN-0065,V2-CUS-011,,linked,App,DEMO-V2-V2-CUS-011-REPEAT1,Công ty TNHH Minh Phúc,0898000011,demo.cv2v2.011@example.test,2026-10-08 22:17:00,Định danh trùng rõ ràng: liên kết Customer
+V2-IN-0066,V2-CUS-012,,linked,Facebook,DEMO-V2-V2-CUS-012-REPEAT1,Võ Đức Phúc,+84898000012,DEMO.CV2V2.012@EXAMPLE.TEST,2026-10-11 22:24:00,Định danh trùng rõ ràng: liên kết Customer
+V2-IN-0067,V2-CUS-013,,linked,Facebook,DEMO-V2-V2-CUS-013-REPEAT1,Đinh Ngọc Bình,0898000013,demo.cv2v2.013@example.test,2026-10-14 22:31:00,Định danh trùng rõ ràng: liên kết Customer
+V2-IN-0068,V2-CUS-014,,linked,Facebook,DEMO-V2-V2-CUS-014-REPEAT1,Hoàng Thanh Long,0898000014,demo.cv2v2.014@example.test,2026-10-17 22:38:00,Định danh trùng rõ ràng: liên kết Customer
+V2-IN-0069,V2-CUS-015,,linked,App,DEMO-V2-V2-CUS-015-REPEAT1,Hồ Minh Thiện,0898000015,demo.cv2v2.015@example.test,2026-10-20 22:45:00,Định danh trùng rõ ràng: liên kết Customer
+V2-IN-0070,V2-CUS-016,,linked,App,DEMO-V2-V2-CUS-016-REPEAT1,Phạm Thị Hải,+84898000016,demo.cv2v2.016@example.test,2026-10-23 22:52:00,Định danh trùng rõ ràng: liên kết Customer
+V2-IN-0071,V2-CUS-017,,linked,App,DEMO-V2-V2-CUS-017-REPEAT1,Đỗ Văn Ngân,0898000017,demo.cv2v2.017@example.test,2026-10-26 22:59:00,Định danh trùng rõ ràng: liên kết Customer
+V2-IN-0072,V2-CUS-018,,linked,Facebook,DEMO-V2-V2-CUS-018-REPEAT1,Trần Bảo Uyên,0898000018,DEMO.CV2V2.018@EXAMPLE.TEST,2026-10-29 22:06:00,Định danh trùng rõ ràng: liên kết Customer
+V2-IN-0073,V2-CUS-019,,linked,Facebook,DEMO-V2-V2-CUS-019-REPEAT1,Đặng Thiên Khánh,0898000019,demo.cv2v2.019@example.test,2026-11-01 22:13:00,Định danh trùng rõ ràng: liên kết Customer
+V2-IN-0074,V2-CUS-020,,linked,Facebook,DEMO-V2-V2-CUS-020-REPEAT1,Lý Trọng Quỳnh,+84898000020,demo.cv2v2.020@example.test,2026-11-04 22:20:00,Định danh trùng rõ ràng: liên kết Customer
+V2-IN-0075,V2-CUS-021,,linked,App,DEMO-V2-V2-CUS-021-REPEAT1,Phan Hữu Duy,0898000021,demo.cv2v2.021@example.test,2026-11-07 22:27:00,Định danh trùng rõ ràng: liên kết Customer
+V2-IN-0076,V2-CUS-022,,linked,App,DEMO-V2-V2-CUS-022-REPEAT1,Dương Quốc Minh,0898000022,demo.cv2v2.022@example.test,2026-11-10 22:34:00,Định danh trùng rõ ràng: liên kết Customer
+V2-IN-0077,V2-CUS-023,,linked,App,DEMO-V2-V2-CUS-023-REPEAT1,Huỳnh Gia Trang,0898000023,demo.cv2v2.023@example.test,2026-11-13 22:41:00,Định danh trùng rõ ràng: liên kết Customer
+V2-IN-0078,V2-CUS-024,,linked,Facebook,DEMO-V2-V2-CUS-024-REPEAT1,Vũ Đức Hiền,+84898000024,DEMO.CV2V2.024@EXAMPLE.TEST,2026-11-16 22:48:00,Định danh trùng rõ ràng: liên kết Customer
+V2-IN-0079,V2-CUS-025,,linked,Facebook,DEMO-V2-V2-CUS-025-REPEAT1,Lê Ngọc Phát,0898000025,demo.cv2v2.025@example.test,2026-11-19 22:55:00,Định danh trùng rõ ràng: liên kết Customer
+V2-IN-0080,V2-CUS-026,,linked,Facebook,DEMO-V2-V2-CUS-026-REPEAT1,Bùi Thanh An,0898000026,demo.cv2v2.026@example.test,2026-09-05 22:02:00,Định danh trùng rõ ràng: liên kết Customer
+V2-IN-0081,V2-CUS-027,,linked,App,DEMO-V2-V2-CUS-027-REPEAT1,Nguyễn Minh Linh,0898000027,demo.cv2v2.027@example.test,2026-09-08 22:09:00,Định danh trùng rõ ràng: liên kết Customer
+V2-IN-0082,V2-CUS-028,,linked,App,DEMO-V2-V2-CUS-028-REPEAT1,Võ Thị Thảo,+84898000028,demo.cv2v2.028@example.test,2026-09-11 22:16:00,Định danh trùng rõ ràng: liên kết Customer
+V2-IN-0083,V2-CUS-029,,linked,App,DEMO-V2-V2-CUS-029-REPEAT1,Hộ kinh doanh Điện máy An Lộc,0898000029,demo.cv2v2.029@example.test,2026-09-14 22:23:00,Định danh trùng rõ ràng: liên kết Customer
+V2-IN-0084,V2-CUS-030,,linked,Facebook,DEMO-V2-V2-CUS-030-REPEAT1,Hoàng Bảo Nam,0898000030,DEMO.CV2V2.030@EXAMPLE.TEST,2026-09-17 22:30:00,Định danh trùng rõ ràng: liên kết Customer
+V2-IN-0085,V2-CUS-031,,linked,Facebook,DEMO-V2-V2-CUS-031-REPEAT1,Hồ Thiên Tuấn,0898000031,demo.cv2v2.031@example.test,2026-09-20 22:37:00,Định danh trùng rõ ràng: liên kết Customer
+V2-IN-0086,V2-CUS-032,,linked,Facebook,DEMO-V2-V2-CUS-032-REPEAT1,Phạm Trọng Hùng,+84898000032,demo.cv2v2.032@example.test,2026-09-23 22:44:00,Định danh trùng rõ ràng: liên kết Customer
+V2-IN-0087,V2-CUS-033,,linked,App,DEMO-V2-V2-CUS-033-REPEAT1,Đỗ Hữu Quân,0898000033,demo.cv2v2.033@example.test,2026-09-26 22:51:00,Định danh trùng rõ ràng: liên kết Customer
+V2-IN-0088,V2-CUS-034,,linked,App,DEMO-V2-V2-CUS-034-REPEAT1,Trần Quốc Châu,0898000034,demo.cv2v2.034@example.test,2026-09-29 22:58:00,Định danh trùng rõ ràng: liên kết Customer
+V2-IN-0089,V2-CUS-035,,linked,App,DEMO-V2-V2-CUS-035-REPEAT1,Đặng Gia Mai,0898000035,demo.cv2v2.035@example.test,2026-10-02 22:05:00,Định danh trùng rõ ràng: liên kết Customer
+V2-IN-0090,V2-CUS-036,,linked,Facebook,DEMO-V2-V2-CUS-036-REPEAT1,Lý Đức Thư,+84898000036,DEMO.CV2V2.036@EXAMPLE.TEST,2026-10-05 22:12:00,Định danh trùng rõ ràng: liên kết Customer
+V2-IN-0091,V2-CUS-037,,linked,Facebook,DEMO-V2-V2-CUS-037-REPEAT1,Phan Ngọc Hạnh,0898000037,demo.cv2v2.037@example.test,2026-10-08 22:19:00,Định danh trùng rõ ràng: liên kết Customer
+V2-IN-0092,V2-CUS-038,,linked,Facebook,DEMO-V2-V2-CUS-038-REPEAT1,Dương Thanh Như,0898000038,demo.cv2v2.038@example.test,2026-10-11 22:26:00,Định danh trùng rõ ràng: liên kết Customer
+V2-IN-0093,V2-CUS-039,,linked,App,DEMO-V2-V2-CUS-039-REPEAT1,Huỳnh Minh Vy,0898000039,demo.cv2v2.039@example.test,2026-10-14 22:33:00,Định danh trùng rõ ràng: liên kết Customer
+V2-IN-0094,V2-CUS-040,,linked,App,DEMO-V2-V2-CUS-040-REPEAT1,Vũ Thị Lan,+84898000040,demo.cv2v2.040@example.test,2026-10-17 22:40:00,Định danh trùng rõ ràng: liên kết Customer
+V2-IN-0095,V2-CUS-041,,linked,App,DEMO-V2-V2-CUS-041-REPEAT1,Lê Văn Sơn,0898000041,demo.cv2v2.041@example.test,2026-10-20 22:47:00,Định danh trùng rõ ràng: liên kết Customer
+V2-IN-0096,V2-CUS-042,,linked,Facebook,DEMO-V2-V2-CUS-042-REPEAT1,Bùi Bảo Giang,0898000042,DEMO.CV2V2.042@EXAMPLE.TEST,2026-10-23 22:54:00,Định danh trùng rõ ràng: liên kết Customer
+V2-IN-0097,V2-CUS-043,,linked,Facebook,DEMO-V2-V2-CUS-043-REPEAT1,Nguyễn Thiên My,0898000043,demo.cv2v2.043@example.test,2026-10-26 22:01:00,Định danh trùng rõ ràng: liên kết Customer
+V2-IN-0098,V2-CUS-044,,linked,Facebook,DEMO-V2-V2-CUS-044-REPEAT1,Võ Trọng Trinh,+84898000044,demo.cv2v2.044@example.test,2026-10-29 22:08:00,Định danh trùng rõ ràng: liên kết Customer
+V2-IN-0099,V2-CUS-001,,linked,Store,DEMO-V2-V2-CUS-001-REPEAT2,Đỗ Ngọc Mai,0898000001,demo.cv2v2.001@example.test,2026-09-09 14:07:00,Khách liên hệ lần ba qua kênh khác
+V2-IN-0100,V2-CUS-002,,linked,Zalo,DEMO-V2-V2-CUS-002-REPEAT2,Trần Thanh Thư,0898000002,demo.cv2v2.002@example.test,2026-09-12 14:14:00,Khách liên hệ lần ba qua kênh khác
+V2-IN-0101,V2-CUS-003,,linked,Facebook,DEMO-V2-V2-CUS-003-REPEAT2,Đặng Minh Hạnh,0898000003,demo.cv2v2.003@example.test,2026-09-15 14:21:00,Khách liên hệ lần ba qua kênh khác
+V2-IN-0102,V2-CUS-004,,linked,Website,DEMO-V2-V2-CUS-004-REPEAT2,Lý Thị Như,0898000004,demo.cv2v2.004@example.test,2026-09-18 14:28:00,Khách liên hệ lần ba qua kênh khác
+V2-IN-0103,V2-CUS-005,,linked,Hotline,DEMO-V2-V2-CUS-005-REPEAT2,Phan Văn Vy,0898000005,demo.cv2v2.005@example.test,2026-09-21 14:35:00,Khách liên hệ lần ba qua kênh khác
+V2-IN-0104,V2-CUS-006,,linked,App,DEMO-V2-V2-CUS-006-REPEAT2,Dương Bảo Lan,0898000006,demo.cv2v2.006@example.test,2026-09-24 14:42:00,Khách liên hệ lần ba qua kênh khác
+V2-IN-0105,V2-CUS-007,,linked,Store,DEMO-V2-V2-CUS-007-REPEAT2,Huỳnh Thiên Sơn,0898000007,demo.cv2v2.007@example.test,2026-09-27 14:49:00,Khách liên hệ lần ba qua kênh khác
+V2-IN-0106,V2-CUS-008,,linked,Zalo,DEMO-V2-V2-CUS-008-REPEAT2,Vũ Trọng Giang,0898000008,demo.cv2v2.008@example.test,2026-09-30 14:56:00,Khách liên hệ lần ba qua kênh khác
+V2-IN-0107,V2-CUS-009,,linked,Facebook,DEMO-V2-V2-CUS-009-REPEAT2,Lê Hữu My,0898000009,demo.cv2v2.009@example.test,2026-10-03 14:03:00,Khách liên hệ lần ba qua kênh khác
+V2-IN-0108,V2-CUS-010,,linked,Website,DEMO-V2-V2-CUS-010-REPEAT2,Bùi Quốc Trinh,0898000010,demo.cv2v2.010@example.test,2026-10-06 14:10:00,Khách liên hệ lần ba qua kênh khác
+V2-IN-0109,V2-CUS-011,,linked,Hotline,DEMO-V2-V2-CUS-011-REPEAT2,Công ty TNHH Minh Phúc,0898000011,demo.cv2v2.011@example.test,2026-10-09 14:17:00,Khách liên hệ lần ba qua kênh khác
+V2-IN-0110,V2-CUS-012,,linked,App,DEMO-V2-V2-CUS-012-REPEAT2,Võ Đức Phúc,0898000012,demo.cv2v2.012@example.test,2026-10-12 14:24:00,Khách liên hệ lần ba qua kênh khác
+V2-IN-0111,V2-CUS-013,,linked,Store,DEMO-V2-V2-CUS-013-REPEAT2,Đinh Ngọc Bình,0898000013,demo.cv2v2.013@example.test,2026-10-15 14:31:00,Khách liên hệ lần ba qua kênh khác
+V2-IN-0112,V2-CUS-014,,linked,Zalo,DEMO-V2-V2-CUS-014-REPEAT2,Hoàng Thanh Long,0898000014,demo.cv2v2.014@example.test,2026-10-18 14:38:00,Khách liên hệ lần ba qua kênh khác
+V2-IN-0113,V2-CUS-015,,linked,Facebook,DEMO-V2-V2-CUS-015-REPEAT2,Hồ Minh Thiện,0898000015,demo.cv2v2.015@example.test,2026-10-21 14:45:00,Khách liên hệ lần ba qua kênh khác
+V2-IN-0114,V2-CUS-016,,linked,Website,DEMO-V2-V2-CUS-016-REPEAT2,Phạm Thị Hải,0898000016,demo.cv2v2.016@example.test,2026-10-24 14:52:00,Khách liên hệ lần ba qua kênh khác
+V2-IN-0115,V2-CUS-017,,linked,Hotline,DEMO-V2-V2-CUS-017-REPEAT2,Đỗ Văn Ngân,0898000017,demo.cv2v2.017@example.test,2026-10-27 14:59:00,Khách liên hệ lần ba qua kênh khác
+V2-IN-0116,V2-CUS-018,,linked,App,DEMO-V2-V2-CUS-018-REPEAT2,Trần Bảo Uyên,0898000018,demo.cv2v2.018@example.test,2026-10-30 14:06:00,Khách liên hệ lần ba qua kênh khác
+V2-IN-0117,V2-CUS-019,,linked,Store,DEMO-V2-V2-CUS-019-REPEAT2,Đặng Thiên Khánh,0898000019,demo.cv2v2.019@example.test,2026-11-02 14:13:00,Khách liên hệ lần ba qua kênh khác
+V2-IN-0118,V2-CUS-020,,linked,Zalo,DEMO-V2-V2-CUS-020-REPEAT2,Lý Trọng Quỳnh,0898000020,demo.cv2v2.020@example.test,2026-11-05 14:20:00,Khách liên hệ lần ba qua kênh khác
+V2-IN-0119,,V2-CUS-011,review,Facebook,DEMO-V2-REVIEW-NAME-01,Người đăng ký khác 1,0898000011,demo.cv2v2.011@example.test,2026-09-09 12:07:00,Nghi trùng: số điện thoại giống nhưng họ tên khác
+V2-IN-0120,,V2-CUS-012,review,Facebook,DEMO-V2-REVIEW-NAME-02,Người đăng ký khác 2,0898000012,demo.cv2v2.012@example.test,2026-09-12 12:14:00,Nghi trùng: số điện thoại giống nhưng họ tên khác
+V2-IN-0121,,V2-CUS-013,review,Facebook,DEMO-V2-REVIEW-NAME-03,Người đăng ký khác 3,0898000013,demo.cv2v2.013@example.test,2026-09-15 12:21:00,Nghi trùng: số điện thoại giống nhưng họ tên khác
+V2-IN-0122,,V2-CUS-014,review,Facebook,DEMO-V2-REVIEW-NAME-04,Người đăng ký khác 4,0898000014,demo.cv2v2.014@example.test,2026-09-18 12:28:00,Nghi trùng: số điện thoại giống nhưng họ tên khác
+V2-IN-0123,,V2-CUS-015,review,Facebook,DEMO-V2-REVIEW-NAME-05,Người đăng ký khác 5,0898000015,demo.cv2v2.015@example.test,2026-09-21 12:35:00,Nghi trùng: số điện thoại giống nhưng họ tên khác
+V2-IN-0124,,V2-CUS-016,review,Facebook,DEMO-V2-REVIEW-NAME-06,Người đăng ký khác 6,0898000016,demo.cv2v2.016@example.test,2026-09-24 12:42:00,Nghi trùng: số điện thoại giống nhưng họ tên khác
+V2-IN-0125,,V2-CUS-017,review,Facebook,DEMO-V2-REVIEW-NAME-07,Người đăng ký khác 7,0898000017,demo.cv2v2.017@example.test,2026-09-27 12:49:00,Nghi trùng: số điện thoại giống nhưng họ tên khác
+V2-IN-0126,,V2-CUS-018,review,Facebook,DEMO-V2-REVIEW-NAME-08,Người đăng ký khác 8,0898000018,demo.cv2v2.018@example.test,2026-09-30 12:56:00,Nghi trùng: số điện thoại giống nhưng họ tên khác
+V2-IN-0127,,V2-CUS-019,review,Facebook,DEMO-V2-REVIEW-NAME-09,Người đăng ký khác 9,0898000019,demo.cv2v2.019@example.test,2026-10-03 12:03:00,Nghi trùng: số điện thoại giống nhưng họ tên khác
+V2-IN-0128,,V2-CUS-020,review,Facebook,DEMO-V2-REVIEW-NAME-10,Người đăng ký khác 10,0898000020,demo.cv2v2.020@example.test,2026-10-06 12:10:00,Nghi trùng: số điện thoại giống nhưng họ tên khác
+V2-IN-0129,,V2-CUS-021,review,Hotline,DEMO-V2-REVIEW-EMAIL-01,Phan Hữu Duy,0898000021,demo.conflict.01@example.test,2026-09-10 00:07:00,Nghi trùng: số trùng email xung đột
+V2-IN-0130,,V2-CUS-022,review,Hotline,DEMO-V2-REVIEW-EMAIL-02,Dương Quốc Minh,0898000022,demo.conflict.02@example.test,2026-09-13 00:14:00,Nghi trùng: số trùng email xung đột
+V2-IN-0131,,V2-CUS-023,review,Hotline,DEMO-V2-REVIEW-EMAIL-03,Huỳnh Gia Trang,0898000023,demo.conflict.03@example.test,2026-09-16 00:21:00,Nghi trùng: số trùng email xung đột
+V2-IN-0132,,V2-CUS-024,review,Hotline,DEMO-V2-REVIEW-EMAIL-04,Vũ Đức Hiền,0898000024,demo.conflict.04@example.test,2026-09-19 00:28:00,Nghi trùng: số trùng email xung đột
+V2-IN-0133,,V2-CUS-025,review,Hotline,DEMO-V2-REVIEW-EMAIL-05,Lê Ngọc Phát,0898000025,demo.conflict.05@example.test,2026-09-22 00:35:00,Nghi trùng: số trùng email xung đột
+V2-IN-0134,,V2-CUS-026,review,Hotline,DEMO-V2-REVIEW-EMAIL-06,Bùi Thanh An,0898000026,demo.conflict.06@example.test,2026-09-25 00:42:00,Nghi trùng: số trùng email xung đột
+V2-IN-0135,,V2-CUS-027,review,Hotline,DEMO-V2-REVIEW-EMAIL-07,Nguyễn Minh Linh,0898000027,demo.conflict.07@example.test,2026-09-28 00:49:00,Nghi trùng: số trùng email xung đột
+V2-IN-0136,,V2-CUS-028,review,Hotline,DEMO-V2-REVIEW-EMAIL-08,Võ Thị Thảo,0898000028,demo.conflict.08@example.test,2026-10-01 00:56:00,Nghi trùng: số trùng email xung đột
+V2-IN-0137,,,rejected,App,DEMO-V2-REJECT-01,Khách Lỗi 1,12345,,2026-09-10 04:07:00,Dữ liệu không hợp lệ: bị từ chối
+V2-IN-0138,,,rejected,Zalo,DEMO-V2-REJECT-02,,,not-an-email,2026-09-13 04:14:00,Dữ liệu không hợp lệ: bị từ chối
+V2-IN-0139,,,rejected,Facebook,DEMO-V2-REJECT-03,Khách Lỗi 3,12345,,2026-09-16 04:21:00,Dữ liệu không hợp lệ: bị từ chối
+V2-IN-0140,,,rejected,Website,DEMO-V2-REJECT-04,,,not-an-email,2026-09-19 04:28:00,Dữ liệu không hợp lệ: bị từ chối
+V2-IN-0141,,,rejected,App,DEMO-V2-REJECT-05,Khách Lỗi 5,12345,,2026-09-22 04:35:00,Dữ liệu không hợp lệ: bị từ chối
+V2-IN-0142,,,rejected,Zalo,DEMO-V2-REJECT-06,,,not-an-email,2026-09-25 04:42:00,Dữ liệu không hợp lệ: bị từ chối
+V2-IN-0143,,,rejected,Facebook,DEMO-V2-REJECT-07,Khách Lỗi 7,12345,,2026-09-28 04:49:00,Dữ liệu không hợp lệ: bị từ chối
+V2-IN-0144,,,rejected,Website,DEMO-V2-REJECT-08,,,not-an-email,2026-10-01 04:56:00,Dữ liệu không hợp lệ: bị từ chối

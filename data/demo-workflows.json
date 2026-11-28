@@ -1,0 +1,73 @@
+{
+  "customers": [
+    {
+      "channel": "Website",
+      "source_record_id": "WEB-DEMO-001",
+      "marketing_consent": true,
+      "leads": [
+        {"first_name": "DEMO mua điện thoại lần đầu", "email": "lead-online-first@example.test", "deal_type": "Won"},
+        {"first_name": "DEMO mua phụ kiện lần hai", "email": "lead-online-repeat@example.test", "deal_type": "Won"}
+      ],
+      "orders": [
+        {
+          "key": "DEMO-WEB-001", "order_date": "2026-11-20", "sales_channel": "Website", "deal_index": 0,
+          "outcome": "Completed", "payment_method": "Direct", "payment_status": "Paid",
+          "fulfillment_method": "Delivery", "processing_status": "In Transit", "fulfillment_status": "Delivered",
+          "item": {"product_name": "Điện thoại demo", "quantity": 1, "unit_price": 15000000}
+        },
+        {
+          "key": "DEMO-WEB-002", "order_date": "2026-11-22", "sales_channel": "Store", "deal_index": 1,
+          "outcome": "Completed", "payment_method": "Installment", "payment_status": "Paid",
+          "fulfillment_method": "Pickup", "processing_status": "Ready for Pickup", "fulfillment_status": "Picked Up",
+          "item": {"product_name": "Thiết bị demo mua lại", "quantity": 1, "unit_price": 8000000}
+        }
+      ],
+      "tickets": [
+        {
+          "subject": "DEMO Bảo hành điện thoại", "type": "Warranty", "order": "DEMO-WEB-001",
+          "description": "Yêu cầu bảo hành từ đơn đã bàn giao.",
+          "resolution": "Đã kiểm tra và thay phụ kiện trong kịch bản demo."
+        },
+        {"subject": "DEMO Cần hướng dẫn sử dụng", "type": "Technical Support", "description": "Yêu cầu đang chờ hỗ trợ."}
+      ]
+    },
+    {
+      "channel": "Store",
+      "source_record_id": "POS-DEMO-001",
+      "orders": [
+        {
+          "key": "DEMO-POS-001", "order_date": "2026-11-21", "sales_channel": "Store",
+          "outcome": "Cancelled", "payment_method": "COD", "payment_status": "Unpaid",
+          "fulfillment_method": "Delivery", "processing_status": "In Transit", "fulfillment_status": "Failed",
+          "item": {"product_name": "Máy tính bảng demo", "quantity": 1, "unit_price": 7000000}
+        },
+        {
+          "key": "DEMO-POS-002", "order_date": "2026-11-23", "sales_channel": "Store", "outcome": "Draft",
+          "item": {"product_name": "Phụ kiện demo", "quantity": 2, "unit_price": 150000}
+        }
+      ],
+      "tickets": [
+        {"subject": "DEMO Giao hàng thất bại", "type": "Complaint", "order": "DEMO-POS-001", "description": "Khách cần tư vấn lần giao khác."}
+      ]
+    },
+    {
+      "channel": "Zalo",
+      "source_record_id": "ZALO-DEMO-001",
+      "leads": [
+        {"first_name": "DEMO Khách cần cân nhắc", "email": "lead-considering@example.test", "deal_type": "Ongoing"},
+        {"first_name": "DEMO Nhu cầu chưa chuyển đổi", "email": "lead-not-converted@example.test"},
+        {
+          "first_name": "DEMO Khách từ chối mua", "email": "lead-declined@example.test", "deal_type": "Lost",
+          "lost_reason": "DEMO Khách từ chối", "lost_notes": "Khách quyết định dừng mua trong kịch bản demo."
+        }
+      ]
+    }
+  ],
+  "staff": [
+    {"email": "c360-demo-sales@example.test", "first_name": "DEMO Bán hàng", "role": "Sales User"},
+    {"email": "c360-demo-manager@example.test", "first_name": "DEMO Quản lý", "role": "Sales Manager"},
+    {"email": "c360-demo-support@example.test", "first_name": "DEMO Hậu mãi", "role": "C360 Customer Service"},
+    {"email": "c360-demo-ops@example.test", "first_name": "DEMO Vận hành", "role": "C360 Operations"},
+    {"email": "c360-demo-marketing@example.test", "first_name": "DEMO Tiếp thị", "role": "C360 Marketing"}
+  ]
+}

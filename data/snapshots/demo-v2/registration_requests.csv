@@ -1,0 +1,13 @@
+﻿snapshot_id,full_name,email,phone,department,status,reason,scenario
+V2-REG-001,Trần Minh Duy,cv2.staff.001@example.test,0887000001,Customer Service,Pending,,Danh sách chờ duyệt
+V2-REG-002,Lê Ngọc Hải,cv2.staff.002@example.test,0887000002,Operations,Pending,,Danh sách chờ duyệt
+V2-REG-003,Phạm Gia Hòa,cv2.staff.003@example.test,0887000003,Other,Pending,,Danh sách chờ duyệt
+V2-REG-004,Huỳnh Hữu Lan,cv2.staff.004@example.test,0887000004,Sales,Pending,,Danh sách chờ duyệt
+V2-REG-005,Hoàng Thiên Mai,cv2.staff.005@example.test,0887000005,Customer Service,Pending,,Danh sách chờ duyệt
+V2-REG-006,Phan Văn Nam,cv2.staff.006@example.test,0887000006,Operations,Pending,,Danh sách chờ duyệt
+V2-REG-007,Võ Minh Phát,cv2.staff.007@example.test,0887000007,Other,Pending,,Danh sách chờ duyệt
+V2-REG-008,Đặng Ngọc Quỳnh,cv2.staff.008@example.test,0887000008,Sales,Pending,,Danh sách chờ duyệt
+V2-REG-009,Bùi Gia Thiện,cv2.staff.009@example.test,0887000009,Customer Service,Rejected,Thông tin minh họa không đủ điều kiện; chưa phê duyệt tài khoản.,Đã từ chối (không tạo User)
+V2-REG-010,Đỗ Hữu Trinh,cv2.staff.010@example.test,0887000010,Operations,Rejected,Thông tin minh họa không đủ điều kiện; chưa phê duyệt tài khoản.,Đã từ chối (không tạo User)
+V2-REG-011,Vũ Thiên Vy,cv2.staff.011@example.test,0887000011,Other,Rejected,Thông tin minh họa không đủ điều kiện; chưa phê duyệt tài khoản.,Đã từ chối (không tạo User)
+V2-REG-012,Hồ Văn Châu,cv2.staff.012@example.test,0887000012,Sales,Rejected,Thông tin minh họa không đủ điều kiện; chưa phê duyệt tài khoản.,Đã từ chối (không tạo User)
